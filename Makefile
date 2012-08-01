@@ -1,12 +1,12 @@
 # Pretty trivial Makefile, really here to document that there's nothing complicated to do to build the document
 
-VOUnits.pdf: VOUnits.tex unity-grammars/unity-vou.txt
+VOUnits.pdf: VOUnits.tex unity-grammars
 	pdflatex VOUnits
 
 VOUnits.bbl: VOUnits.aux
 	bibtex VOUnits
 
-unity-grammars/unity-vou.txt: unity-grammars.tar.gz
+unity-grammars: unity-grammars.tar.gz
 	tar xzf unity-grammars.tar.gz
 
 clean:
