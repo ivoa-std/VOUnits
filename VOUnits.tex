@@ -24,6 +24,8 @@
 \newrefformat{sec}{Sect.~\ref{#1}}
 \newrefformat{fig}{Fig.~\ref{#1}}
 \newrefformat{tab}{Table~\ref{#1}}
+\usepackage{varioref}
+\newrefformat{tabx}{Table~\vref{#1}}
 
 % Physical units in \rm.  Unstarred version includes leading
 % \thinspace.  Starred version doesn't, and is used when referring to
@@ -93,26 +95,27 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{2012 August 1}
+\date{2012 August 20}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
-\ivoatype{IVOA Working Draft}
-%\ivoatype{IVOA Proposed Recommendation}
+%\ivoatype{IVOA Working Draft}
+\ivoatype{IVOA Proposed Recommendation}
 %\ivoatype{IVOA Recommendation}
 
 \version{1.0}
 % Give author list: separate different authors with \\
 % You can add email addresses with links \url{mailto:yourname@ivoa.net}
 \author{S\'{e}bastien Derri\`ere, Norman Gray, Mireille Louys, \\
-Jonathan Mc~Dowell, Fran\c{c}ois Ochsenbein, Pedro Osuna, Bruno Rino, \\
+Jonathan McDowell, Fran\c{c}ois Ochsenbein, Pedro Osuna, Bruno Rino, \\
 Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120801/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120820/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/latest/VOUnits.html}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
 \previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120718.pdf}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120801/}}}
 
 
 
@@ -143,46 +146,6 @@ Jesus Salgado}
 %%%%%%%%%%%%%%%%%
 
 \begin{document}
-%%\psfig{file=ivoa2.ps,width=1.5in}
-%
-%\huge
-%\vskip 0.2in
-%\par\noindent{\bf Data Model for Astronomical DataSet Characterisation}
-%\Large
-%\par\noindent{\bf Version 1.0 }
-%\vskip 0.15in
-%\par\noindent{\bf IVOA {\it Working draft}  \\ \today }
-%
-%\vskip 1in
-%\large
-%\noindent
-%{\bf Working Group: }
-%
-%http://www.ivoa.net/twiki/bin/view/IVOA/IvoaDataModel
-%\normalsize
-%
-%\par\noindent{\bf This version:} Presentation of the Characterisation Data
-%Model and its XML representations
-%
-%
-%%\link{http://www.ivoa.net/Documents/WD/DM/WD-OBS-20031108.html}
-%
-%%\par\noindent{\bf Latest version:}
-%
-%%\link{http://www.ivoa.net/Documents/WD/DM/WD-OBS.html}
-%
-%%\par\noindent{\bf Previous versions:}
-%
-%%None.
-%
-%\noindent{\bf Editors:}
-%
-%Jonathan McDowell, Franç\c{c}ois Bonnarel, Igor Chilingarian,
-%Mireille Louys, Alberto Micol, Anita Richards.
-%
-%\noindent{\bf Authors:}
-%
-%IVOA Data Model Working Group
 
 \maketitle % print header in standard form
 \newpage
@@ -391,7 +354,7 @@ of the comparison tables.
 \subsection{Standards for astronomical catalogues}
 
 The conventions adopted at CDS are summarized in the Standards for Astronomical 
-Catalogues, Version 2.0 \citep{cds00}. They are presented in the fourth column
+Catalogues, Version 2.0 \citep[\S3.2]{cds00}. They are presented in the fourth column
 of the comparison tables.
 
 \subsection{FITS 2010}
@@ -447,19 +410,19 @@ A formal grammar summarizing these conventions is given in \prettyref{sec:vougra
 \subsection{String representation and encoding\label{sec:encoding}}
 
 %    \setlength\LTcapwidth{22cm}
-
-\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-%  \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|}
+\begin{table}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+  \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
     Units are strings of chars &  & YES &  & YES & YES\\\hline
     Case sensitive & YES & YES & YES & YES & YES\\\hline
     Character set &  &  & No spaces & ASCII text & ASCII printable\\\hline
+\end{tabular}
   \caption{Comparison of string representation and encoding.}
   \label{tab:comparUnitEncoding}
-%\end{table}
-\end{longtable}
-
+%\end{longtable}
+\end{table}
 
 VOUnits must be unit labels suitable for IVOA use (or other electronic manipulation),
 and therefore need to be expressed unambiguously in encodings recognised by XML parsers,
@@ -485,32 +448,36 @@ disallowing additional scale factors for \unit{kg}.
 
 No use of \unit{Ohm} was found in astronomy archives, therefore the possible non-compliance of the OGIP
 syntax was not considered critical.
-
-\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\begin{table}
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
     %\multicolumn{6}{|c|}{Base units} \\\hline
-    The 6+1 base SI units & \multicolumn{4}{c|}{\unit{m, s, A, K, mol, cd}} & idem \\
-    ... mass base unit & \unit{kg}, but use prefixes with \unit{g} & \unit{kg} & \unit{g} & \unit{kg}, note that \unit{g} is allowed & \unit{g}\\
-    & \multicolumn{4}{c|}{} &  \\
-    Dimensionless planar and solid angle & \multicolumn{4}{c|}{\unit{rad, sr}} & idem \\
-    Additional remarks & Use \unit{s}, NOT sec &  &  & \unit{deg} preferred for decimal angles & \\\hline
-    Derived units with symbols & \multicolumn{4}{c|}{\unit{Hz, N, Pa,
+    The 6+1 base SI units\raggedright & \multicolumn{4}{c|}{\unit{m, s, A, K, mol, cd}} & idem \\
+     & unit is \unit{kg}, but use \unit{g} with prefixes\raggedright & \unit{kg} & \unit{g} & \unit{kg}, note that \unit{g} is allowed & \unit{g}\\
+     %& \multicolumn{4}{c|}{} &  \\
+     \hline
+    Dimensionless planar and solid angle\raggedright & \multicolumn{4}{c|}{\unit{rad, sr}} & idem \\
+    & Use \unit{s}, not sec, for seconds\raggedright &  &  & \unit{deg} preferred for decimal angles & \\\hline
+    Derived units with symbols\raggedright & \multicolumn{4}{c|}{\unit{Hz, N, Pa,
       J, W, C, V, S, F, Wb, T, H, lm, lx}} & idem \\
      & \unit{$\Omega$} & \unit{ohm} & \unit{Ohm} & \unit{Ohm} & \unit{Ohm}\\\hline
 %     &  &  &  &  & \\\hline
+\end{tabular}
   \caption{Comparison of base units.}
   \label{tab:comparUnitBase}
-%\end{table}
-\end{longtable}
+%\end{longtable}
+\end{table}
 
 \subsection{Scale factors\label{sec:scaleFactors}}
 
 Following the usage in \prettyref{tab:comparUnitScale}, there are 20 scale factors that can be used as
 prefixes to any base symbol (except that~P is not allowed as a scale factor for \unit{a}). One must not use compound prefixes. Prefixes are concatenated to the base
 symbol without space, and can not be used without a base symbol.
-
-\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\begin{table}
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
     & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOUnits\\\hline
     Scale factors,   & \multicolumn{4}{c|}{\unit{d, c, m, n, p, f, a}} & idem \\
@@ -518,13 +485,14 @@ symbol without space, and can not be used without a base symbol.
     prefixes & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
      &  & \multicolumn{3}{c|}{\unit{z, y, Z, Y}} & \unit{z, y, Z, Y}\\\hline
     % & Tab. 5 & Tab. 3 & 3.2.3 & Tab. 5 & \\\hline
-    Prefix--symbol concatenation & no space, regarded as single symbol & no space, regarded as a single unit string & no space & no space (implicit) & no space\\\hline
-    Prefix-able symbols  & Not \unit{kg}: use \unit{g} & All units above, and \unit{eV, pc, Jy, Crab} Only \unit{mCrab} allowed & all & all & all (except \unit{P} for \unit{a})\\\hline
+    Prefix--symbol concatenation & no space, regarded as single symbol\raggedright & no space, regarded as a single unit string\raggedright & no space & no space (implicit)\raggedright & no space\\\hline
+    Prefix-able symbols  & Not \unit{kg}: use \unit{g}\raggedright & All units above, and \unit{eV, pc, Jy, Crab} Only \unit{mCrab} allowed\raggedright & all & all & all (except \unit{P} for \unit{a})\\\hline
     Use compound prefixes & should not & should never & must not & must not & must not\\\hline
+\end{tabular}
   \caption{Comparison of scale factors.}
   \label{tab:comparUnitScale}
-%\end{table}
-\end{longtable}
+%\end{longtable}
+\end{table}
 
 Remark: the letter \unit{u} is used instead of the \micro\ symbol to represent a factor of $10^{-6}$, 
 following the character set defined in \prettyref{sec:encoding}.
@@ -534,7 +502,9 @@ following the character set defined in \prettyref{sec:encoding}.
 The \prettyref{tab:comparUnitAstro} lists symbols used in astronomy to describe times, angles, distances and
 a few additional quantities. 
 
-\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\begin{table}
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
     %\multicolumn{6}{|c|}{Astronomy-related units} \\\hline
@@ -544,21 +514,23 @@ a few additional quantities.
     year & \unit{a} & \unit{yr} & \unit{a, yr} & \unit{a, yr} Pa (peta a) forbidden& like FITS\\\hline
     arcsecond & \unit{''} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec}\\\hline
     arcminute & \unit{'} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin}\\\hline
-    degree (of angle) & \unit{$^\circ$} & \unit{deg} & \unit{deg} & \unit{deg} & \unit{deg}\\\hline
-    milliarcsecond & \unit{mas} (use \unit{nrad} !) &  & \unit{mas} & \unit{mas} & \unit{mas}\\\hline
-    microarcsec &  &  & \unit{uarcsec} &  & no dedicated symbol, use \unit{uarcsec}\\\hline
+    degree (angle) & \unit{$^\circ$} & \unit{deg} & \unit{deg} & \unit{deg} & \unit{deg}\\\hline
+    milliarcsecond & \unit{mas} (use \unit{nrad}!)\raggedright &  & \unit{mas} & \unit{mas} & \unit{mas}\\\hline
+    microarcsec &  &  & \unit{uarcsec} &  & no dedicated symbol, use
+    \unit{uarcsec}\\\hline
     cycle & \unit{c, $^\mathrm{c}$} &  &  &  & not used\\\hline
     astronomical unit & \unit{au} & \unit{AU} & \unit{AU} & \unit{AU} & \unit{AU}\\\hline
     parsec & \multicolumn{4}{c|}{\unit{pc}} & \unit{pc}\\\hline
     atomic mass & \unit{u} &  &  & \unit{u} & \unit{u}\\\hline
     electron Volt & \multicolumn{4}{c|}{\unit{eV}} & \unit{eV}\\\hline
     Jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
-    Celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}&  &  &  & not used\\\hline
+    Celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}\raggedright&  &  &  & not used\\\hline
     century & ha, cy should not be used &  &  &  & no dedicated symbol, use \unit{ha} or \unit{hyr}\\\hline
+\end{tabular}
   \caption{Comparison of astronomy-related units.}
   \label{tab:comparUnitAstro}
-%\end{table}
-\end{longtable}
+%\end{longtable}
+\end{table}
 
 Minutes, hours, and days of time must be represented in VOUnits by the symbols \unit{min}, \unit{h} and \unit{d}.
 The year can be expressed by \unit{a} (recommended by IAU) or \unit{yr} (common practice), but peta-year must only
@@ -581,7 +553,9 @@ and a century corresponds to \unit{ha} or \unit{hyr}. Note
 recommends to no longer use these units. 
 
 
-\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\begin{table}
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
     %\multicolumn{6}{|c|}{IAU (Table 7) strongly recommends to no longer use these} \\\hline
@@ -601,10 +575,11 @@ recommends to no longer use these units.
     gamma & \unit{$\gamma$} & \unit{} & \unit{} & \unit{} & not used \\\hline
     oersted & \unit{Oe} & \unit{} & \unit{} & \unit{} & not used \\\hline
     Imperial, non-metric & should not be used & \unit{} & \unit{} & \unit{} & not used \\\hline\hline
+\end{tabular}
   \caption{Comparison of symbols deprecated by IAU.}
   \label{tab:comparUnitDeprecated}
-%\end{table}
-\end{longtable}
+\end{table}
+%\end{longtable}
 
 In order to be compatible with legacy metadata, VOUnit parsers should be able to interpret
 symbols for \AA{}ngstr\"om, barn, erg and Gauss, as written in the sixth column of \prettyref{tab:comparUnitDeprecated}.
@@ -614,7 +589,9 @@ Tables~\ref{tab:comparUnitBase}, \ref{tab:comparUnitScale} and \ref{tab:comparUn
 \prettyref{tab:comparUnitOther} compares other various symbols. The VOUnits symbol
 for magnitudes is \unit{mag}.
 
-\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\begin{table}
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
     magnitude & \multicolumn{4}{c|}{\unit{mag}} & \unit{mag}\\\hline
@@ -641,11 +618,11 @@ for magnitudes is \unit{mag}.
     Unitless in percent & \unit{} &  & \unit{\%} & \unit{} & \unit{} \\\hline
     unknown & \unit{} & \unit{UNKNOWN} & \unit{} & \unit{} & \unit{?} \\\hline
 %  \end{tabular}
+\end{tabular}
   \caption{Comparison of other symbols.}
   \label{tab:comparUnitOther}
-%\end{table}
-\end{longtable}
-%\end{landscape}
+\end{table}
+%\end{longtable}
 
 It can be noted that some of the units listed in \prettyref{tab:comparUnitOther} are 
 questionable. They arise in fact from a need to describe quantities, when the only
@@ -707,15 +684,15 @@ unit symbols for exponentiation, multiplication, division, and other computation
 \hline
     & IAU & OGIP  & StdCats & FITS \\\hline
     %\multicolumn{6}{|c|}{Compound units} \\\hline
-    Multiplication & space, except if previous unit ends with superscript; dot (\unit{.}) may be used
-    	& one or more spaces OR one asterisk (\unit{*}) with optional spaces on either side 
+    Multiplication & space, except if previous unit ends with superscript; dot (\unit{.}) may be used\raggedright
+    	& one or more spaces OR one asterisk (\unit{*}) with optional spaces on either side\raggedright 
 	& dot (\unit{.}), no space 
 	& single space OR asterisk (\unit{*}, no spaces) OR dot (\unit{.}, no spaces) \\\hline
-    Division & per. Use negative index or solidus (\unit{/}) 
-    	& slash (\unit{/}) with optional spaces on either side, space not recommended after / OR negative index
+    Division & per. Use negative index or solidus (\unit{/})\raggedright
+    	& slash (\unit{/}) with optional spaces on either side, space not recommended after / OR negative index\raggedright
 	& \unit{/} with no spaces 
 	& \unit{/} with no spaces  \\\hline\hline
-    Use of multiple / & MUST never use two / 
+    Use of multiple / & MUST never use two /\raggedright 
     	& allowed 
 	& allowed 
 	& may be used, discouraged, math precedence rule \\\hline\hline
@@ -737,8 +714,8 @@ unit symbols for exponentiation, multiplication, division, and other computation
 \end{longtable}
 
 The combination rules is the point where the largest discrepancies between the
-different schemes appear. The FITS document provides a nice summary trying to accomodate
-at best the existing schemes, quoting section 4.3.1 of the paper:
+different schemes appear. The FITS document summarises the problem of
+try to best accomodate the existing schemes:
 \label{sec:fitsquote}
 \begin{quote}
 Two or more base units strings (called str1 and str2 (...)) may be combined using
@@ -778,7 +755,7 @@ parentheses. Thus meters squared may be indicated by m**(2),
 indicated by \texttt{m**-3}, \texttt{m-3}, \texttt{m\^{}(-3)}, \texttt{/m3}, and so forth. Meters to
 the three-halves power may be indicated by \texttt{m(1.5)}, \texttt{m\^{}(1.5)},
 \texttt{m**(1.5)}, \texttt{m(3/2)}, \texttt{m**(3/2)}, and \texttt{m\^{}(3/2)}, but not by \texttt{m\^{}3/2}
-or \texttt{m1.5}.
+or \texttt{m1.5}.~\cite[\S4.3.1]{pence10}
 \end{quote}
 
 This and other ambiguities are discussed in the detailed syntaxes of \prettyref{sec:grammar}.
@@ -897,7 +874,7 @@ representation to another one (see also \prettyref{sec:conversion}).
 
 \subsection{Libraries\label{sec:libraries}}
 
-There are several existing libraries able to interpret unit labels.
+There are a few existing libraries able to interpret unit labels.
 In all cases,
 some software effort is required if they are to be used in translating
 between data provider unit labels, and those to be adopted by
@@ -907,9 +884,10 @@ One of the most widely-used specialised
 astronomical libraries is AST which includes a unit conversion
 facility attached to astronomical coordinate systems \citep{berry12}.
 
-Another library has been developed at CDS\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}},
+Another library has been developed at
+CDS\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}},
 and can be tested online\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}}. This library covers all
-the symbols and notations defined in the standard for astronomical catalogues \citep{cds00}, as well as
+the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
 additional symbols and notations.
 
 Recently, Norman Gray started developing
@@ -1052,7 +1030,7 @@ recommended base and derived units in the various syntaxes, plus a
 collection of test cases.
 
 In these grammars, the terminals are as given in
-\prettyref{tab:terminals}.% on p.\pageref{tab:terminals}.
+\prettyref{tabx:terminals}.
 \begin{table}
 %\def\={\raggedright\tabularnewline\relax} % avoid problem with \raggedright redefining \\
 %\let\=\tabularnewline
@@ -1070,18 +1048,19 @@ In these grammars, the terminals are as given in
 \texttt{UNSIGNED\_INTEGER}&an integer with no leading sign\raggedright\tabularnewline
 \texttt{WHITESPACE}&a non-empty string of space characters (no other whitespace)\raggedright\tabularnewline
 \end{tabular}
-\caption{\label{tab:terminals}The terminals used in the grammars}
+\caption{\label{tabx:terminals}The terminals used in the grammars}
 \end{table}
 
 \subsection{FITS}
 \label{sec:fitsgrammar}
 
 For the FITS units syntax, see section~4.3 of~\cite{pence10}, and its
-associated tables.  Our preferred FITS grammar is in \prettyref{tab:fitsgrammar} on p.\pageref{tab:fitsgrammar}.
+associated tables.  Our preferred FITS grammar is in
+\prettyref{tabx:fitsgrammar}.
 
 \begin{table}
 \verbatiminput{unity-grammars/unity-fits.txt}
-\caption{\label{tab:fitsgrammar}The FITS grammar}
+\caption{\label{tabx:fitsgrammar}The FITS grammar}
 \end{table}
 
 As noted above in \prettyref{sec:fitsquote}, 
@@ -1127,11 +1106,11 @@ must be \texttt{10}).
 \label{sec:ogipgrammar}
 
 For the OGIP units syntax, see \cite{george95}.  Our preferred OGIP
-grammar is in \prettyref{tab:ogipgrammar} on p.\pageref{tab:ogipgrammar}.
+grammar is in \prettyref{tabx:ogipgrammar}.
 
 \begin{table}
 \verbatiminput{unity-grammars/unity-ogip.txt}
-\caption{\label{tab:ogipgrammar}The OGIP grammar}
+\caption{\label{tabx:ogipgrammar}The OGIP grammar}
 \end{table}
 
 Specification ambiguities:
@@ -1155,12 +1134,12 @@ must be \texttt{10}), and positive.
 \subsection{The CDS grammar}
 \label{sec:cdsgrammar}
 
-For the CDS units syntax, see \cite{cds00}.  Our preferred CDS
-grammar is in \prettyref{tab:cdsgrammar} on p.\pageref{tab:cdsgrammar}.
+For the CDS units syntax, see \cite[\S3.2]{cds00}.  Our preferred CDS
+grammar is in \prettyref{tabx:cdsgrammar}.
 
 \begin{table}
 \verbatiminput{unity-grammars/unity-cds.txt}
-\caption{\label{tab:cdsgrammar}The CDS grammar}
+\caption{\label{tabx:cdsgrammar}The CDS grammar}
 \end{table}
 
 The \texttt{CDSFLOAT} terminal is a string matching the regular
@@ -1177,7 +1156,8 @@ expression
 \label{sec:vougrammar}
 
 The VOUnits grammar is defined by this section, and the grammar in
-\prettyref{tab:vougrammar} on p.\pageref{tab:vougrammar}.  This grammar is a strict subset of the
+\prettyref{tabx:vougrammar}.
+This grammar is a strict subset of the
 FITS and CDS grammars (in the sense that any VOUnit unit string is a
 valid FITS and CDS string, too), and it is almost a subset of the OGIP
 grammar, except that it uses the dot for multiplication rather than
@@ -1185,7 +1165,7 @@ star.
 
 \begin{table}
 \verbatiminput{unity-grammars/unity-vou.txt}
-\caption{\label{tab:vougrammar}The VOUnits grammar}
+\caption{\label{tabx:vougrammar}The VOUnits grammar}
 \end{table}
 As with the other grammars, the `factor'
 \emph{must} be a power of~10, and positive.
@@ -1193,6 +1173,8 @@ As with the other grammars, the `factor'
 \clearpage
 \section{Updates of this document}
 \begin{itemize}
+\item 1.0-20120718 to 1.0-20120801
+Minor typographical fixes
 \item 1.0-20120718 to 1.0-20120801
   \begin{itemize}
     \item Included yacc-style grammars in document.
