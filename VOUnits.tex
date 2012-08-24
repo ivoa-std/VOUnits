@@ -446,7 +446,7 @@ base symbol.
 This is just a way to simplify the parsing, by simultaneously allowing scale factors for \unit{g} and
 disallowing additional scale factors for \unit{kg}.
 
-No use of \unit{Ohm} was found in astronomy archives, therefore the possible non-compliance of the OGIP
+No use of the ohm was found in astronomy archives, therefore the possible non-compliance of the OGIP
 syntax was not considered critical.
 \begin{table}
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
@@ -523,8 +523,8 @@ a few additional quantities.
     parsec & \multicolumn{4}{c|}{\unit{pc}} & \unit{pc}\\\hline
     atomic mass & \unit{u} &  &  & \unit{u} & \unit{u}\\\hline
     electron Volt & \multicolumn{4}{c|}{\unit{eV}} & \unit{eV}\\\hline
-    Jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
-    Celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}\raggedright&  &  &  & not used\\\hline
+    jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
+    celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}\raggedright&  &  &  & not used\\\hline
     century & ha, cy should not be used &  &  &  & no dedicated symbol, use \unit{ha} or \unit{hyr}\\\hline
 \end{tabular}
   \caption{Comparison of astronomy-related units.}
@@ -534,12 +534,12 @@ a few additional quantities.
 
 Minutes, hours, and days of time must be represented in VOUnits by the symbols \unit{min}, \unit{h} and \unit{d}.
 The year can be expressed by \unit{a} (recommended by IAU) or \unit{yr} (common practice), but peta-year must only
-be written \unit{Pyr} because \unit{Pa} is the base symbol for Pascal.
+be written \unit{Pyr} because \unit{Pa} is the base symbol for pascal.
 
 The astronomical unit must be expressed in upper-case, \unit{AU}, following the legacy practice, and in order to
 avoid the (unlikely) confusion with atto-atomic mass.
 
-There are no VOUnit symbols for Celsius degrees or century. Temperatures are expressed in Kelvin (\unit{K}),
+There are no VOUnit symbols for celsius degrees or century. Temperatures are expressed in kelvin (\unit{K}),
 and a century corresponds to \unit{ha} or \unit{hyr}. Note
   that the unit \unit{ha} is \emph{not} hectare, which is the SI
   stipulation~\citep{si-brochure}.\footnote{If large telescope arrays 
@@ -582,7 +582,7 @@ recommends to no longer use these units.
 %\end{longtable}
 
 In order to be compatible with legacy metadata, VOUnit parsers should be able to interpret
-symbols for \AA{}ngstr\"om, barn, erg and Gauss, as written in the sixth column of \prettyref{tab:comparUnitDeprecated}.
+symbols for \aa{}ngstr\"om, barn, erg and gauss, as written in the sixth column of \prettyref{tab:comparUnitDeprecated}.
 However, data producers are strongly advised to prefer the equivalent notation using symbols and prefixes listed in 
 Tables~\ref{tab:comparUnitBase}, \ref{tab:comparUnitScale} and \ref{tab:comparUnitAstro}. 
 
