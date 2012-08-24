@@ -112,7 +112,7 @@ Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
 \urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120820/}}}
-\urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/latest/VOUnits.html}}}
+\urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits.html}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
 \previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120718.pdf}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120801/}}}
@@ -1126,6 +1126,12 @@ Specification ambiguities:
   of its examples include this.  The same interpretive logic would
   appear to permit \texttt{m**3/2}, but this seems to run too great a
   risk of being misparsed, and we forbid it here.
+\item In the same place, the text suggests that \texttt{str1**y} may
+  omit the brackets `if~\texttt y is positive', but the context
+  suggests that the intention is to permit this if~\texttt y is
+  unsigned.  In the grammar here, we permit the omission of the
+  brackets only if~\texttt y is unsigned -- that is, \texttt{m**+2},
+  like \texttt{m**-2}, is forbidden.
 \end{itemize}
 Missing from the grammar is the constraint that the `factor'
 \emph{must} be a power of~10 (that is, the \texttt{UNSIGNED\_INTEGER}
