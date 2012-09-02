@@ -27,6 +27,8 @@
 \usepackage{varioref}
 \newrefformat{tabx}{Table~\vref{#1}}
 
+\usepackage{supertabular,multicol}
+
 % Physical units in \rm.  Unstarred version includes leading
 % \thinspace.  Starred version doesn't, and is used when referring to
 % the unit by itself (eg axis is $B/\units*T$), and is not qualifying
@@ -45,6 +47,7 @@
 \def\verbatim@font{\fontsize{9}{11}\selectfont\ttfamily}
 % \DeclareRobustCommand{\^}{%
 %    \ifmmode\nfss@text{\textasciicircum}\else\textasciicircum\fi}
+
 \makeatother
 
 % abbreviation for 'e.g.', which (a) gets spacing right after the full
@@ -106,8 +109,14 @@
 \version{1.0}
 % Give author list: separate different authors with \\
 % You can add email addresses with links \url{mailto:yourname@ivoa.net}
-\author{S\'{e}bastien Derri\`ere, Norman Gray, Mireille Louys, \\
-Jonathan McDowell, Fran\c{c}ois Ochsenbein, Pedro Osuna, Bruno Rino, \\
+\author{S\'{e}bastien Derri\`ere,
+Norman Gray,
+Mireille Louys, \\
+Jonathan McDowell,
+Fran\c{c}ois Ochsenbein,
+Pedro Osuna,
+Anita Richards,\\
+Bruno Rino,
 Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
@@ -146,8 +155,15 @@ Jesus Salgado}
 %%%%%%%%%%%%%%%%%
 
 \begin{document}
-
 \maketitle % print header in standard form
+\thispagestyle{empty}
+\begingroup
+\input{versions}
+\vfill
+\hbox to \textwidth{\hfil\tiny Volute: \SVNRevision, \SVNDate}
+%\hbox to \textwidth{\hfil\tiny \SVNHeadURL}
+%\hbox to \textwidth{\hfil\tiny Volute: \SVNHeader}
+\endgroup
 \newpage
 \tableofcontents 
 \newpage
@@ -247,7 +263,7 @@ document, the following concepts are used:
 \item a {\bf quantity} is the combination of a (numerical) {\em value}, measured for a {\em concept} and expressed in a given {\em unit}. 
 In the VO context, the nature of the concept can be expressed with a UCD or a utype. This document does not address the full issue of
 representing quantities, but focusses on the {\em unit} part.
-\item a {\bf unit} can be expressed in various forms: in natural language (\eg \emph{meters per second squared}), with a combination
+\item a {\bf unit} can be expressed in various forms: in natural language (\eg \emph{metres per second squared}), with a combination
 of symbols with typographic conventions (\eg \unit{m s$^{-2}$}), or by a simplified text label (\eg \unit{m.s-2}). VOUnit deals with the
 label form, which is easier to standardize, parse and exchange. A VOUnit corresponds in the most general case to a combination of
 several (possibly prefixed) symbols with mathematical operations expressed in a controlled syntax.
@@ -322,6 +338,15 @@ magnitudes into fluxes.
 % (\violet{\footnotesize{\url{http://www.starlink.ac.uk/\~dsb/ast/ast.html}}})\\,
 %or \textbf{SLALIB} for Java, already exist for the latter.
 %\violet{\footnotesize{\url{http.www.starlink.rl.ac.uk/star/docs/sun67.htx/sun67.html}}}\\
+
+This specification describes only isolated units, and not arrays,
+records or other combinations of units.  Thus, it does not cover
+declaring an RA-Dec pair, for example. Several VO protocols require
+embedding complex objects into result table and give string
+serializations for those: geometries in TAP results are the most
+common example.  This specification does not cover this situation,
+although we hope that where individual unit strings are covered in
+such instances, their syntax will conform to this specification.
 
 \section{Current use of units}
 \label{sec:current}
@@ -473,8 +498,10 @@ syntax was not considered critical.
 \subsection{Scale factors\label{sec:scaleFactors}}
 
 Following the usage in \prettyref{tab:comparUnitScale}, there are 20 scale factors that can be used as
-prefixes to any base symbol (except that~P is not allowed as a scale factor for \unit{a}). One must not use compound prefixes. Prefixes are concatenated to the base
-symbol without space, and can not be used without a base symbol.
+prefixes to any base symbol (except that~P is not allowed as a scale
+factor for \unit{a}). One must not use compound prefixes (that is,
+more than one SI prefix). Prefixes are concatenated to the base
+symbol without space, and cannot be used without a base symbol.
 \begin{table}
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
@@ -496,6 +523,11 @@ symbol without space, and can not be used without a base symbol.
 
 Remark: the letter \unit{u} is used instead of the \micro\ symbol to represent a factor of $10^{-6}$, 
 following the character set defined in \prettyref{sec:encoding}.
+
+The SI prefixes of \prettyref{tab:comparUnitScale} always refer to
+multiples of 1000, even when applied to binary units such as bit or
+byte.  This Recommendation does not discuss the binary prefixes (kibi,
+Mibi, and so on) of \cite[\S4]{std:iec80000-13}.
 
 \subsection{Astronomy symbols}
 
@@ -532,20 +564,34 @@ a few additional quantities.
 %\end{longtable}
 \end{table}
 
-Minutes, hours, and days of time must be represented in VOUnits by the symbols \unit{min}, \unit{h} and \unit{d}.
-The year can be expressed by \unit{a} (recommended by IAU) or \unit{yr} (common practice), but peta-year must only
-be written \unit{Pyr} because \unit{Pa} is the base symbol for pascal.
+Minutes, hours, and days of time must be represented in VOUnits by the
+symbols \unit{min}, \unit{h} and \unit{d}; however the \unit{cd} is
+the candela, not the centi-day.  The year can be expressed by \unit{a}
+(recommended by IAU) or \unit{yr} (common practice), but peta-year
+must only be written \unit{Pyr}, to avoid the collision with the
+pascal, \unit{Pa}.
 
-The astronomical unit must be expressed in upper-case, \unit{AU}, following the legacy practice, and in order to
-avoid the (unlikely) confusion with atto-atomic mass.
+The astronomical unit must be expressed in upper-case, \unit{AU},
+following the legacy practice, and in order to avoid the (unlikely)
+confusion with atto-atomic mass, and for the sake of consistency.
 
 There are no VOUnit symbols for celsius degrees or century. Temperatures are expressed in kelvin (\unit{K}),
 and a century corresponds to \unit{ha} or \unit{hyr}. Note
   that the unit \unit{ha} is \emph{not} hectare, which is the SI
   stipulation~\citep{si-brochure}.\footnote{If large telescope arrays 
-    wish to talk of Janskys per hectare, for some reason, they're going
+    wish to talk of Watts per Hertz per hectare, for some reason, they're going
     to have to find some other way of doing so.}
 
+\begin{table}
+\begin{tabular}{lll}
+\textbf{unit}&\textbf{interpretation}&\textbf{not}\\
+Pa&pascal&peta-year\\
+ha&hecto-year&hectare\\
+cd&candela&centi-day\\
+au&atto-atomic-mass&astronomical unit\\
+\end{tabular}
+\caption{\label{tab:ambiguous}Ambiguous units}
+\end{table}
 
 \subsection{Other symbols}
 
@@ -642,6 +688,32 @@ The recommended way to indicate that there is no unit (for example a quantity th
 is a character string, or unitless) is to use an empty string rather than blanks
 or dashes.
 
+In the table below, we indicate the `known units' for each of the
+described syntaxes.  In the table, a `$\cdot$' indicates that the unit
+is recognised in that syntax, an `s' that it it additionally permitted
+to have SI prefixes, and a `d' that it is recognised but deprecated.
+There are a few units (namely `pix/pixel', `ph/photon' and `a/yr') for
+which there are recognised alternatives in some syntaxes, and in these
+cases `p' marks the preferred one.
+
+\begin{multicols}{2}
+\let\mcnewpage\newpage
+\makeatletter
+\renewcommand\newpage{%
+        \if@firstcolumn
+                \hrule width\linewidth height0pt
+                \columnbreak
+        \else
+                \mcnewpage
+        \fi
+}
+\makeatother
+\catcode`\%=11
+\tablehead{\emph{unit}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}\\}
+\begin{supertabular}{rcccc}
+\input{known-units.tex}
+\end{supertabular}
+\end{multicols}
 
 \subsection{Combination of symbols and mathematical expressions}
 
@@ -994,11 +1066,18 @@ could intervene to ensure consistent use of units.
 \section*{Acknowledgements}
 
 We thank all those participants in IVOA and EuroVO workshops who have
-contributed by exposing use cases and providing comments, especially Paddy Leahy, Jeff
-Lusted, Arnold Rots, Mark Taylor, Brian Thomas and recent contributors
-on the DM forum.
-This document is just an update of the previous draft discussed in Strasbourg Interop meeting in 2009.
-It will be completed with appropriate grammar and tools to check different levels of consistency for a unit string used in the VO context.
+contributed by exposing use cases and providing comments, especially
+Markus Demleitner,
+Paddy Leahy,
+Jeff Lusted,
+Arnold Rots,
+Mark Taylor,
+Brian Thomas
+and recent contributors on the DM forum.
+This document is just an update of the previous draft discussed in
+Strasbourg Interop meeting in 2009. It will be completed with
+appropriate grammar and tools to check different levels of consistency
+for a unit string used in the VO context.
 
 
 \appendix
