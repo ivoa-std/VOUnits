@@ -98,7 +98,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{2012 August 20}
+\date{2013-02-25}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -120,10 +120,11 @@ Bruno Rino,
 Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120820/}}}
-\urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits.html}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
+\urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120718.pdf}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120820.pdf}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120718.pdf}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120801/}}}
 
 
@@ -158,9 +159,9 @@ Jesus Salgado}
 \maketitle % print header in standard form
 \thispagestyle{empty}
 \begingroup
-\input{versions}
+%%\input{versions}
 \vfill
-\hbox to \textwidth{\hfil\tiny Volute: \SVNRevision, \SVNDate}
+%%\hbox to \textwidth{\hfil\tiny Volute: \SVNRevision, \SVNDate}
 %\hbox to \textwidth{\hfil\tiny \SVNHeadURL}
 %\hbox to \textwidth{\hfil\tiny Volute: \SVNHeader}
 \endgroup
@@ -202,6 +203,23 @@ Semantics IVOA mailing list {\tt semantics\@@ivoa.net}.
 A list of current IVOA recommendations and other technical documents can be found at
 \url{http://www.ivoa.net/Documents/}.
 
+\section*{Acknowledgements}
+
+We thank all those participants in IVOA and EuroVO workshops who have
+contributed by exposing use cases and providing comments, especially
+Markus Demleitner,
+Paddy Leahy,
+Jeff Lusted,
+Arnold Rots,
+Mark Taylor,
+Brian Thomas
+and recent contributors on the DM forum.
+%This document is just an update of the previous draft discussed in
+%Strasbourg Interop meeting in 2009. It will be completed with
+%appropriate grammar and tools to check different levels of consistency
+%for a unit string used in the VO context.
+
+
 \section{Introduction}
 
 This document describes the standardised use of Units in the VO
@@ -234,7 +252,7 @@ implied by convention and/or (preferably) specified in metadata.
 
 
 Units also appear in the VOTable format \citep{ochsenbein11}, through the use
-of a {\tt unit} parameter that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
+of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
 elements. Because of the widespread dependency of many other VO standards on VOTable,
 these standards inherit a dependency on Units.
 
@@ -264,7 +282,7 @@ document, the following concepts are used:
 In the VO context, the nature of the concept can be expressed with a UCD or a utype. This document does not address the full issue of
 representing quantities, but focusses on the {\em unit} part.
 \item a {\bf unit} can be expressed in various forms: in natural language (\eg \emph{metres per second squared}), with a combination
-of symbols with typographic conventions (\eg \unit{m s$^{-2}$}), or by a simplified text label (\eg \unit{m.s-2}). VOUnit deals with the
+of symbols with typographic conventions (\eg m s$^{-2}$), or by a simplified text label (\eg \unit{m.s-2}). VOUnit deals with the
 label form, which is easier to standardize, parse and exchange. A VOUnit corresponds in the most general case to a combination of
 several (possibly prefixed) symbols with mathematical operations expressed in a controlled syntax.
 \item a {\bf base unit} is represented by a {\bf base symbol}, with unambiguous meaning.
@@ -322,7 +340,7 @@ unique way (\eg all distances in \unit{m}).  So long as data are labelled
 in a recognised system, a
 translation layer can be provided. Data providers can customise the
 translation tools if required. Depending on preference and the
-operations required, the user may have a choice of units for their
+operations required, the user may have a choice of units for his or her
 query and for the result.
 
 VOUnits do not specify how transformation of quantities is done. But VOUnits describe the
@@ -370,7 +388,7 @@ The IAU style will be summarized in the second column of the comparison tables.
 \subsection{OGIP 1993}
 
 NASA has defined a list of character strings specifying the basic physical units 
-used within OGIP FITS files \citep{george95}. Rules and guidelines on the construction 
+used within OGIP (Office of Guest Investigator Programs) FITS files \citep{george95}. Rules and guidelines on the construction 
 of compound units are also outlined. 
 
 HEASARC datasets follow these conventions, presented in the third column
@@ -421,7 +439,8 @@ use as the toolkit behind the {\sc casa} package.)
 
 \section{Proposal for VOUnits\label{sec:proposal}}
 
-By systematically comparing four reference schemes, the rules for VOUnits are defined in this section.
+By systematically comparing the four reference schemes described above (details are given in Appendix~\ref{sec:comparisons}), 
+the rules for VOUnits are defined in this section.
 Various aspects are addressed:
 \begin{itemize}
 \item how the labels are encoded;
@@ -434,27 +453,13 @@ A formal grammar summarizing these conventions is given in \prettyref{sec:vougra
 
 \subsection{String representation and encoding\label{sec:encoding}}
 
-%    \setlength\LTcapwidth{22cm}
-\begin{table}
-%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-  \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|}
-\hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
-    Units are strings of chars &  & YES &  & YES & YES\\\hline
-    Case sensitive & YES & YES & YES & YES & YES\\\hline
-    Character set &  &  & No spaces & ASCII text & ASCII printable\\\hline
-\end{tabular}
-  \caption{Comparison of string representation and encoding.}
-  \label{tab:comparUnitEncoding}
-%\end{longtable}
-\end{table}
 
 VOUnits must be unit labels suitable for IVOA use (or other electronic manipulation),
 and therefore need to be expressed unambiguously in encodings recognised by XML parsers,
 Java compilers, etc.  
 
 Following the current usage in unit labels (see \prettyref{tab:comparUnitEncoding}), \emph{VOUnits must be 
-case-sensitive strings of chars consisting of printable ASCII characters} (20 to 7E in hexadecimal).
+case-sensitive strings of chars consisting of printable ASCII characters} (values coded 20 to 7E in hexadecimal).
 
 It is therefore not allowed to use special characters such as \AA\ or \micro\ in VOUnits.
 
@@ -462,6 +467,22 @@ It is therefore not allowed to use special characters such as \AA\ or \micro\ in
 
 There is a good agreement for the base symbols across the different schemes (see \prettyref{tab:comparUnitBase}).
 VOUnits follow the same notations.
+
+\smallskip
+
+The VOUnits base symbols are the following : 
+\medskip
+
+\begin{tabular}{|l|l|l|l|}\hline
+\unit{m} (metre)		&\unit{g} (gram) 	&\unit{J} (joule)     	&\unit{Wb} (weber)\\
+\unit{s} (second of time)	&\unit{rad} (radian)    &\unit{W} (watt) 	&\unit{T} (tesla)\\
+\unit{A} (ampere)		&\unit{sr} (steradian)  &\unit{C} (coulomb)	&\unit{H} (henry)\\
+\unit{K} (kelvin)		&\unit{Hz} (hertz)      &\unit{V} (volt) 	&\unit{lm} (lumen)\\
+\unit{mol} (mole)		&\unit{N} (newton)      &\unit{S} (siemens)	&\unit{lx} (lux)\\
+\unit{cd} (candela)		&\unit{Pa} (pascal)     &\unit{F} (farad)	&\unit{Ohm} (ohm)\\\hline
+\end{tabular}
+
+\medskip
 
 For masses, the SI unit is \unit{kg}. However, existing specifications recommend not to use scale factors with
 \unit{kg}, but with \unit{g} if needed, which makes the parsing potentially difficult. In VOUnits, only the 
@@ -471,55 +492,34 @@ base symbol.
 This is just a way to simplify the parsing, by simultaneously allowing scale factors for \unit{g} and
 disallowing additional scale factors for \unit{kg}.
 
-No use of the ohm was found in astronomy archives, therefore the possible non-compliance of the OGIP
+No use of the Ohm was found in astronomy archives, therefore the possible non-compliance of the OGIP
 syntax was not considered critical.
-\begin{table}
-\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-\hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
-    %\multicolumn{6}{|c|}{Base units} \\\hline
-    The 6+1 base SI units\raggedright & \multicolumn{4}{c|}{\unit{m, s, A, K, mol, cd}} & idem \\
-     & unit is \unit{kg}, but use \unit{g} with prefixes\raggedright & \unit{kg} & \unit{g} & \unit{kg}, note that \unit{g} is allowed & \unit{g}\\
-     %& \multicolumn{4}{c|}{} &  \\
-     \hline
-    Dimensionless planar and solid angle\raggedright & \multicolumn{4}{c|}{\unit{rad, sr}} & idem \\
-    & Use \unit{s}, not sec, for seconds\raggedright &  &  & \unit{deg} preferred for decimal angles & \\\hline
-    Derived units with symbols\raggedright & \multicolumn{4}{c|}{\unit{Hz, N, Pa,
-      J, W, C, V, S, F, Wb, T, H, lm, lx}} & idem \\
-     & \unit{$\Omega$} & \unit{ohm} & \unit{Ohm} & \unit{Ohm} & \unit{Ohm}\\\hline
-%     &  &  &  &  & \\\hline
-\end{tabular}
-  \caption{Comparison of base units.}
-  \label{tab:comparUnitBase}
-%\end{longtable}
-\end{table}
+
 
 \subsection{Scale factors\label{sec:scaleFactors}}
 
 Following the usage in \prettyref{tab:comparUnitScale}, there are 20 scale factors that can be used as
 prefixes to any base symbol (except that~P is not allowed as a scale
-factor for \unit{a}). One must not use compound prefixes (that is,
+factor for \unit{a}). 
+
+These scale factors are written for VOUnits as in Table 5 of the FITS 2010 paper : 
+
+\medskip
+
+\begin{tabular}{|l|l|l|l|}\hline
+\unit{d} (deci -- $10^{-1}$)	&\unit{p} (pico -- $10^{-12}$) 	&\unit{da} (deca -- $10^{1}$)   	&\unit{T} (tera -- $10^{12}$)\\
+\unit{c} (centi -- $10^{-2}$)	&\unit{f} (femto -- $10^{-15}$) &\unit{h} (hecto -- $10^{2}$) 	&\unit{P} (peta -- $10^{15}$)\\
+\unit{m} (milli -- $10^{-3}$)	&\unit{a} (atto -- $10^{-18}$)  &\unit{k} (kilo -- $10^{3}$)	&\unit{E} (exa -- $10^{18}$)\\
+\unit{u} (micro -- $10^{-6}$)	&\unit{z} (zepto -- $10^{-21}$) &\unit{M} (mega -- $10^{6}$) 	&\unit{Z} (zetta -- $10^{21}$)\\
+\unit{n} (nano -- $10^{-9}$)	&\unit{y} (yocto -- $10^{-24}$) &\unit{G} (giga -- $10^{9}$)	&\unit{Y} (yotta -- $10^{24}$)\\\hline
+\end{tabular}
+
+\medskip
+
+
+One must not use compound prefixes (that is,
 more than one SI prefix). Prefixes are concatenated to the base
 symbol without space, and cannot be used without a base symbol.
-\begin{table}
-\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-\hline
-    & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOUnits\\\hline
-    Scale factors,   & \multicolumn{4}{c|}{\unit{d, c, m, n, p, f, a}} & idem \\
-    (multiple) & \multicolumn{4}{c|}{\unit{da, h, k, M, G, T, P, E}}  & \\
-    prefixes & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
-     &  & \multicolumn{3}{c|}{\unit{z, y, Z, Y}} & \unit{z, y, Z, Y}\\\hline
-    % & Tab. 5 & Tab. 3 & 3.2.3 & Tab. 5 & \\\hline
-    Prefix--symbol concatenation & no space, regarded as single symbol\raggedright & no space, regarded as a single unit string\raggedright & no space & no space (implicit)\raggedright & no space\\\hline
-    Prefix-able symbols  & Not \unit{kg}: use \unit{g}\raggedright & All units above, and \unit{eV, pc, Jy, Crab} Only \unit{mCrab} allowed\raggedright & all & all & all (except \unit{P} for \unit{a})\\\hline
-    Use compound prefixes & should not & should never & must not & must not & must not\\\hline
-\end{tabular}
-  \caption{Comparison of scale factors.}
-  \label{tab:comparUnitScale}
-%\end{longtable}
-\end{table}
 
 Remark: the letter \unit{u} is used instead of the \micro\ symbol to represent a factor of $10^{-6}$, 
 following the character set defined in \prettyref{sec:encoding}.
@@ -534,35 +534,20 @@ Mibi, and so on) of \cite[\S4]{std:iec80000-13}.
 The \prettyref{tab:comparUnitAstro} lists symbols used in astronomy to describe times, angles, distances and
 a few additional quantities. 
 
-\begin{table}
-\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
-\hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
-    %\multicolumn{6}{|c|}{Astronomy-related units} \\\hline
-    minute & \unit{min, $^\mathrm{m}$} & \unit{min} & \unit{min} & \unit{min} & \unit{min}\\\hline
-    hour & \unit{h, $^\mathrm{h}$} & \unit{h} & \unit{h} & \unit{h} & \unit{h}\\\hline
-    day & \unit{d, $^\mathrm{d}$} & \unit{d} & \unit{d} & \unit{d} & \unit{d}\\\hline
-    year & \unit{a} & \unit{yr} & \unit{a, yr} & \unit{a, yr} Pa (peta a) forbidden& like FITS\\\hline
-    arcsecond & \unit{''} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec}\\\hline
-    arcminute & \unit{'} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin}\\\hline
-    degree (angle) & \unit{$^\circ$} & \unit{deg} & \unit{deg} & \unit{deg} & \unit{deg}\\\hline
-    milliarcsecond & \unit{mas} (use \unit{nrad}!)\raggedright &  & \unit{mas} & \unit{mas} & \unit{mas}\\\hline
-    microarcsec &  &  & \unit{uarcsec} &  & no dedicated symbol, use
-    \unit{uarcsec}\\\hline
-    cycle & \unit{c, $^\mathrm{c}$} &  &  &  & not used\\\hline
-    astronomical unit & \unit{au} & \unit{AU} & \unit{AU} & \unit{AU} & \unit{AU}\\\hline
-    parsec & \multicolumn{4}{c|}{\unit{pc}} & \unit{pc}\\\hline
-    atomic mass & \unit{u} &  &  & \unit{u} & \unit{u}\\\hline
-    electron Volt & \multicolumn{4}{c|}{\unit{eV}} & \unit{eV}\\\hline
-    jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
-    celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}\raggedright&  &  &  & not used\\\hline
-    century & ha, cy should not be used &  &  &  & no dedicated symbol, use \unit{ha} or \unit{hyr}\\\hline
+The VOUnits adopted symbols are the following :
+
+\medskip
+
+\begin{tabular}{|l|l|l|}\hline
+\unit{min} (minute of time)	&\unit{deg} (degree of angle) 	&\unit{AU} (astronomical unit)     	\\
+\unit{h} (hour of time)		&\unit{arcmin} (arcminute)    	&\unit{pc} (parsec) 	\\
+\unit{d} (day)			&\unit{arcsec} (arcsecond)  	&\unit{eV} (electron volt)	\\
+\unit{a} or \unit{yr} (year)	&\unit{mas} (milliarcsecond)    &\unit{Jy} (jansky) 	\\
+\unit{u} (atomic mass)		&      				&	\\\hline
 \end{tabular}
-  \caption{Comparison of astronomy-related units.}
-  \label{tab:comparUnitAstro}
-%\end{longtable}
-\end{table}
+
+\medskip
+
 
 Minutes, hours, and days of time must be represented in VOUnits by the
 symbols \unit{min}, \unit{h} and \unit{d}; however the \unit{cd} is
@@ -582,22 +567,476 @@ and a century corresponds to \unit{ha} or \unit{hyr}. Note
     wish to talk of Watts per Hertz per hectare, for some reason, they're going
     to have to find some other way of doing so.}
 
-\begin{table}
+A few symbols which might be ambiguous are listed in \prettyref{tab:ambiguous}, with their correct 
+VOUnit interpretation and what they do not mean.
+
+
+\begin{table}[bht]
 \begin{tabular}{lll}
-\textbf{unit}&\textbf{interpretation}&\textbf{not}\\
-Pa&pascal&peta-year\\
-ha&hecto-year&hectare\\
-cd&candela&centi-day\\
-au&atto-atomic-mass&astronomical unit\\
+\textbf{VOUnit}&\textbf{Correct interpretation}&\textbf{Incorrect}\\
+\unit{Pa}&pascal&peta-year\\
+\unit{ha}&hecto-year&hectare\\
+\unit{cd}&candela&centi-day\\
+\unit{au}&atto-atomic-mass&astronomical unit\\
 \end{tabular}
-\caption{\label{tab:ambiguous}Ambiguous units}
+\caption{\label{tab:ambiguous}Possibly ambiguous units}
 \end{table}
 
 \subsection{Other symbols}
 
 \prettyref{tab:comparUnitDeprecated} corresponds to Table~7 in the IAU document, and the IAU strongly
 recommends to no longer use these units. 
+Data producers are strongly advised to prefer the equivalent notation using symbols and prefixes listed in 
+Tables~\ref{tab:comparUnitBase}, \ref{tab:comparUnitScale} and \ref{tab:comparUnitAstro}. 
 
+However, in order to be compatible with legacy metadata, VOUnit parsers should be able to interpret
+symbols for \aa{}ngstr\"om, barn, erg and gauss, as written below :
+%in the sixth column of \prettyref{tab:comparUnitDeprecated}.
+
+\medskip
+
+\begin{tabular}{|l|l|}\hline
+\unit{angstrom} or \unit{Angstrom} 	&\unit{erg}    	\\
+\unit{barn}		&\unit{G} (Gauss)    		\\\hline
+\end{tabular}
+
+\medskip
+
+\prettyref{tab:comparUnitOther} compares other various symbols. 
+
+The last set of VOUnits symbols, derived from this comparison, is the following :
+
+\medskip
+
+\begin{tabular}{|l|l|p{3cm}|l|}\hline
+\unit{mag} (magnitude)		&\unit{pix}  or \unit{pixel} 	&\unit{solMass} (solar mass)     &\unit{R} (rayleigh) \\
+\unit{Ry} (rydberg)		&\unit{voxel}    		&\unit{solLum} (solar luminosity)&\unit{chan} (channel) 	\\
+\unit{lyr} (light year)		&\unit{bit}   			&\unit{solRad} (solar radius)	&\unit{bin} \\
+\unit{ct} or \unit{count}	&\unit{byte} (8 bits)   	&\unit{Sun} (relative to the Sun, e.g. abundances)&\unit{beam} 	\\
+\unit{ph} or \unit{photon} 	&\unit{adu}     		&\unit{D} (Debye)	&\unit{?} (unknown)\\\hline
+\end{tabular}
+
+\medskip
+
+It can be noted that some of the units listed in \prettyref{tab:comparUnitOther} are 
+questionable. They arise in fact from a need to describe quantities, when the only
+piece of metadata available is the unit label. Count, photon, pixel, bin, voxel, bit,
+byte are concepts, just as apple or banana. The associated quantities could be fully
+described with a UCD, a value and a void unit label.
+
+It is possible to count a number of bananas, or to express a distance measured in
+bananas, but this does not make a banana a reference unit.
+
+The FITS document provides the most general description of all the compared schemes, 
+and VOUnits adopts similar definitions, in order to acknowledge at best legacy metadata.
+The VOUnits symbol for magnitudes is \unit{mag}.
+The symbol \unit{Sun} is used to express ratios relative to solar values, for example
+abundances or metallicities.
+Note that all symbols like \unit{count}, \unit{photon}, \unit{pixel} are always used
+in lower case and singular form.
+
+The recommended way to indicate that there is no unit (for example a quantity that
+is a character string, or unitless) is to use an empty string rather than blanks
+or dashes.
+
+The question mark (\unit{?}) is reserved for cases when the unit is unknown.
+
+
+\subsection{Combination of symbols and mathematical expressions}
+
+\prettyref{tab:comparUnitCombine} summarizes how mathematical operations can be applied on
+unit symbols for exponentiation, multiplication, division, and other computations.
+
+
+
+The combination rules is the point where the largest discrepancies between the
+different schemes appear. The FITS document summarises the problem of
+trying to best accomodate the existing schemes:
+\label{sec:fitsquote}
+\begin{quote}
+Two or more base units strings (called str1 and str2 (...)) may be combined using
+the restricted set of (explicit or implicit) operators that provide
+for multiplication, division, exponentiation, raising arguments
+to powers, or taking the logarithm or square-root of an
+argument. Note that functions such as log actually require dimensionless
+arguments, so that $\log(\unit{Hz})$, for example, actually
+means $\log(x/1 \unit{Hz})$. The final units string is the compound
+string, or a compound of compounds, preceded by an
+optional numeric multiplier of the form \texttt{10**k}, \texttt{10\^{}k}, or \texttt{10$\pm$k}
+where~\texttt k is an integer, optionally surrounded by parentheses with
+the sign character required in the third form in the absence of 
+parentheses. Creators of FITS files are encouraged to use the
+numeric multiplier only when the available standard scale factors
+(\dots) will not suffice. Parentheses are used for symbol
+grouping and are strongly recommended whenever the order
+of operations might be subject to misinterpretation. A space
+character implies multiplication which can also be conveyed explicitly
+with an asterisk or a period. Therefore, although spaces
+are allowed as symbol separators, their use is discouraged. Note
+that, per IAU convention, case is significant throughout. The IAU
+style manual forbids the use of more than one slash (\unit{/}) character
+in a units string. However, since normal mathematical precedence
+rules apply in this context, more than one slash may be
+used but is discouraged.
+
+A unit raised to a power is indicated by the unit string followed,
+with no intervening spaces, by the optional symbols \texttt{**}
+or \texttt{\^{}} followed by the power given as a numeric expression (\dots). 
+The power may be a simple integer, with or
+without sign, optionally surrounded by parentheses. It may also
+be a decimal number (\eg 1.5, 0.5) or a ratio of two integers
+(\eg 7/9), with or without sign, which must be surrounded by
+parentheses. Thus meters squared may be indicated by m**(2),
+\texttt{m**+2}, \texttt{m+2}, \texttt{m2}, \texttt{m\^{}2}, \texttt{m\^{}(+2)}, etc. and per meter cubed may be
+indicated by \texttt{m**-3}, \texttt{m-3}, \texttt{m\^{}(-3)}, \texttt{/m3}, and so forth. Meters to
+the three-halves power may be indicated by \texttt{m(1.5)}, \texttt{m\^{}(1.5)},
+\texttt{m**(1.5)}, \texttt{m(3/2)}, \texttt{m**(3/2)}, and \texttt{m\^{}(3/2)}, but not by \texttt{m\^{}3/2}
+or \texttt{m1.5}.~\cite[\S4.3.1]{pence10}
+\end{quote}
+
+This and other ambiguities are discussed in the detailed syntaxes of \prettyref{sec:grammar}.
+
+VOUnits follow the same rules as FITS, as summarized in \prettyref{tab:VOUnitCombine}, and can in
+addition be preceded by an arbitrary optional numeric scaling factor (expressed as a floating number with the optional
+exponent being expressed as in FITS, with a multiplication symbol).
+% XXX Aren't these quantities, rather than units?? 
+Examples of valid VOUnits are \unit{2.54cm}, \unit{10+8m}, \unit{3.45 10**(-4)Jy}. 
+Scale factors from \prettyref{tab:comparUnitScale} should however be
+preferred and used whenever possible.
+%\emph{Note (NG): these appear to be `quantities' rather than `units',
+%  in the terminology of \prettyref{sec:notations} -- resolve
+%  during/after RFC period.}
+
+\begin{table}
+\begin{tabular}[bht]{|l|l|}
+\unit{str1 str2} & Multiplication (discouraged -- see text)\\
+\unit{str1*str2} & Multiplication \\
+\unit{str1.str2} & Multiplication \\
+\unit{str1/str2} & Division \\
+\unit{str1**expr} & Raised to the power expr \\
+\unit{str1\^{}expr} & Raised to the power expr \\
+\unit{str1expr} & Raised to the power expr \\
+\unit{log(str1)} & Common Logarithm (to base 10) \\
+\unit{ln(str1)} & Natural Logarithm \\
+\unit{exp(str1)} & Exponential (e$^\mathrm{str1}$) \\
+\unit{sqrt(str1)} & Square root \\
+\end{tabular}
+ \caption{Combination rules and mathematical expressions for VOUnits.}
+  \label{tab:VOUnitCombine}
+\end{table}
+
+
+
+
+%\subsection{Quantities}
+%\label{sec:quantities}
+%
+%A quantity, \eg a measurement of a physical value like the speed of
+%light, has a value (2.998 10+5), a ucd (phys.veloc), units (km.s-1)
+%and is coded using a numerical type (real).
+%
+%Some quantities are also reused as units. Many units are expressed, or
+%converted, in terms of physical constants such as the speed of light,
+%\begin{itemize}
+%	\item \texttt{$c=$~2.998 10+8~m.s-1;} 
+%	\item Boltzman's constant, \texttt{$K_{\mathrm{B}}=$1.38065~10-23}
+%	\item \texttt{1 AU $=$ 1.499 10+11 m.}
+%\end{itemize}
+%
+% Many of these are used as units in their own right, \eg  velocities may be expressed as a
+%fraction or multiple of c, but c is also used to convert between
+%wavelength and frequency, etc. These are combinations of units with
+%scaling factors applied, and so can be treated in the same way as any
+%other compound unit \eg  the \texttt{Jy} (\texttt{10-26 W.m-2.Hz-1}) .
+%
+%We need to ensure that we are consistent with the IVOA Quantity model,
+%where appropriate.
+
+\subsection{Remarks and good practices}
+
+VOUnits, as described in this document, provide a string serialization of
+unit labels compatible with the two principal
+means of representation expected in the VO:
+\begin{itemize}
+\item as an attribute string in a VOTable document: \verb|unit="..."|
+\item as a unit element in an XML serialization of some data model: \verb|<unit>...</unit>|
+\end{itemize}
+
+Avoiding the use of special characters (\AA, ', ", ...) reduces the
+complexity of using VOUnits in query languages or other programmation environments.
+
+Even if enclosing VOUnits with single or double quotes should be sufficient to
+facilitate parsing of a general query containing VOUnits, avoiding the use of
+white spaces for multiplication should
+make the parsing even easier, with the unit label being a single "word". Therefore
+the notation in the first line of \prettyref{tab:VOUnitCombine} is discouraged.
+
+
+Complex data formats are not addressed by VOUnits. While possibly convenient for
+humans, sexagesimal coordinates or calendar dates expressed in ISO 8601 are
+quantities represented in a complex format, encoded as strings, and as such the
+corresponding VOUnit should be an empty string. Expressions such as "d:m:s" or
+"ISO 8601" are not valid VOUnits. This should not be a problem, as existing VO 
+standards already recommend that coordinates be expressed in decimal degrees.
+
+One can also remark that some quantities like the Modified Julian Date (MJD) are 
+not recognized VOUnits. As described in \prettyref{sec:notations}, the quantity MJD can be 
+seen as a concept (described by the appropriate UCD or utype), and the corresponding
+value will most likely be expressed in days, so the VOUnit will be \unit{d}. There is 
+no need in overloading VOUnits to incorporate the description of concepts themselves.
+
+A summary of the various symbols is given in the last part of Appendix~\ref{sec:comparisons}.
+
+The notion of unit conversion and quantity manipulation is discussed in
+\prettyref{sec:conversion}.
+
+
+\section{Use cases and applications\label{sec:useCase}}
+
+\subsection{Unit parsing}
+
+The rules defined in \prettyref{sec:proposal} allow us to build VOUnit parsers.
+Several services can be built on top of a VOUnit parser:
+
+\begin{enumerate}
+\item Validation. A service checking that a VOUnit is well written. The output
+of such a service can have different levels: fully valid unit; valid syntax, but
+not the preferred one (\eg  use of deprecated symbols); parsing error. 
+\item Explanation. A service returning a plain-text explanation of the unit label.
+\item Typesetting. A service returning an equivalent of the unit label suitable for inclusion in
+a \LaTeX\ or HTML document.
+\item Dimensional equation. As described by \citet{osuna05}, VOUnits can be translated
+into a dimensional equation, allowing to build up conversions methods from one string 
+representation to another one (see also \prettyref{sec:conversion}). 
+\end{enumerate}
+
+\subsection{Libraries\label{sec:libraries}}
+
+There are a few existing libraries able to interpret unit labels.
+In all cases,
+some software effort is required if they are to be used in translating
+between data provider unit labels, and those to be adopted by
+the IVOA for internal use.
+
+One of the most widely-used specialised
+astronomical libraries is AST which includes a unit conversion
+facility attached to astronomical coordinate systems \citep{berry12}.
+
+Another library has been developed at
+CDS\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}},
+and can be tested online\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}}. This library covers all
+the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
+additional symbols and notations.
+
+Recently, Norman Gray started developing
+Unity\footnote{\url{https://bitbucket.org/nxg/unity}}, a new
+standalone library intended to parse VOUnits, OGIP, StdCats and FITS
+formats, and to be used as a vehicle for developing the grammars and
+ideas for this present document.  It provides yacc-style grammars for
+the various syntaxes, as well as implementing them in parsers written
+in Java and~C.  The formal grammar used for VOUnits is given in
+\prettyref{sec:vougrammar}.
+
+\subsection{Unit conversion and quantity transformation\label{sec:conversion}}
+
+Unit conversion is the simple task of converting a quantity expressed in a given unit into a different unit, while
+the concept remains the same. For example, converting a distance in \unit{pc} into a distance in \unit{AU} or \unit{km}.
+Or converting a flux from \unit{mJy} to \unit{W.m-2.Hz-1}. This is rather easy with existing libraries, using dimensional
+analysis or SI units as a reference.
+
+Quantity transformation consists in deriving a new quantity from one or several original
+quantities. It is more complex, because it requires to have a precise model 
+(a simple equation in simple cases) for computing the transformation. The model involves
+quantities, each described with a UCD or utype, value and VOUnit. Some of the quantities
+involved might be physical constants (\eg  Boltzmann's constant $k_{\mathrm{B}}$).
+
+Examples of such transformations can be:
+\begin{itemize}
+\item linear unit conversion: a distance is measured in \unit{pixel} in an image, and needs to be transformed in
+the corresponding angular separation in \unit{arcsec}. This can be done if the quantity representing the pixel
+scale is given, with its value and a compatible unit like \unit{deg/pixel}.
+\item converting a photon wavelength in the corresponding photon energy or frequency.
+\item deriving the flux for a given photon emission rate (in \texttt{W}) from Planck's
+constant (\texttt{6.63 $10^{-34}$ J.s}), the radiation frequency (in \texttt{GHz}), and the
+number of photons emitted per second.
+\item transforming a magnitude into a flux, as needed for SED building.
+\end{itemize}
+
+VOUnits can help in quantity transformation if all quantities are qualified with proper VOUnits.
+
+\subsection{Query languages}
+
+Including VOUnits in queries is not an easy task. Some guidelines were defined in the
+reflexion on ADQL.
+
+\begin{enumerate}
+\item All data providers should be encouraged to supply units for each column
+of a table. Columns should also have associated UCDs, so that quantities can be
+properly identified.
+
+%In most published tables in Astronomical journals and Vizier server as well, unitless values are
+%represented by "---". This could be adopted for the VO convention as well.
+\item The IVOA needs to provide a parser to relate the native units to the standard IVOA
+labels (in this context, the `native units' are the units of the
+underlying database table or metadata).   
+
+\item
+The default response to a query which does not specify units, will be
+in the native units of the table. 
+%\emph{We recommand that the output units will be labelled using the IVOA standard label ???}
+
+\item
+Where queries involve combining or otherwise operating on the content
+of columns to produce an output column with modified units, we can
+provide libraries and a parser to assist in assigning and checking a
+new unit, and attach this to the returned values via the SQL CAST
+operator. 
+This is implemented already in database related applications such as 
+Saada\footnote{\url{http://saada.unistra.fr/}}, for instance. 
+If any column used in responding to a query lacks a necessary unit, the output
+involving that column will be unitless.
+
+\item
+If the user wants to change the output units with respect to the table
+units, this could be done by specifying the units in the initial
+SELECT statement. There are several issues to consider: 
+	\begin{enumerate}
+	\item Does the user also need to include the conversion expression, or does the unit
+parser take care of that?  
+	\item Can the user use this to assign units (based on prior knowledge) to output from a 
+column lacking a unit?
+	\end{enumerate}
+\end{enumerate} 
+
+
+\subsection{Broader use in the VO}
+
+\begin{figure}[thb]
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=\textwidth]{./units2.jpg}
+  \caption{This shows the levels at which conversions might be done.
+\textcolor{blue}{Blue arrows}: At the point where an astronomer or
+  data provider submits input to the VO, we should provide tools to
+  ensure that units are labeled consistently according to VOUnits. 
+  This implies that a units parsing step is included prior to metadata ingestion into the VO.
+\brown{Brown arrows}: Conversions required to supply results to
+  the user in specified or reasonable units \eg  \texttt{J.s-1} to \texttt{W}, are done where and when they are required.}
+  \label{fig:units2}
+\end{figure}
+
+Different VO entities require and consume metadata with units attached like registries, 
+applications and interoperate via protocols. \prettyref{fig:units2} illustrates the places where the IVOA
+could intervene to ensure consistent use of units.
+
+
+\newpage
+
+\appendix
+
+\section{Comparison of existing schemes and VOUnits\label{sec:comparisons}}
+
+%\subsection{String representation and encoding}
+
+%    \setlength\LTcapwidth{22cm}
+\begin{table}[hb]
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+  \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|}
+\hline
+    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    Units are strings of chars &  & YES &  & YES & YES\\\hline
+    Case sensitive & YES & YES & YES & YES & YES\\\hline
+    Character set &  &  & No spaces & ASCII text & ASCII printable\\\hline
+\end{tabular}
+  \caption{Comparison of string representation and encoding.}
+  \label{tab:comparUnitEncoding}
+%\end{longtable}
+\end{table}
+
+%\subsection{Base units}
+
+\begin{table}[hb]
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\hline
+    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    %\multicolumn{6}{|c|}{Base units} \\\hline
+    The 6+1 base SI units\raggedright & \multicolumn{4}{c|}{\unit{m, s, A, K, mol, cd}} & idem \\
+    \cline{2-6}
+    (use \unit{s}, not sec, for seconds)\raggedright & unit is \unit{kg}, but use \unit{g} with prefixes\raggedright & \unit{kg} & \unit{g} & \unit{kg}, note that \unit{g} is allowed & \unit{g}\\
+     %& \multicolumn{4}{c|}{} &  \\
+     \hline
+    Dimensionless planar and solid angle\raggedright & \multicolumn{4}{c|}{\unit{rad, sr}} & idem \\
+    \cline{2-5}
+    &  &  &  & \unit{deg} preferred for decimal angles & \\\hline
+    Derived units with symbols\raggedright & \multicolumn{4}{c|}{\unit{Hz, N, Pa,
+      J, W, C, V, S, F, Wb, T, H, lm, lx}} & idem \\
+     & \unit{$\Omega$} & \unit{ohm} & \unit{Ohm} & \unit{Ohm} & \unit{Ohm}\\\hline
+%     &  &  &  &  & \\\hline
+\end{tabular}
+  \caption{Comparison of base units.}
+  \label{tab:comparUnitBase}
+%\end{longtable}
+\end{table}
+
+%\subsection{Scale factors}
+
+\begin{table}[ht]
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\hline
+    & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOUnits\\\hline
+    Scale factors,   & \multicolumn{4}{c|}{\unit{d, c, m, n, p, f, a}} & idem \\
+    (multiple) & \multicolumn{4}{c|}{\unit{da, h, k, M, G, T, P, E}}  & \\
+    prefixes & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
+     &  & \multicolumn{3}{c|}{\unit{z, y, Z, Y}} & \unit{z, y, Z, Y}\\\hline
+    % & Tab. 5 & Tab. 3 & 3.2.3 & Tab. 5 & \\\hline
+    Prefix--symbol concatenation & no space, regarded as single symbol\raggedright & no space, regarded as a single unit string\raggedright & no space & no space (implicit)\raggedright & no space\\\hline
+    Prefix-able symbols  & Not \unit{kg}: use \unit{g}\raggedright & All units above, and \unit{eV, pc, Jy, Crab} Only \unit{mCrab} allowed\raggedright & all & all & all (except \unit{P} for \unit{a})\\\hline
+    Use compound prefixes & should not & should never & must not & must not & must not\\\hline
+\end{tabular}
+  \caption{Comparison of scale factors.}
+  \label{tab:comparUnitScale}
+%\end{longtable}
+\end{table}
+
+%\clearpage
+
+%\subsection{Astronomy symbols}
+
+%\clearpage
+
+\begin{table}[htb]
+\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+%\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\hline
+    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    %\multicolumn{6}{|c|}{Astronomy-related units} \\\hline
+    minute & \unit{min, $^\mathrm{m}$} & \unit{min} & \unit{min} & \unit{min} & \unit{min}\\\hline
+    hour & \unit{h, $^\mathrm{h}$} & \unit{h} & \unit{h} & \unit{h} & \unit{h}\\\hline
+    day & \unit{d, $^\mathrm{d}$} & \unit{d} & \unit{d} & \unit{d} & \unit{d}\\\hline
+    year & \unit{a} & \unit{yr} & \unit{a, yr} & \unit{a, yr} Pa (peta a) forbidden& like FITS\\\hline
+    arcsecond & \unit{''} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec}\\\hline
+    arcminute & \unit{'} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin}\\\hline
+    degree (angle) & \unit{$^\circ$} & \unit{deg} & \unit{deg} & \unit{deg} & \unit{deg}\\\hline
+    milliarcsecond & \unit{mas} (use \unit{nrad}!)\raggedright &  & \unit{mas} & \unit{mas} & \unit{mas}\\\hline
+    microarcsec &  &  & \unit{uarcsec} &  & no dedicated symbol, use
+    \unit{uarcsec}\\\hline
+    cycle & \unit{c, $^\mathrm{c}$} &  &  &  & not used\\\hline
+    astronomical unit & \unit{au} & \unit{AU} & \unit{AU} & \unit{AU} & \unit{AU}\\\hline
+    parsec & \multicolumn{4}{c|}{\unit{pc}} & \unit{pc}\\\hline
+    atomic mass & \unit{u} &  &  & \unit{u} & \unit{u}\\\hline
+    electron volt & \multicolumn{4}{c|}{\unit{eV}} & \unit{eV}\\\hline
+    jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
+    celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}\raggedright&  &  &  & not used\\\hline
+    century & ha, cy should not be used &  &  &  & no dedicated symbol, use \unit{ha} or \unit{hyr}\\\hline
+\end{tabular}
+  \caption{Comparison of astronomy-related units.}
+  \label{tab:comparUnitAstro}
+%\end{longtable}
+\end{table}
+%\clearpage
+
+%\subsection{Other symbols}
 
 \begin{table}
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
@@ -627,14 +1066,6 @@ recommends to no longer use these units.
 \end{table}
 %\end{longtable}
 
-In order to be compatible with legacy metadata, VOUnit parsers should be able to interpret
-symbols for \aa{}ngstr\"om, barn, erg and gauss, as written in the sixth column of \prettyref{tab:comparUnitDeprecated}.
-However, data producers are strongly advised to prefer the equivalent notation using symbols and prefixes listed in 
-Tables~\ref{tab:comparUnitBase}, \ref{tab:comparUnitScale} and \ref{tab:comparUnitAstro}. 
-
-\prettyref{tab:comparUnitOther} compares other various symbols. The VOUnits symbol
-for magnitudes is \unit{mag}.
-
 \begin{table}
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
@@ -662,7 +1093,7 @@ for magnitudes is \unit{mag}.
      & \unit{} & \unit{Crab} avoid use & \unit{} & \unit{} & not used \\\hline
     No unit, dimensionless & \unit{} & blank string & \unit{-} & \unit{} & empty string \\\hline
     Unitless in percent & \unit{} &  & \unit{\%} & \unit{} & \unit{} \\\hline
-    unknown & \unit{} & \unit{UNKNOWN} & \unit{} & \unit{} & \unit{?} \\\hline
+    unknown & \unit{} & {\tiny\unit{UNKNOWN}} & \unit{} & \unit{} & \unit{?} \\\hline
 %  \end{tabular}
 \end{tabular}
   \caption{Comparison of other symbols.}
@@ -670,55 +1101,9 @@ for magnitudes is \unit{mag}.
 \end{table}
 %\end{longtable}
 
-It can be noted that some of the units listed in \prettyref{tab:comparUnitOther} are 
-questionable. They arise in fact from a need to describe quantities, when the only
-piece of metadata available is the unit label. Count, photon, pixel, bin, voxel, bit,
-byte are concepts, just as apple or banana. The associated quantities could be fully
-described with a UCD, a value and an void unit label.
+\clearpage
 
-It is possible to count a number of bananas, or to express a distance measured in
-bananas, but this does not make a banana a reference unit.
-
-The FITS document provides the most general description of all the compared schemes, 
-and VOUnits adopts similar definitions, in order to acknowledge at best legacy metadata.
-Note that all symbols like \unit{count}, \unit{photon}, \unit{pixel} are always used
-in lower case and singular form.
-
-The recommended way to indicate that there is no unit (for example a quantity that
-is a character string, or unitless) is to use an empty string rather than blanks
-or dashes.
-
-In the table below, we indicate the `known units' for each of the
-described syntaxes.  In the table, a `$\cdot$' indicates that the unit
-is recognised in that syntax, an `s' that it it additionally permitted
-to have SI prefixes, and a `d' that it is recognised but deprecated.
-There are a few units (namely `pix/pixel', `ph/photon' and `a/yr') for
-which there are recognised alternatives in some syntaxes, and in these
-cases `p' marks the preferred one.
-
-\begin{multicols}{2}
-\let\mcnewpage\newpage
-\makeatletter
-\renewcommand\newpage{%
-        \if@firstcolumn
-                \hrule width\linewidth height0pt
-                \columnbreak
-        \else
-                \mcnewpage
-        \fi
-}
-\makeatother
-\catcode`\%=11
-\tablehead{\emph{unit}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}\\}
-\begin{supertabular}{rcccc}
-\input{known-units.tex}
-\end{supertabular}
-\end{multicols}
-
-\subsection{Combination of symbols and mathematical expressions}
-
-\prettyref{tab:comparUnitCombine} summarizes how mathematical operations can be applied on
-unit symbols for exponentiation, multiplication, division, and other computations.
+%\subsection{Combination of symbols}
 
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\hline
@@ -785,302 +1170,37 @@ unit symbols for exponentiation, multiplication, division, and other computation
 %\end{table}
 \end{longtable}
 
-The combination rules is the point where the largest discrepancies between the
-different schemes appear. The FITS document summarises the problem of
-try to best accomodate the existing schemes:
-\label{sec:fitsquote}
-\begin{quote}
-Two or more base units strings (called str1 and str2 (...)) may be combined using
-the restricted set of (explicit or implicit) operators that provide
-for multiplication, division, exponentiation, raising arguments
-to powers, or taking the logarithm or square-root of an
-argument. Note that functions such as log actually require dimensionless
-arguments, so that $\log(\unit{Hz})$, for example, actually
-means $\log(x/1 \unit{Hz})$. The final units string is the compound
-string, or a compound of compounds, preceded by an
-optional numeric multiplier of the form \texttt{10**k}, \texttt{10\^{}k}, or \texttt{10$\pm$k}
-where~\texttt k is an integer, optionally surrounded by parentheses with
-the sign character required in the third form in the absence of 
-parentheses. Creators of FITS files are encouraged to use the
-numeric multiplier only when the available standard scale factors
-(\dots) will not suffice. Parentheses are used for symbol
-grouping and are strongly recommended whenever the order
-of operations might be subject to misinterpretation. A space
-character implies multiplication which can also be conveyed explicitly
-with an asterisk or a period. Therefore, although spaces
-are allowed as symbol separators, their use is discouraged. Note
-that, per IAU convention, case is significant throughout. The IAU
-style manual forbids the use of more than one slash (\unit{/}) character
-in a units string. However, since normal mathematical precedence
-rules apply in this context, more than one slash may be
-used but is discouraged.
+\clearpage
 
-A unit raised to a power is indicated by the unit string followed,
-with no intervening spaces, by the optional symbols \texttt{**}
-or \texttt{\^{}} followed by the power given as a numeric expression (\dots). 
-The power may be a simple integer, with or
-without sign, optionally surrounded by parentheses. It may also
-be a decimal number (\eg 1.5, 0.5) or a ratio of two integers
-(\eg 7/9), with or without sign, which must be surrounded by
-parentheses. Thus meters squared may be indicated by m**(2),
-\texttt{m**+2}, \texttt{m+2}, \texttt{m2}, \texttt{m\^{}2}, \texttt{m\^{}(+2)}, etc. and per meter cubed may be
-indicated by \texttt{m**-3}, \texttt{m-3}, \texttt{m\^{}(-3)}, \texttt{/m3}, and so forth. Meters to
-the three-halves power may be indicated by \texttt{m(1.5)}, \texttt{m\^{}(1.5)},
-\texttt{m**(1.5)}, \texttt{m(3/2)}, \texttt{m**(3/2)}, and \texttt{m\^{}(3/2)}, but not by \texttt{m\^{}3/2}
-or \texttt{m1.5}.~\cite[\S4.3.1]{pence10}
-\end{quote}
+In the table below, we indicate the `known units' for each of the
+described syntaxes.  In the table, a `$\cdot$' indicates that the unit
+is recognised in that syntax, an `s' that it it additionally permitted
+to have SI prefixes, and a `d' that it is recognised but deprecated.
+There are a few units (namely `\unit{angstrom} or \unit{Angstrom}', 
+\unit{pix} or \unit{pixel}', `\unit{ph} or \unit{photon}' and `\unit{a} or \unit{yr}') for
+which there are recognised alternatives in some syntaxes, and in these
+cases `p' marks the preferred one.
+%\clearpage 
 
-This and other ambiguities are discussed in the detailed syntaxes of \prettyref{sec:grammar}.
+\begin{multicols}{2}
+\let\mcnewpage\newpage
+\makeatletter
+\renewcommand\newpage{%
+        \if@firstcolumn
+                \hrule width\linewidth height0pt
+                \columnbreak
+        \else
+                \mcnewpage
+        \fi
+}
+\makeatother
+\catcode`\%=11
+\tablehead{\emph{unit}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}\\}
+\begin{supertabular}{rcccc}
+\input{known-units.tex}
+\end{supertabular}
+\end{multicols}
 
-VOUnits follow the same rules as FITS, as summarized in \prettyref{tab:VOUnitCombine}, and can in
-addition be preceded by an arbitrary optional numeric scaling factor (expressed as a floating number with the optional
-exponent being expressed as in FITS, with a multiplication symbol).
-% XXX Aren't these quantities, rather than units?? 
-Examples of valid VOUnits are \unit{2.54cm}, \unit{10+8m}, \unit{3.45 10**(-4)Jy}. 
-Scale factors from \prettyref{tab:comparUnitScale} should however be
-preferred and used whenever possible.
-\emph{Note (NG): these appear to be `quantities' rather than `units',
-  in the terminology of \prettyref{sec:notations} -- resolve
-  during/after RFC period.}
-
-\begin{table}
-\begin{tabular}[bht]{|l|l|}
-\unit{str1 str2} & Multiplication \\
-\unit{str1*str2} & Multiplication \\
-\unit{str1.str2} & Multiplication \\
-\unit{str1/str2} & Division \\
-\unit{str1**expr} & Raised to the power expr \\
-\unit{str1\^{}expr} & Raised to the power expr \\
-\unit{str1expr} & Raised to the power expr \\
-\unit{log(str1)} & Common Logarithm (to base 10) \\
-\unit{ln(str1)} & Natural Logarithm \\
-\unit{exp(str1)} & Exponential (e$^\mathrm{str1}$) \\
-\unit{sqrt(str1)} & Square root \\
-\end{tabular}
- \caption{Combination rules and mathematical expressions for VOUnits.}
-  \label{tab:VOUnitCombine}
-\end{table}
-
-
-
-
-%\subsection{Quantities}
-%\label{sec:quantities}
-%
-%A quantity, \eg a measurement of a physical value like the speed of
-%light, has a value (2.998 10+5), a ucd (phys.veloc), units (km.s-1)
-%and is coded using a numerical type (real).
-%
-%Some quantities are also reused as units. Many units are expressed, or
-%converted, in terms of physical constants such as the speed of light,
-%\begin{itemize}
-%	\item \texttt{$c=$~2.998 10+8~m.s-1;} 
-%	\item Boltzman's constant, \texttt{$K_{\mathrm{B}}=$1.38065~10-23}
-%	\item \texttt{1 AU $=$ 1.499 10+11 m.}
-%\end{itemize}
-%
-% Many of these are used as units in their own right, \eg  velocities may be expressed as a
-%fraction or multiple of c, but c is also used to convert between
-%wavelength and frequency, etc. These are combinations of units with
-%scaling factors applied, and so can be treated in the same way as any
-%other compound unit \eg  the \texttt{Jy} (\texttt{10-26 W.m-2.Hz-1}) .
-%
-%We need to ensure that we are consistent with the IVOA Quantity model,
-%where appropriate.
-
-\subsection{Remarks and good practices}
-
-VOUnits, as described in this document, provide a string serialization of
-unit labels compatible with the two principal
-means of representation expected in the VO:
-\begin{itemize}
-\item as an attribute string in a VOTable document: \verb|unit="..."|
-\item as a unit element in an XML serialization of some data model: \verb|<unit>...</unit>|
-\end{itemize}
-
-Avoiding the use of special characters (\AA, ', ", ...) reduces the
-complexity of using VOUnits in query languages or other programmation environments.
-
-Even if enclosing VOUnits with single or double quotes should be sufficient to
-facilitate parsing of a general query containing VOUnits, avoiding the use of
-white spaces for multiplication should
-make the parsing even easier, with the unit label being a single "word", and therefore
-the notation in the first line of \prettyref{tab:VOUnitCombine} is discouraged.
-
-
-Complex data formats are not addressed by VOUnits. While possibly convenient for
-humans, sexagesimal coordinates or calendar dates expressed in ISO 8601 are
-quantities represented in a complex format, encoded as strings, and as such the
-corresponding VOUnit should be an empty string. Expressions such as "d:m:s" or
-"ISO 8601" are not valid VOUnits. This should not be a problem, as existing VO 
-standards already recommend that coordinates be expressed in decimal degrees.
-
-One can also remark that some quantities like the Modified Julian Date (MJD) are 
-not recognized VOUnits. As described in \prettyref{sec:notations}, the quantity MJD can be 
-seen as a concept (described by the appropriate UCD or utype), and the corresponding
-value will most likely be expressed in days, so the VOUnit will be \unit{d}. There is 
-no need in overloading VOUnits to incorporate the description of concepts themselves.
-
-The notion of unit conversion and quantity manipulation is discussed in
-\prettyref{sec:conversion}.
-
-
-\section{Use cases and applications\label{sec:useCase}}
-
-\subsection{Unit parsing}
-
-The rules defined in \prettyref{sec:proposal} allow us to build VOUnit parsers.
-Several services can be built on top of a VOUnit parser:
-
-\begin{enumerate}
-\item Validation. A service checking that a VOUnit is well written. The output
-of such a service can have different levels: fully valid unit; valid syntax, but
-not the preferred one (\eg  use of deprecated symbols); parsing error. 
-\item Explanation. A service returning a plain-text explanation of the unit label.
-\item Typesetting. A service returning an equivalent of the unit label suitable for inclusion in
-a \LaTeX\ or HTML document.
-\item Dimensional equation. As described by \citet{osuna05}, VOUnits can be translated
-into a dimensional equation, allowing to build up conversions methods from one string 
-representation to another one (see also \prettyref{sec:conversion}). 
-\end{enumerate}
-
-\subsection{Libraries\label{sec:libraries}}
-
-There are a few existing libraries able to interpret unit labels.
-In all cases,
-some software effort is required if they are to be used in translating
-between data provider unit labels, and those to be adopted by
-the IVOA for internal use.
-
-One of the most widely-used specialised
-astronomical libraries is AST which includes a unit conversion
-facility attached to astronomical coordinate systems \citep{berry12}.
-
-Another library has been developed at
-CDS\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}},
-and can be tested online\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}}. This library covers all
-the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
-additional symbols and notations.
-
-Recently, Norman Gray started developing
-Unity\footnote{\url{https://bitbucket.org/nxg/unity}}, a new
-standalone library intended to parse VOUnits, OGIP, StdCats and FITS
-formats, and to be used as a vehicle for developing the grammars and
-ideas for this present document.  It provides yacc-style grammars for
-the various syntaxes, as well as implementing them in parsers written
-in Java and~C.  The formal grammar used for VOUnits is given in
-\prettyref{sec:vougrammar}.
-
-\subsection{Unit conversion and quantity transformation\label{sec:conversion}}
-
-Unit conversion is the simple task of converting a quantity expressed in a given unit into a different unit, while
-the concept remains the same. For example, converting a distance in \unit{pc} in to a distance in \unit{AU} or \unit{km}.
-Or converting a flux from \unit{mJy} to \unit{W.m-2.Hz-1}. This is rather easy with existing libraries, using dimensional
-analysis or SI units as a reference.
-
-Quantity transformation consists in deriving a new quantity from one or several original
-quantities. It is more complex, because it requires to have a precise model 
-(a simple equation in simple cases) for computing the transformation. The model involves
-quantities, each described with a UCD or utype, value and VOUnit. Some of the quantities
-involved might be physical constants (\eg  Boltzmann's constant $k_{\mathrm{B}}$).
-
-Examples of such transformations can be:
-\begin{itemize}
-\item linear unit conversion: a distance is measured in \unit{pixel} in an image, and needs to be transformed in
-the corresponding angular separation in \unit{arcsec}. This can be done if the quantity representing the pixel
-scale is given, with its value and a compatible unit like \unit{deg/pixel}.
-\item converting a photon wavelength in the corresponding photon energy or frequency.
-\item deriving the flux for a given photon emission rate (in \texttt{W}) from Planck's
-constant (\texttt{6.63 $10^{-34}$ J.s}), the radiation frequency (in \texttt{GHz}), and the
-number of photons emitted per second.
-\item transforming a magnitude into a flux, as needed for SED building.
-\end{itemize}
-
-VOUnits can help in quantity transformation if all quantities are qualified with proper VOUnits.
-
-\subsection{Query languages}
-
-Including VOUnits in queries is not an easy task. Some guidelines were defined in the
-reflexion on ADQL.
-
-\begin{enumerate}
-\item All data providers should be encouraged to supply units for each column
-of a table. Columns should also have associated UCDs, so that quantities can be
-properly identified.
-
-%In most published tables in Astronomical journals and Vizier server as well, unitless values are
-%represented by "---". This could be adopted for the VO convention as well.
-\item The IVOA needs to provide a parser to relate the native units to the standard IVOA
-labels (in this context, the `native units' are the units of the
-underlying database table or metadata).   
-
-\item
-The default response to a query which does not specify units, will be
-in the native units of the table. 
-%\emph{We recommand that the output units will be labelled using the IVOA standard label ???}
-
-\item
-Where queries involve combining or otherwise operating on the content
-of columns to produce an output column with modified units, we can
-provide libraries and a parser to assist in assigning and checking a
-new unit, and attach this to the returned values via the SQL CAST
-operator. 
-This is implemented already in database related applications such as Saada, for instance. 
-If any column used in responding to a query lacks a necessary unit, the output
-involving that column will be unitless.
-
-\item
-If the user wants to change the output units with respect to the table
-units, this could be done by specifying the units in the initial
-SELECT statement. There are several issues to consider: 
-	\begin{enumerate}
-	\item Does the user also need to include the conversion expression, or does the unit
-parser take care of that?  
-	\item Can the user use this to assign units (based on prior knowledge) to output from a 
-column lacking a unit?
-	\end{enumerate}
-\end{enumerate} 
-
-
-\subsection{Broader use in the VO}
-
-\begin{figure}[thb]
-  % Requires \usepackage{graphicx}
-  \includegraphics[width=\textwidth]{./units2.jpg}
-  \caption{This shows the levels at which conversions might be done.
-\textcolor{red}{Thick red arrows}: At the point where an astronomer or
-  data provider submits input to the VO, we should provide tools to
-  ensure that units are labeled consistently according to VOUnits. 
-  This implies that a units parsing step is included prior to metadata ingestion into the VO.
-\brown{Dashed brown arrows}: Conversions required to supply results to
-  the user in specified or reasonable units \eg  \texttt{J.s-1} to \texttt{W}, are done where and when they are required.}
-  \label{fig:units2}
-\end{figure}
-
-Different VO entities require and consume metadata with units attached like registries, 
-applications and interoperate via protocols. \prettyref{fig:units2} illustrates the places where the IVOA
-could intervene to ensure consistent use of units.
-
-
-
-\section*{Acknowledgements}
-
-We thank all those participants in IVOA and EuroVO workshops who have
-contributed by exposing use cases and providing comments, especially
-Markus Demleitner,
-Paddy Leahy,
-Jeff Lusted,
-Arnold Rots,
-Mark Taylor,
-Brian Thomas
-and recent contributors on the DM forum.
-This document is just an update of the previous draft discussed in
-Strasbourg Interop meeting in 2009. It will be completed with
-appropriate grammar and tools to check different levels of consistency
-for a unit string used in the VO context.
-
-
-\appendix
 
 \section{Formal grammars\label{sec:grammar}}
 % These grammars are extracted from http://bitbucket.org/nxg/unity
@@ -1171,7 +1291,7 @@ but mean \units{kg~m^{-1}~s^{-1}} in the FITS syntax, and
 
 Other ambiguities:
 \begin{itemize}
-\item The FITS spec may or may not be intended to permit 
+\item The FITS specification may or may not be intended to permit 
   \texttt{10+3 /m}, but we don't.
 \item It is possible to read the FITS spec as permitting
   \texttt{m\^{}1.5}, without parentheses.  We take it to be
@@ -1259,9 +1379,13 @@ In particular:
 \caption{\label{tabx:vougrammar}The VOUnits grammar}
 \end{table}
 
-\clearpage
+%\clearpage
 \section{Updates of this document}
 \begin{itemize}
+\item 1.0-20121212 to 1.0-20130225 Large tables from section 3 moved to Appendix A. Short summaries of symbols added
+to section 3. Changes to table of known units for consistency with text. Added explanations for units Sun and byte.  
+\item 1.0-20120820 to 1.0-20121212 
+Minor typographical fixes. Added definition of OGIP. Removed last sentence from acknowledgements, which have been moved to the beginning of the document. Changed figure 1 to move Units in Semantics. Added 'discouraged' in first line of \prettyref{tab:VOUnitCombine}. Color change in figure 2 and its label.
 \item 1.0-20120718 to 1.0-20120801
 Minor typographical fixes
 \item 1.0-20120718 to 1.0-20120801
