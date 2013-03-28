@@ -13,7 +13,7 @@ unity-grammars: unity-grammars.tar.gz
 
 known-units.tex: unity-grammars known-units-to-tex.awk
 	rm -f $@
-	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | sort | awk -F, -f known-units-to-tex.awk >$@
+	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >$@
 
 clean:
 	for e in log toc aux bbl blg out pdf; do rm -f VOUnits.$$e; done
