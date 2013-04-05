@@ -1,0 +1,12 @@
+To build this document, if you have 'make' and 'awk', simply give the command:
+
+  % make
+
+If you don't have make and awk, then:
+
+  % unzip unity-grammars.zip
+  % pdflatex VOUnits
+
+(or equivalent).  The file known-units.tex is generated from
+unity-grammars/known-units.csv, but is checked into the repository so
+that it can be build by hand in this way.
