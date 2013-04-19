@@ -13,13 +13,14 @@ unity-grammars: unity-grammars.zip
 	touch unity-grammars
 
 # The file known-units.tex is generated but checked in, so that the
-# document is buildable on a machine without 'make' or 'awk'.
-known-units.tex: unity-grammars known-units-to-tex.awk
+# document is buildable on a machine without 'make' or 'python'.
+known-units.tex: unity-grammars known-units-to-tex.py
 	rm -f $@
 	echo '\\iffalse\n% Generated from unity-grammars.zip/known-units.csv\n%' >$@
 	sed 's/^/% /' unity-grammars/README >>$@
 	echo '\\fi' >>$@
-	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >>$@
+	python known-units-to-tex.py < unity-grammars/known-units.csv >>$@
+#	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >>$@
 
 clean:
 	for e in log toc aux bbl blg out pdf; do rm -f VOUnits.$$e; done

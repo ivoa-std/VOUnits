@@ -288,12 +288,18 @@
   \par
   \vskip 1.0em%
   \let \footnote \thanks%
-    {\LARGE\color{ivoacolor}\sffamily\bfseries \@title}%
-    \vskip 0.5em%
-    {\LARGE\color{ivoacolor}\sffamily\bfseries Version \@version}%
-    \vskip 2.0em%
-    {\Large\color{ivoacolor}\sffamily\bfseries \@ivoatype{ }\@date}%
-    \vskip 2.0em%
+    \vbox{%
+      { \LARGE
+        \color{ivoacolor}\sffamily\bfseries
+        \noindent\@title
+        \vskip 0.5em
+        \noindent Version \@version}%
+      \vskip 2.0em
+      \Large \sffamily\bfseries
+      \noindent \@ivoatype\ \@date
+      \vskip 2.0em
+      }
+      \large\sffamily
     %\begingroup
     %\begin{trivlist}\parindent=2em
     \list{}{\leftmargin=0em \labelsep=0em%
@@ -301,42 +307,40 @@
     \ifx\@urllastversion\@undefined
     \else
     \item{}
-    {\large\sffamily\bfseries This version:\par\indent}%
-    {\small\@urlthisversion}%
+    \textbf{This version:}\par
+    {\small\texttt{\@urlthisversion}}%
     \vskip 1.0em%
     \fi
     \ifx\@urllastversion\@undefined
     \else
     \item{}
-    {\large\sffamily\bfseries Latest version:\par\indent}%
-    {\small \@urllastversion}%
+    \textbf{Latest version:}\par
+    {\small\texttt{\@urllastversion}}%
     \vskip 1.0em%
     \fi
     \ifx\@previousversion\@undefined
     \else
     \item{}
-    {\large\sffamily\bfseries Previous versions:\par\indent}%
+    \textbf{Previous versions:}\par
     {\small \@previousversion}%
     \vskip 1.0em%
     \fi
     \ifx\@editor\@undefined
     \else
     \item{}
-    {\large\sffamily\bfseries Editor(s):\par\indent}%
+    \textbf{Editor(s):}\par
     {\@editor}%
     \vskip 1.0em%
     \fi
     \item{}
-    {\large\sffamily\bfseries Authors:\par\indent}%
-    {\large
-      \lineskip .5em%
-      \begin{tabular}[t]{l}%
-        \@author
-      \end{tabular}\par}%
-  \par
-  \vskip 1.5em}
-  %\end{trivlist}
+    \textbf{Authors:}\par
+    {\leftskip\parindent
+      \rightskip0pt plus 4em
+      \noindent\@author
+      \par}
+  \vskip 1.5em
   \endlist
+  }
 \fi
 \setcounter{secnumdepth}{4}
 \newcounter {part}
