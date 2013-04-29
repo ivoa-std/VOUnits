@@ -98,7 +98,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{2013-04-19}
+\date{1.0-20130429}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -120,7 +120,7 @@ Bruno Rino,
 Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130419/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
 \previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
@@ -342,7 +342,6 @@ In particular:
 \item Where there are some ambiguities in, or contradictions between,
   these specifications, we recommend that application authors should
   resolve them as indicated in this specification.  
-% (I'm thinking of the vague words in the FITS spec about whether multiple slashes are permitted)
 \item This document defines a syntax, called `VOUnits', which is as
   far as is feasible in the intersection of the three syntaxes, and
   which we recommend that applications should use when writing unit strings.
@@ -652,7 +651,7 @@ unit symbols for exponentiation, multiplication, division, and other computation
 
 The combination rules is the point where the largest discrepancies between the
 different schemes appear. The FITS document summarises the problem of
-trying to best accomodate the existing schemes:
+trying to best accommodate the existing schemes:
 \label{sec:fitsquote}
 \begin{quote}
 Two or more base units strings (called str1 and str2 (...)) may be combined using
@@ -675,9 +674,9 @@ character implies multiplication which can also be conveyed explicitly
 with an asterisk or a period. Therefore, although spaces
 are allowed as symbol separators, their use is discouraged. Note
 that, per IAU convention, case is significant throughout. The IAU
-style manual forbids the use of more than one slash (\unit{/}) character
+style manual forbids the use of more than one solidus (\unit{/}) character
 in a units string. However, since normal mathematical precedence
-rules apply in this context, more than one slash may be
+rules apply in this context, more than one solidus may be
 used but is discouraged.
 
 A unit raised to a power is indicated by the unit string followed,
@@ -1221,7 +1220,7 @@ use as the toolkit behind the {\sc casa} package.)
 	& dot (\unit{.}), no space 
 	& single space OR asterisk (\unit{*}, no spaces) OR dot (\unit{.}, no spaces) \\\hline
     Division & per. Use negative index or solidus (\unit{/})\raggedright
-    	& slash (\unit{/}) with optional spaces on either side, space not recommended after / OR negative index\raggedright
+    	& solidus (\unit{/}) with optional spaces on either side, space not recommended after / OR negative index\raggedright
 	& \unit{/} with no spaces 
 	& \unit{/} with no spaces  \\\hline\hline
     Use of multiple / & MUST never use two /\raggedright 
@@ -1267,10 +1266,11 @@ We believe that the grammars below are such that if a string
 successfully parses in two distinct grammars, it means the same in
 both.
 
-The grammars here are those of the `Unity' package at
-\url{https://bitbucket.org/nxg/unity}, which includes lists of
-recommended base and derived units in the various syntaxes, plus a
-collection of test cases.
+The grammars here are from the `Unity' package at
+\url{https://bitbucket.org/nxg/unity}, which includes machine-readable
+grammars, lists of recommended units, and a collection of test cases.  These are also extracted in
+machine-readable form
+at \url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounits/unity-grammars.zip}.
 
 In these grammars, the terminals are as given in
 \prettyref{tabx:terminals}.
@@ -1428,18 +1428,18 @@ In particular:
 %\clearpage
 \section{Updates of this document}
 \begin{itemize}
-\item 1.0-20130419: Some restructuring, some rephrasing, and a few layout changes.
-\item 1.0-20121212 to 1.0-20130225: Large tables from section 3 moved to Appendix A. Short summaries of symbols added
+\item 1.0-20130429: Some restructuring, some rephrasing, and a few layout changes.
+\item 1.0-20130225: Large tables from section 3 moved to Appendix A. Short summaries of symbols added
 to section 3. Changes to table of known units for consistency with text. Added explanations for units Sun and byte.  
-\item 1.0-20120820 to 1.0-20121212:
+\item 1.0-20121212:
 Minor typographical fixes. Added definition of OGIP. Removed last sentence from acknowledgements, which have been moved to the beginning of the document. Changed figure 1 to move Units in Semantics. Added 'discouraged' in first line of \prettyref{tab:VOUnitCombine}. Color change in figure 2 and its label.
-\item 1.0-20120718 to 1.0-20120801:
+\item 1.0-20120801:
 Minor typographical fixes
-\item 1.0-20120718 to 1.0-20120801:
+\item 1.0-20120801:
   \begin{itemize}
     \item Included yacc-style grammars in document.
     \end{itemize}
-\item 1.0-20120521 to 1.0-20120718:
+\item 1.0-20120718:
 	\begin{itemize}
 	\item Removed external tables refs in tables to avoid confusion.
 	\item Removed refs to SOFA and NOVAS.
@@ -1447,7 +1447,7 @@ Minor typographical fixes
 	\item Added formal grammar in annex.
 	\item Minor editing and typo fixes.
 	\end{itemize}
-\item 1.0-20111216 to 1.0-20120521:
+\item 1.0-20120521:
 	\begin{itemize}
 	\item Typos fixed, removed F. Bonnarel from authors. 
 	\item One sentence rephrased in section 1.2 for clarity.
@@ -1457,7 +1457,8 @@ Minor typographical fixes
 	\item \prettyref{tabx:comparUnitDeprecated} completed.
 	\item Added numeric factors in \prettyref{tabx:comparUnitCombine} and discussion in text.
 	\end{itemize}
-\item 0.3 to 1.0-20111216: Major rework of the document.
+\item 1.0-20111216: Major rework of the document.
+\item 0.3: initial public release.
 %\item version 0.1 to 0.2
 % \begin{itemize}
 % \item 20090521
