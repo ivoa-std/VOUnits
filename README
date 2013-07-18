@@ -10,3 +10,8 @@ If you don't have make and awk, then:
 (or equivalent).  The file known-units.tex is generated from
 unity-grammars/known-units.csv, but is checked into the repository so
 that it can be build by hand in this way.
+
+The file unity-grammars.zip should be kept up-to-date with the product
+of the Unity project, at https://bitbucket.org/nxg/unity.  To obtain
+an updated copy of that file, check out the repository, and build
+src/grammar/unity-grammars.zip 
