@@ -15,6 +15,11 @@
 \fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\def\SVN$#1: #2 ${\expandafter\def\csname SVN#1\endcsname{#2}}
+\SVN$Revision$
+\SVN$Date$
+\SVN$HeadURL$
+
 %% Comment/uncomment lines below to follow your LateX distribution...
 
 \usepackage{natbib} % use author-year citations
@@ -98,7 +103,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{1.0-20130429}
+\date{1.0-20130718}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -120,9 +125,10 @@ Bruno Rino,
 Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130718/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
 %\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120718.pdf}}}
@@ -167,7 +173,7 @@ Jesus Salgado}
 %%\input{versions}
 \vfill
 %%\hbox to \textwidth{\hfil\tiny Volute: \SVNRevision, \SVNDate}
-%\hbox to \textwidth{\hfil\tiny \SVNHeadURL}
+\hbox to \textwidth{\hfil\tiny \SVNRevision, \SVNDate: \SVNHeadURL}
 %\hbox to \textwidth{\hfil\tiny Volute: \SVNHeader}
 \endgroup
 \newpage
@@ -286,7 +292,7 @@ provides explicit examples of the Units to be used in its scope, on a case-by-ca
 basis.
 
 The registry records can also contain units, for the description of table metadata.
-The definition of VO data protocols uses units by specifying in which units the input
+The definition of VO Data Access protocols uses units by specifying in which units the input
 parameters have to be expressed, or by restricting the possible units in which some 
 output must be returned.
 
@@ -517,10 +523,15 @@ symbol without space, and cannot be used without a base symbol.
 Remark: the letter \unit{u} is used instead of the \micro\ symbol to represent a factor of $10^{-6}$, 
 following the character set defined in \prettyref{sec:encoding}.
 
-The SI prefixes of \prettyref{tabx:comparUnitScale} always refer to
-multiples of 1000, even when applied to binary units such as bit or
-byte.  This Recommendation does not discuss the binary prefixes (kibi,
-Mibi, and so on) of \citet[\S4]{std:iec80000-13}.
+The SI prefixes of \prettyref{tabx:comparUnitScale} \emph{always refer to
+multiples of 1000}, even when applied to binary units such as bit or
+byte; this follows the stipulations (and clarifying note) of
+section~3.1 of~\citet{si-brochure}.
+This Recommendation does not discuss the binary prefixes (kibi,
+Mibi, and so on) of \citet[\S4]{std:iec80000-13}.  Because these
+binary prefixes are less well known, we suggest, to avoid confusion,
+that data owners do \emph{not} use these binary prefixes when they
+generate unit strings.
 
 \subsection{Astronomy symbols}
 
@@ -545,25 +556,36 @@ listed in \prettyref{tab:vouadopted}.
 
 Minutes, hours, and days of time must be represented in VOUnits by the
 symbols \unit{min}, \unit{h} and \unit{d}; however the \unit{cd} is
-the candela, not the centi-day.  The year can be expressed by \unit{a}
-(recommended by IAU) or \unit{yr} (common practice), but peta-year
-must only be written \unit{Pyr}, to avoid the collision with the
-pascal, \unit{Pa}.
+the candela, not the centi-day.  The year can be expressed by
+\unit{yr} (common practice),
+or \unit{a},
+as recommended by ISO \citep[Annex C]{std:iso80000-3}
+and the IAU \citep[Table 6]{wilkins89}.
+However peta-year must only be written \unit{Pyr},
+to avoid the collision with the pascal, \unit{Pa}.
+
+There are no VOUnit symbols for degrees celsius or century.
+Temperatures are expressed in kelvin (\unit{K}),
+and a century corresponds to \unit{ha} or \unit{hyr}.
+Note that \emph{this is a mild deviation from the SI standard},
+which states that the `hectare', with unit symbol \unit{ha},
+is a `non-SI unit accepted for use' as a measure of land area~\citep[table~6]{si-brochure},
+and which acknowledges neither `a' nor `yr' as a symbol for year.\footnote{If
+large telescope arrays feel they must talk of attojoules per
+hectare per century, for some reason, they're going to have to be
+careful how they do so; it's probably best not to even think about atto-Henrys.}
 
 The astronomical unit must be expressed in upper-case, \unit{AU},
-in order to follow the legacy practice, to avoid the (admittedly unlikely)
-confusion with atto-atomic mass, and for the sake of consistency.
+in order to follow the general expectation of legacy practice,
+and to avoid the (admittedly unlikely) confusion with atto-atomic mass.
+\emph{This is a deviation} from both the SI recommendation of
+`ua'~\citep{si-brochure} and the IAU's recommendation of `au'~\citep{iau12}.%
+\footnote{If you feel a burning desire to write about micro-years or
+atto atomic-mass, this document is not the place you need to look
+for help.}
 
-There are no VOUnit symbols for celsius degrees or century.
-Temperatures are expressed in kelvin (\unit{K}),
-and a century corresponds to \unit{ha} or \unit{hyr}. Note
-that the unit \unit{ha} is \emph{not} hectare, which is the SI
-stipulation~\citep{si-brochure}.\footnote{If large telescope arrays 
-wish to talk of Watts per Hertz per hectare, for some reason, they're going
-to have to find some other way of doing so.}
-
-A few symbols which might be ambiguous are listed in \prettyref{tab:ambiguous}, with their correct 
-VOUnit interpretation and what they do not mean.
+A few symbols which might theoretically be ambiguous are listed in \prettyref{tab:ambiguous},
+with their correct VOUnit interpretation and what they do not mean.
 
 
 \begin{table}[bht]
@@ -707,9 +729,9 @@ preferred and used whenever possible.
 %  in the terminology of \prettyref{sec:notations} -- resolve
 %  during/after RFC period.}
 
-\begin{table}
+\begin{table}[ht]
 \begin{center}
-\begin{tabular}[bht]{|l|l|}
+\begin{tabular}{|l|l|}
 \hline
 \unit{str1 str2} & Multiplication (discouraged -- see text)\\
 \unit{str1*str2} & Multiplication \\
@@ -1012,7 +1034,7 @@ use as the toolkit behind the {\sc casa} package.)
 %\subsection{String representation and encoding}
 
 %    \setlength\LTcapwidth{22cm}
-\begin{table}[hb]
+\begin{table}[ht]
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
   \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.1\linewidth}|p{0.1\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|}
 \hline
@@ -1028,7 +1050,7 @@ use as the toolkit behind the {\sc casa} package.)
 
 %\subsection{Base units}
 
-\begin{table}[hb]
+\begin{table}[ht]
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
@@ -1079,7 +1101,7 @@ use as the toolkit behind the {\sc casa} package.)
 
 %\clearpage
 
-\begin{table}[htb]
+\begin{table}[ht]
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
@@ -1112,7 +1134,7 @@ use as the toolkit behind the {\sc casa} package.)
 
 %\subsection{Other symbols}
 
-\begin{table}
+\begin{table}[ht]
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
@@ -1140,7 +1162,7 @@ use as the toolkit behind the {\sc casa} package.)
 \end{table}
 %\end{longtable}
 
-\begin{table}
+\begin{table}[ht]
 \begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 %\begin{longtable}[th]{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
 \hline
@@ -1274,7 +1296,7 @@ at \url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounit
 
 In these grammars, the terminals are as given in
 \prettyref{tabx:terminals}.
-\begin{table}
+\begin{table}[ht]
 %\def\={\raggedright\tabularnewline\relax} % avoid problem with \raggedright redefining \\
 %\let\=\tabularnewline
 \begin{tabular}{rp{9cm}}
@@ -1302,7 +1324,7 @@ For the FITS units syntax, see section~4.3 of~\cite{pence10}, and its
 associated tables.  Our preferred FITS grammar is in
 \prettyref{tabx:fitsgrammar}.
 
-\begin{table}
+\begin{table}[ht]
 \verbatiminput{unity-grammars/unity-fits.txt}
 \caption{\label{tabx:fitsgrammar}The FITS grammar}
 \end{table}
@@ -1348,7 +1370,7 @@ Other ambiguities:
 For the OGIP units syntax, see \cite{george95}.  Our preferred OGIP
 grammar is in \prettyref{tabx:ogipgrammar}.
 
-\begin{table}
+\begin{table}[ht]
 \verbatiminput{unity-grammars/unity-ogip.txt}
 \caption{\label{tabx:ogipgrammar}The OGIP grammar}
 \end{table}
@@ -1380,7 +1402,7 @@ Specification ambiguities:
 For the CDS units syntax, see \cite[\S3.2]{cds00}.  Our preferred CDS
 grammar is in \prettyref{tabx:cdsgrammar}.
 
-\begin{table}
+\begin{table}[ht]
 \verbatiminput{unity-grammars/unity-cds.txt}
 \caption{\label{tabx:cdsgrammar}The CDS grammar}
 \end{table}
@@ -1391,6 +1413,10 @@ expression
 \texttt{[0-9]+\textbackslash.[0-9]+x10[-+][0-9]+}
 \end{quotation}
 (that is, something resembling \texttt{1.5x10+11}).
+
+The \texttt{OPEN\_SQ} and \texttt{CLOSE\_SQ} terminals, used to mark
+the logarithm of a unit in this syntax, are the open and close square
+brackets, `\texttt{[}' and `\texttt{]}'.
 
 
 
@@ -1420,7 +1446,7 @@ In particular:
   expression.
 \end{itemize}
 
-\begin{table}
+\begin{table}[ht]
 \verbatiminput{unity-grammars/unity-vou.txt}
 \caption{\label{tabx:vougrammar}The VOUnits grammar}
 \end{table}
@@ -1428,6 +1454,9 @@ In particular:
 %\clearpage
 \section{Updates of this document}
 \begin{itemize}
+\item 1.0-20130701: Simplified Architecture diagram. Added example
+with scientific notation.  Adjusted locations of grammar tables to try
+to keep them closer to the associated text.
 \item 1.0-20130429: Some restructuring, some rephrasing, and a few layout changes.
 \item 1.0-20130225: Large tables from section 3 moved to Appendix A. Short summaries of symbols added
 to section 3. Changes to table of known units for consistency with text. Added explanations for units Sun and byte.  
