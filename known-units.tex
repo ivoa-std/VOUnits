@@ -2,108 +2,42 @@
 % Generated from unity-grammars.zip/known-units.csv
 %
 % These are the grammars from https://bitbucket/nxg/unity
-%     revision: 162bfe753527
-%     date: 2013-07-18 11:16 +0100
+%     revision: b49aceb6d7f0
+%     date: 2013-07-24 16:42 +0100
 %     tags: tip
 \fi
-%&&&$\cdot$&
- & lm&s&s&s&s
-\\
-A&s&s&s&s
- & lx&s&s&s&s
-\\
-a&s&&s&s
- & lyr&$\cdot$&$\cdot$&&s
-\\
-adu&$\cdot$&&&s
- & m&s&s&s&s
-\\
-Angstrom&d&&$\cdot$&dp
- & mag&s&$\cdot$&s&s
-\\
-angstrom&&$\cdot$&&d
- & mas&$\cdot$&&$\cdot$&
-\\
-arcmin&$\cdot$&$\cdot$&$\cdot$&s
- & min&$\cdot$&$\cdot$&$\cdot$&s
-\\
-arcsec&$\cdot$&$\cdot$&s&s
- & mol&s&s&s&s
-\\
-AU&$\cdot$&$\cdot$&$\cdot$&s
- & N&s&s&s&s
-\\
-barn&sd&$\cdot$&s&sd
- & Ohm&s&&s&s
-\\
-beam&$\cdot$&&&s
- & ohm&&s&&
-\\
-bin&$\cdot$&$\cdot$&&s
- & Pa&s&s&s&s
-\\
-bit&s&&s&s
- & pc&s&s&s&s
-\\
-byte&s&$\cdot$&s&s
- & ph&$\cdot$&&&s
-\\
-C&s&s&s&s
- & photon&p&$\cdot$&&sp
-\\
-cd&s&s&s&s
- & pix&$\cdot$&&$\cdot$&s
-\\
-chan&$\cdot$&$\cdot$&&s
- & pixel&p&$\cdot$&&sp
-\\
-count&$\cdot$&$\cdot$&&sp
- & R&s&&&s
-\\
-Crab&&s&&
- & rad&s&s&s&s
-\\
-ct&$\cdot$&&$\cdot$&s
- & Ry&$\cdot$&&s&s
-\\
-d&$\cdot$&$\cdot$&$\cdot$&s
- & s&s&s&s&s
-\\
-D&$\cdot$&&$\cdot$&s
- & S&s&s&s&s
-\\
-deg&$\cdot$&$\cdot$&$\cdot$&s
- & solLum&$\cdot$&&$\cdot$&s
-\\
-erg&d&$\cdot$&&sd
- & solMass&$\cdot$&&$\cdot$&s
-\\
-eV&s&s&s&s
- & solRad&$\cdot$&&$\cdot$&s
-\\
-F&s&s&s&s
- & sr&s&s&s&s
-\\
-g&s&s&s&s
- & T&s&s&s&s
-\\
-G&sd&$\cdot$&&sd
- & u&$\cdot$&&&s
-\\
-H&s&s&s&s
- & V&s&s&s&s
-\\
-h&$\cdot$&$\cdot$&$\cdot$&s
- & voxel&$\cdot$&$\cdot$&&s
-\\
-Hz&s&s&s&s
- & W&s&s&s&s
-\\
-J&s&s&s&s
- & Wb&s&s&s&s
-\\
-Jy&s&s&s&s
- & yr&sp&$\cdot$&sp&sp
-\\
-K&s&s&s&s
-\\
+%&percent&&&$\cdot$& & K&kelvin&s&s&s&s\\
+A&ampere&s&s&s&s & lm&lumen&s&s&s&s\\
+a&julian year&s&&s&s & lx&lux&s&s&s&s\\
+adu&ADU&$\cdot$&&&s & lyr&light year&$\cdot$&$\cdot$&&s\\
+Angstrom&angstrom&d&&$\cdot$&dp & m&meter&s&s&s&s\\
+angstrom&angstrom&&$\cdot$&&d & mag&magnitudes&s&$\cdot$&s&s\\
+arcmin&arc minute&$\cdot$&$\cdot$&$\cdot$&s & mas&milliarcsecond&$\cdot$&&$\cdot$&$\cdot$\\
+arcsec&arc second&$\cdot$&$\cdot$&s&s & min&minute (time)&$\cdot$&$\cdot$&$\cdot$&s\\
+AU&astro'l unit&$\cdot$&$\cdot$&$\cdot$&s & mol&mole&s&s&s&s\\
+barn&barn&sd&$\cdot$&s&sd & N&newton&s&s&s&s\\
+beam&beam&$\cdot$&&&s & Ohm&ohm&s&&s&s\\
+bin&bin&$\cdot$&$\cdot$&&s & ohm&ohm&&s&&\\
+bit&bit&s&&s&sb & Pa&pascal&s&s&s&s\\
+byte&byte&sp&$\cdot$&s&sbp & pc&parsec&s&s&s&s\\
+B&byte&&&&sb & ph&photon&$\cdot$&&&s\\
+C&coulomb&s&s&s&s & photon&photon&p&$\cdot$&&sp\\
+cd&candela&s&s&s&s & pix&pixel&$\cdot$&&$\cdot$&s\\
+chan&channel&$\cdot$&$\cdot$&&s & pixel&pixel&p&$\cdot$&&sp\\
+count&number&$\cdot$&$\cdot$&&sp & R&rayleigh&s&&&s\\
+Crab&crab&&s&& & rad&radian&s&s&s&s\\
+ct&number&$\cdot$&&$\cdot$&s & Ry&rydberg&$\cdot$&&s&s\\
+d&day&$\cdot$&$\cdot$&$\cdot$&s & s&second (time)&s&s&s&s\\
+dB&decibel&&&&$\cdot$ & S&siemens&s&s&s&s\\
+D&debye&$\cdot$&&$\cdot$&s & solLum&luminosity&$\cdot$&&$\cdot$&s\\
+deg&degree (angle)&$\cdot$&$\cdot$&$\cdot$&s & solMass&solar mass&$\cdot$&&$\cdot$&s\\
+erg&erg&d&$\cdot$&&sd & solRad&solar radius&$\cdot$&&$\cdot$&s\\
+eV&electron volt&s&s&s&s & sr&steradian&s&s&s&s\\
+F&farad&s&s&s&s & T&tesla&s&s&s&s\\
+g&gramme&s&s&s&s & u&AMU&$\cdot$&&&s\\
+G&gauss&sd&$\cdot$&&sd & V&volt&s&s&s&s\\
+H&henry&s&s&s&s & voxel&voxel&$\cdot$&$\cdot$&&s\\
+h&hour&$\cdot$&$\cdot$&$\cdot$&s & W&watt&s&s&s&s\\
+Hz&hertz&s&s&s&s & Wb&weber&s&s&s&s\\
+J&joule&s&s&s&s & yr&julian year&sp&$\cdot$&sp&sp\\
+Jy&jansky&s&s&s&s\\
