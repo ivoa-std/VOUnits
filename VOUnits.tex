@@ -162,7 +162,7 @@ Jesus Salgado}
 \newcommand{\brown}{\textcolor[rgb]{0.50,0.10,0.10}}
 %%%%%%%%%%%%%%%%%
 
-%\usepackage{showlabels}
+\usepackage{showlabels}
 
 
 
@@ -182,14 +182,14 @@ Jesus Salgado}
 \listoftables
 \newpage
 \section*{Abstract}
+This document describes a recommended syntax for writing the string
+representation of unit labels (`VOUnits').  In addition, it describes
+a set of recognised and deprecated units, which is as far as possible
+consistent with other relevant standards (BIPM, ISO/IEC and the IAU).
 
-This document describes common practices in manipulating
-units in astronomical metadata and defines a means of consistent
-representation within VO services.
-
-The core of the document contains the recommended rules for writing string representations 
-of unit labels, called VOUnits.
-
+The intention is that units written to conform to this specification
+will likely also be parsable by other well-known parsers.  To this
+end, we include machine-readable grammars for other units syntaxes.
 \section*{Status of this document}
 
 This is an IVOA Proposed Recommendation made available for public review.
@@ -226,12 +226,7 @@ Jeff Lusted,
 Arnold Rots,
 Mark Taylor,
 Brian Thomas
-and recent contributors on the DM forum.
-%This document is just an update of the previous draft discussed in
-%Strasbourg Interop meeting in 2009. It will be completed with
-%appropriate grammar and tools to check different levels of consistency
-%for a unit string used in the VO context.
-
+and recent contributors on the DM and Semantics forums.
 
 \section{Introduction}
 
@@ -244,6 +239,9 @@ We \emph{recommend}, therefore, that applications which write out
 units should do so using \emph{only} the VOUnits syntax, and that
 applications reading units should be able to read \emph{at least} the
 VOUnits syntax, plus all of the units of \prettyref{sec:knownunits}.
+It is not, however, quite possible for VOUnits to be in the
+intersection of existing syntaxes; there is futher discussion of this
+point in \prettyref{sec:deviations}.
 
 We also provide, for information, a set of self- and mutually-consistent
 machine-readable grammars for all of the syntaxes discussed.
@@ -278,12 +276,11 @@ The normative content of this document is \prettyref{sec:proposal} and \prettyre
 Generally, every quantity provided in astronomy has a unit attached to
 its value or is unitless (\eg a ratio, or a numerical multiplier).  
 
-The Units lie at the core of the VO architecture, as can be seen in \prettyref{fig:architecture}.
+Units lie at the core of the VO architecture, as can be seen in \prettyref{fig:architecture}.
 Most of the existing data and metadata collections accessible in the resource
-layer do have some legacy units, which are mandatory for any scientific use of
+layer have some legacy units, which are mandatory for any scientific use of
 the corresponding data.  Units can be embedded in data (\eg FITS headers) or be
 implied by convention and/or (preferably) specified in metadata.
-
 
 Units also appear in the VOTable format \citep{ochsenbein11}, through the use
 of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
@@ -311,19 +308,44 @@ Discussions about units often suffer from misunderstandings arising from cultura
 differences or ambiguities in the adopted vocabulary. For the sake of clarity, in this 
 document, the following concepts are used:
 
-\begin{itemize}
-\item a \textbf{quantity} is the combination of a (numerical) {\em value}, measured for a {\em concept} and expressed in a given {\em unit}. 
+%\begin{itemize}
+%\item 
+A \textbf{quantity} is the combination of a (numerical) {\em
+value}, measured for a {\em concept} and expressed in terms of a given
+{\em unit}; there may be other structure to a quantity, such as
+uncertainty or even provenance. 
 In the VO context, the nature of the concept can be expressed with a UCD or a utype. This document does not address the full issue of
 representing quantities, but focusses on the {\em unit} part.
-\item a \textbf{unit} can be expressed in various forms: in natural language (\eg \emph{metres per second squared}), with a combination
-of symbols with typographic conventions (\eg m s$^{-2}$), or by a simplified text label (\eg \unit{m.s-2}). VOUnit deals with the
-label form, which is easier to standardize, parse and exchange. A VOUnit corresponds in the most general case to a combination of
-several (possibly prefixed) symbols with mathematical operations expressed in a controlled syntax.
-\item a \textbf{base unit} is represented by a \textbf{base symbol}, with unambiguous meaning.
-\item a \textbf{prefix} or \textbf{scale factor} is prepended to a
-\textbf{base symbol} to scale it, most typically by powers of ten.
-\item a \textbf{symbol} or \unit{sym} is either a base symbol or a prefixed base symbol.
-\end{itemize}
+
+%\item
+A \textbf{unit} can be expressed in various forms: in natural language
+(\eg \emph{metres per second squared}), with a combination of symbols
+with typographic conventions (\eg m s$^{-2}$), or by a simplified text
+label (\eg \unit{m.s-2}). VOUnit deals with the label form, which is
+easier to standardize, parse and exchange. A VOUnit corresponds in the
+most general case to a combination of several (possibly prefixed)
+symbols with mathematical operations expressed in a controlled syntax.
+
+A \textbf{unit} consists of a sequence of \textbf{unit components},
+each of which represents a \textbf{base unit}, possibly modified by a
+multiplicative \textbf{prefix} (of one or two characters), and raised
+to an integer or rational power.  The whole unit may (in some
+syntaxes) be prefixed by a numerical \textbf{scale-factor}.
+
+Each of the \textbf{base units} (for example, the metre) is
+represented by a \textbf{base symbol} (for example \unit{m}).  Each
+syntax has a number of \textbf{known units}
+(\prettyref{sec:knownunits}), for each one of which there is at least
+one symbol which identifies only that unit.
+
+A \textbf{symbol} is either a base symbol or a base symbol with a
+scaling string prefix.
+
+For example, in the unit of \unit{1.663e-1mm.s**-1}, the scalefactor
+is $1.663\times10^{-1}$, the two unit-components are \texttt{mm}
+and \texttt{s**-1}; the first symbol has base symbol \texttt{m} and
+prefix \texttt{m} (for `milli'), and the second has base
+symbol \texttt{s}, no prefix, and the power~$-1$.
 
 %% Remark: some complex questions, more related to data modeling than to units, such as how a quantity 
 %% is associated to its measurement error, or how groups of coordinates are described, are not addressed in this
@@ -337,20 +359,16 @@ several (possibly prefixed) symbols with mathematical operations expressed in a 
 The purpose of this document is to provide a reference specification of how
 to write VOUnits, in order to maximize interoperability within the VO;
 the intention is that VOUnit strings should be reliably
-parseable by computer, with a single interpretation.
+parseable by humans \emph{and} computers, with a single interpretation.
 This is broadly the case for the other existing
 unit-string syntaxes, although there are some slight ambiguities in
 the specifications of these syntaxes (cf \prettyref{appx:grammar}).
 We therefore include a set of self- and mutually-consistent
 machine-readable grammars for all of the syntaxes discussed.
 
-VOUnits will not try to reinvent the wheel, and will be as compliant as possible with
+We aim not to reinvent the wheel, and to be as compliant as possible with
 legacy metadata in major archives, and astronomers' habits.
 
-%% By explicitly stating what must (and must not) be used, what may be used, and
-%% giving clear recommendations as to the preferred practices, it should avoid some
-%% common misinterpretations and confusions that are often encountered when dealing with
-%% units.
 In particular:
 \begin{itemize}
 \item We describe (\prettyref{appx:current}) a number of existing unit
@@ -382,17 +400,25 @@ In particular:
 
 
 
-\subsection {What this document will not do}
+\subsection{What this document will not do}
 \label{sec:outofscope}
 
-This Recommendation does \textbf{not} prescribe what units data providers
-employ, nor demand that a given quantity be expressed in a
-unique way (\eg all distances in \unit{m}).  So long as data is labelled 
-in a recognised system, a
-translation layer can be provided. Data providers can customise the
-translation tools if required. Depending on preference and the
-operations required, the user may have a choice of units for his or her
-query and for the result.
+This Recommendation does \textbf{not} prescribe what units data
+providers employ, except to the extent that we avoid giving a standard
+interpretation for a unit in some cases (for example we do not
+acknowledge the degree celsius or the century as units).  Since we do
+not forbid `unrecognised' units, this need not restrict data providers.
+Nor do we demand that a given quantity be expressed in a
+unique way (\eg all distances in \unit{m}).  So long as data is
+labelled in a recognised system, a translation layer can be
+provided. Data providers can customise the translation tools if
+required. Depending on preference and the operations required, the
+user may have a choice of units for his or her query and for the
+result.  In particular, the Recommendation does not require that only
+recognised units are used.  While it is obviously desirable for data
+providers to use recognised and non-deprecated units where possible,
+there are occasions when this is unnecessary or undesirable.
+See \prettyref{sec:deviations}.
 
 This Recommendation does not discuss \emph{quantities} at all.  That
 is, we do not discuss the combination of number and unit which refers
@@ -404,20 +430,6 @@ other data-modelling imponderables which have in the past, possibly
 surprisingly, generated a great deal of rhetorical heat within the
 IVOA without, so far, a generally acceptable resolution.
 
-%% VOUnits do not specify how transformation of quantities is done. But VOUnits describe the
-%% units of each quantity in a standard way, allowing a client to do the conversion if the underlying transformation 
-%% model is known. This is the case for simple operations such as converting light wavelengths into
-%% frequencies, but also for more complex ones such as coordinate conversions or converting
-%% magnitudes into fluxes.
-
-%The former is the domain of the
-%PhotometryDataModel to be issued in a separate Data Model effort. See  
-%(\violet{\footnotesize{\url{http://www.ivoa.net/cgi-bin/twiki/bin/view/IVOA/PhotometryDataModel}}}) for more information and current developments.\\
-%Excellent libraries \eg \textbf{AST} in C \cite{AST}
-% (\violet{\footnotesize{\url{http://www.starlink.ac.uk/\~dsb/ast/ast.html}}})\\,
-%or \textbf{SLALIB} for Java, already exist for the latter.
-%\violet{\footnotesize{\url{http.www.starlink.rl.ac.uk/star/docs/sun67.htx/sun67.html}}}\\
-
 This Recommendation describes only isolated units, and not arrays,
 records or other combinations of units.  Thus, it does not cover
 declaring an RA-Dec pair, for example. Several VO protocols require
@@ -427,9 +439,35 @@ common example.  This specification does not cover this situation,
 although we hope that where individual unit strings are covered in
 such instances, their syntax will conform to this specification.
 
+In general, this specification is concerned almost exclusively with
+the syntactic question of what is and is not a valid unit string,
+leaving most questions of interpretation to a higher layer in an
+application stack.  Specifically:
+\begin{itemize}
+\item The specification does not forbid `unknown' units.  An
+implementation of this specification should be able to recognise, and
+communicate, that a unit is unknown, but it is not required to reject
+a unit string on the grounds that it is unrecognised.
+
+\item Similarly, although \prettyref{tabx:knownunits} forbids some
+units from having SI prefixes, a VOUnit implementation should not
+itself reject a unit string which incorrectly includes a prefix, but
+should instead just make this information available.
+
+\item The list of known units in \prettyref{sec:knownunits} is not
+specific about the precise definitions of the units in question; for
+example, it refers to the `second' without distinguishing between the
+various possible definitions that the second can have.  In a
+particular context, a data provider may need to indicate which of a
+number of possible definitions is being used in fact.  That said, a
+VOUnits processor must interpret the symbols
+of \prettyref{tabx:knownunits} compatibly with the indicated units:
+a \unit{m} is always a metre of one type or another, and may not be
+interpreted as, for example, a minute.
+\end{itemize}
+
 \section{Proposal for VOUnits\label{sec:proposal}}
 
-%% By systematically comparing the four reference schemes described above (details are given in Appendix~\ref{appx:comparisons}), 
 The rules for VOUnits are defined in this section.
 Various aspects are addressed:
 \begin{itemize}
@@ -438,7 +476,6 @@ Various aspects are addressed:
 \item what prefixes are allowed and how they are used;
 \item how symbols are combined.
 \end{itemize}
-
 A formal grammar summarizing these conventions is given
 in \prettyref{appx:vougrammar}.
 
@@ -457,6 +494,30 @@ Following the current usage in unit labels
 case-sensitive strings of chars consisting of printable ASCII
 characters} (values coded 20 to 7E in hexadecimal).  The syntax
 therefore excludes special characters such as \AA\ or \micro.
+
+\subsection{Identifying prefixes within strings\label{sec:parsing-components}}
+
+A \textbf{symbol} within a unit-component should be parsed as follows:
+\begin{enumerate}
+\item If it corresponds to a known \textbf{base symbol}, then it
+should be recognised as such -- the \unit{Pa} is always the Pascal,
+and the \texttt{P} is not parsed as a `peta' prefix (this is
+effectively a special case which is distinguished from the `normal'
+case below).
+
+\item If the symbol starts with a multiplicative prefix, then this is
+recognised independently of whether the resulting base symbol is a
+known or unknown unit -- thus \unit{Mm} and \unit{Mfurlong} are parsed
+as millions of metres and furlongs, but note that this implies, for
+the sake of consistency, that \unit{furlong} is parsed as the
+femto-`urlong'.
+
+\item In the VOUnits syntax (a significant divergence from the other
+syntaxes), base symbols may be put between single
+quotes \unit{'...'}.  Such symbols are always parsed as
+unrecognised unit symbols which are not further examined.
+See \prettyref{sec:quoting} for discussion.
+\end{enumerate}
 
 \subsection{Base units\label{sec:baseUnits}}
 
@@ -514,6 +575,12 @@ as long as they are parsed giving preference to the syntaxes and prefixes descri
 Thus the string \unit{furlong/week} should parse successfully (though
 perhaps with suitably prominent warnings) as the femto-`urlong' per week.
 
+The Unity library (\prettyref{sec:libraries}) recognises units with
+respect to a subset of the QUDT unit framework~\cite{qudt}, with some
+astronomy-specific additions.  This is a particularly comprehensive
+collection of units, and we commend it to the IVOA community as
+a \emph{lingua franca} for this type of work.
+
 \begin{table}
 \hbox to \textwidth{\hss
 \catcode`\%=11
@@ -537,19 +604,21 @@ preferred one.}
 
 The symbol~`b' is sometimes used for `bits', but this is the SI symbol
 for `barn', and this Recommendation aligns with the SI standard in
-this respect.
+this respect.  Since the same symbol is sometimes used for `bytes', it
+is probably best avoided in any case.
 
 \citet[item 13-9.c]{std:iec80000-13} notes that the term `byte'
 `has been used for numbers of bits other than eight' in the past, but
 that it should now always be used for eight-bit bytes; we recommend
 the same interpretation here.  The same source notes the theoretical
-confusion between the symbol \units{B} for `byte' and for `Bel'.  We
+confusion between the symbol \unit{B} for `byte' and for `Bel'.  We
 believe it would be perverse in our present context to recommend
-against using `B' for byte, and so resolve this in this Recommendation
+against using `B' for byte, and so resolve this here
 in favour of `byte' by mandating that \unit{B} is an
 acceptable symbol for `byte', that the \unit{dB} is an
-unprefixable special-case unit, and by implication that the `dB'
-should not be interpreted as a tenth of a byte.
+unprefixable special-case unit (as discussed below), and by implication that the `dB'
+should not be interpreted as a tenth of a byte.\footnote{We have no
+evidence that this has been a common source of confusion within the IVOA.}
 
 \subsection{Scale factors\label{sec:scaleFactors}}
 
@@ -649,7 +718,8 @@ listed in \prettyref{tab:vouadopted}.
 
 Minutes, hours, and days of time must be represented in VOUnits by the
 symbols \unit{min}, \unit{h} and \unit{d}; however the \unit{cd} is
-the candela, not the centi-day.  The year can be expressed by
+the candela, not the centi-day.\footnote{We therefore rule out
+interpreting \units{dB/cd} as 0.9\units{mbit/s}.}  The year can be expressed by
 \unit{yr} (common practice),
 or \unit{a},
 as recommended by ISO \citep[Annex C]{std:iso80000-3}
@@ -688,6 +758,8 @@ with their correct VOUnit interpretation and what they do not mean.
 \unit{Pa}&pascal&peta-year\\
 \unit{ha}&hecto-year&hectare\\
 \unit{cd}&candela&centi-day\\
+\unit{dB}&decibel&deci-byte\\
+\unit{B}&byte&bel\\
 \unit{au}&atto-atomic-mass&astronomical unit\\
 \end{tabular}
 \end{center}
@@ -744,12 +816,11 @@ questionable. They arise in fact from a need to describe quantities, when the on
 piece of metadata available is the unit label. Count, photon, pixel, bin, voxel, bit,
 byte are concepts, just as apple or banana. The associated quantities could be fully
 described with a UCD, a value and a void unit label.
-
 It is possible to count a number of bananas, or to express a distance measured in
 bananas, but this does not make a banana a reference unit.
 
 The FITS document provides the most general description of all the compared schemes, 
-and VOUnits adopts similar definitions, in order to acknowledge at best legacy metadata.
+and VOUnits adopts similar definitions, for the sake of legacy metadata.
 The VOUnits symbol for magnitudes is \unit{mag}.
 The symbol \unit{Sun} is used to express ratios relative to solar values, for example
 abundances or metallicities.
@@ -835,9 +906,6 @@ which must be a power of ten.
 %% Examples of valid VOUnits are \unit{2.54cm}, \unit{10+8m}, \unit{3.45 10**(-4)Jy}. 
 Scale factors from \prettyref{tabx:comparUnitScale} should however be
 preferred and used whenever possible.
-%\emph{Note (NG): these appear to be `quantities' rather than `units',
-%  in the terminology of \prettyref{sec:notations} -- resolve
-%  during/after RFC period.}
 
 \begin{table}%[ht]
 \begin{center}
@@ -911,6 +979,67 @@ even if they deprecate them at some later processing stage.
 %We need to ensure that we are consistent with the IVOA Quantity model,
 %where appropriate.
 
+\subsection{Preceding numerical factor}
+
+A VOUnits unit may be preceded by a numerical scale-factor to indicate a
+derived unit.  For example, the inch might appear as the unit
+of \unit{25.4mm}.  See \prettyref{appx:vougrammar} for the syntax of
+the VOUnits numerical string.
+
+A data provider may choose to use such a unit in order to represent a
+unit which is not listed as one of the VOUnit `known units'.  For
+example, given a VOTable column of masses relative to Jupiter's mass,
+one might label it as having units of \unit{1.898E27kg}.
+The \emph{advantage} of doing so is that the data consumer can
+translate the column data into physical units without further
+information, and the data source is thus self-contained.
+The \emph{disadvantage} of doing so is (i) that the intention might be
+obscured; and (ii) that the measurements may be relative to the actual
+jupiter mass rather than merely expressed in those terms, so that they
+should change if the actual mass were to be refined as a result of
+a recalibration.  The data provider retains the choice of which
+strategy to take.
+
+This Recommendation does not prescribe how many significant figures
+should be in a scale-factor, nor whether it should be interpreted as
+single- or double-precision, nor how units with scale-factors should
+be compared for equality.  All of these are implementation choices for
+the software which is handling the units.
+
+\subsection{Quoted, unknown, units\label{sec:quoting}}
+
+In the VOUnits syntax (a significant divergence from the other
+syntaxes), base symbols may be put between single
+quotes \unit{'...'}.  Such symbols are always parsed as
+unrecognised unit symbols which are not further examined.
+
+This has two consequences.  Firstly, it means that an unknown symbol
+which happens to start with an SI (or binary) prefix is not broken
+into a base symbol and prefix: thus \unit{'furlong'} is parsed as
+expected, whereas \unit{furlong} would be the femto-`urlong'.
+Secondly, a quoted symbol is parsed as an unrecognised unit, even if
+it would otherwise indicate a known unit; thus the unit \unit{'m'} is
+parsed as an unknown unit `m', and does not indicate the metre.
+
+This facility means that a data provider may label data with units of,
+for example, \unit{'martianDay'} or the \unit{'B'}, while still
+remaining conformant with the VOUnits Recommendation, and without
+risking the leading \texttt{m} being misparsed as an SI prefix, or the
+`B' being misparsed as a `byte'.
+
+\subsection{Deviations between VOUnits and other grammars}
+\label{sec:deviations}
+
+XXX
+
+OGIP not compatible
+
+leading floats, and why that may not be a good idea
+
+unrecognised units are OK, and why one might or should not use them
+
+Are seconds always SI/atomic seconds?
+
 \subsection{Remarks and good practices}
 
 VOUnits, as described in this document, provide a string serialization of
@@ -921,7 +1050,7 @@ means of representation expected in the VO:
 \item as a unit element in an XML serialization of some data model: \verb|<unit>...</unit>|
 \end{itemize}
 
-Avoiding the use of special characters (\AA, ', ", ...) reduces the
+Avoiding the use of special characters (\AA, ', $\mu$,\dots) reduces the
 complexity of using VOUnits in query languages or other programming environments.
 
 Even if enclosing VOUnits with single or double quotes should be sufficient to
@@ -1088,7 +1217,10 @@ applications and interoperate via protocols. \prettyref{fig:units2} illustrates 
 could intervene to ensure consistent use of units.
 
 
-\newpage
+\clearpage
+% Put a \clearpage before each appendix -- these are fairly distinct,
+% and users may well want to refer to individual ones, so make it easy
+% to jump between them.
 
 \appendix
 
@@ -1163,7 +1295,14 @@ use as the toolkit behind the {\sc casa} package.)
 %implement the IAU 2000 recommendations.
 \end{itemize}
 
-\section{Comparison of existing schemes and VOUnits\label{appx:comparisons}}
+\clearpage
+\section{History: Comparison of unit-string schemes\label{appx:comparisons}}
+
+In this section, we compare the existing unit-string syntaxes and the
+proposed standard.  We have included these comparisons for
+more-or-less historical reasons, to try to highlight the variations
+between syntaxes, and so imply the motivation for this Recommendation,
+namely that the current practice is disturbingly heterogeneous.
 
 %\subsection{String representation and encoding}
 
@@ -1401,6 +1540,7 @@ use as the toolkit behind the {\sc casa} package.)
 \end{longtable}
 
 
+\clearpage
 \section{Formal grammars\label{appx:grammar}}
 % These grammars are extracted from http://bitbucket.org/nxg/unity
 % revision f9b7e66b0068
@@ -1451,7 +1591,7 @@ In these grammars, the terminals are as given in
 \caption{\label{tabx:terminals}The terminals used in the grammars}
 \end{table}
 
-\subsection{FITS}
+\subsection{The FITS grammar (informative)}
 \label{appx:fitsgrammar}
 
 For the FITS units syntax, see section~4.3 of~\cite{pence10}, and its
@@ -1460,16 +1600,17 @@ associated tables.  Our preferred FITS grammar is in
 
 \begin{table}[ht]
 \verbatiminput{unity-grammars/unity-fits.txt}
-\caption{\label{tabx:fitsgrammar}The FITS grammar}
+\caption[The FITS grammar]{\label{tabx:fitsgrammar}The FITS grammar.
+See \prettyref{appx:fitsgrammar}.}
 \end{table}
 
 As noted above in \prettyref{sec:fitsquote}, 
 the FITS specification isn't completely clear on the topic of 
-solidi, saying `[t]he IAU style manual forbids
+solidi, saying ``[t]he IAU style manual forbids
 the use of more than one solidus (/) character in a units
 string. However, since normal mathematical precedence rules apply
 in this context, more than one solidus may be used but is
-discouraged'.  This does not really resolve the question of whether, for
+discouraged''.  This does not really resolve the question of whether, for
 example, \texttt{kg/m s} should be parsed as \units{kg~m^{-1}~s^{-1}}
 or as \units{kg~m^{-1}~s}, since this is a question of both operator
 precedence and (left-)associativity, where there might be different
@@ -1489,6 +1630,11 @@ the FITS and OGIP syntaxes,
 but mean \units{kg~m^{-1}~s^{-1}} in the FITS syntax, and
 \units{kg~m^{-1}~s} in the OGIP one.
 
+The FITS specification permits a leading numeric multiplier, but
+``[c]reators of FITS files are encouraged to use the numeric
+multiplier only when the available standard scale factors of [SI] will
+not suffice''.
+
 Other ambiguities:
 \begin{itemize}
 \item The FITS specification may or may not be intended to permit 
@@ -1498,7 +1644,7 @@ Other ambiguities:
   invalid here.
 \end{itemize}
 
-\subsection{OGIP}
+\subsection{The OGIP grammar (informative)}
 \label{appx:ogipgrammar}
 
 For the OGIP units syntax, see \cite{george95}.  Our preferred OGIP
@@ -1506,14 +1652,30 @@ grammar is in \prettyref{tabx:ogipgrammar}.
 
 \begin{table}[ht]
 \verbatiminput{unity-grammars/unity-ogip.txt}
-\caption{\label{tabx:ogipgrammar}The OGIP grammar}
+\caption[The OGIP grammar]{\label{tabx:ogipgrammar}The OGIP grammar.
+Note that the \texttt{FLOAT} in the \texttt{scalefactor} production
+must be a power of ten.
+See \prettyref{appx:ogipgrammar}.}
 \end{table}
+
+The OGIP specification somewhat reluctantly concedes (in its section
+3.2) that ``occasionally it may be preferable to include [leading
+scale] factors on the grounds of user-friendliness'', but that ``[t]he
+inclusion of numerical factors should therefore be avoided wherever
+possible'', and it is ``suggested'' that the scale factor should in any case
+be restricted to powers of~10.
+%On these grounds, the \texttt{FLOAT}
+%terminal in the grammar should be extra-syntactically restricted to
+%being a round power of ten.
 
 Specification ambiguities:
 \begin{itemize}
 \item The OGIP specification permits a space between the leading
   factor and the rest of the unit (by implication from the provided
   examples).
+\item The specification does not indicate the format of the numerical
+  factor in the case where it is not a power of ten.  We have
+  suggested \texttt{FLOAT} here (see \prettyref{tabx:terminals}).
 \item OGIP \emph{recommends} having no whitespace after the division
   solidus, but does not forbid it; therefore we permit it in this
   grammar.
@@ -1530,7 +1692,7 @@ Specification ambiguities:
   like \texttt{m**-2}, is forbidden.
 \end{itemize}
 
-\subsection{The CDS grammar}
+\subsection{The CDS grammar (informative)}
 \label{appx:cdsgrammar}
 
 For the CDS units syntax, see \cite[\S3.2]{cds00}.  Our preferred CDS
@@ -1538,9 +1700,28 @@ grammar is in \prettyref{tabx:cdsgrammar}.
 
 \begin{table}[ht]
 \verbatiminput{unity-grammars/unity-cds.txt}
-\caption{\label{tabx:cdsgrammar}The CDS grammar}
+\caption[The CDS grammar]{\label{tabx:cdsgrammar}The CDS grammar.
+See \prettyref{appx:cdsgrammar}.}
 \end{table}
 
+Specification ambiguities:
+\begin{itemize}
+\item The CDS document indicates that units should be raised to powers by
+concatenation of the unit string with an integer, but does so rather
+elliptically, so that it is not clear whether \texttt{m+2} is
+permitted (the relevant examples show this as \texttt{m2}).  We take
+this to be permitted in this grammar.
+\item The specification does not indicate the format of the numerical
+  factor in the case where it is not a power of ten and not
+  a \texttt{CDSFLOAT}.  We have suggested \texttt{FLOAT} here
+  (see \prettyref{tabx:terminals}).
+\item The document does not specify or illustrate how \texttt{kg/m/s}
+should be parsed.  Since the document mentions the OGIP standard (even
+though it does not permit OGIP's syntax for powers, \texttt{m**2}), we
+take it that this is valid, and equivalent to \units{kg~m^{-1}~s^{-1}}.
+\end{itemize}
+
+This specification places no restrictions on the leading scale factor.
 The \texttt{CDSFLOAT} terminal is a string matching the regular
 expression
 \begin{quotation}
@@ -1555,7 +1736,7 @@ brackets, `\texttt{[}' and `\texttt{]}'.
 
 
 
-\subsection{The VOUnits grammar}
+\subsection{The VOUnits grammar (normative)}
 \label{appx:vougrammar}
 
 The VOUnits grammar is defined by this section, the grammar in
@@ -1580,12 +1761,22 @@ In particular:
   expression.
 \end{itemize}
 
+In \prettyref{tabx:vougrammar}, the \texttt{VOUFLOAT} terminal is a
+string matching the regular expression
+\begin{quotation}
+\texttt{0\textbackslash.[0-9]+([eE][+-]?[0-9]+)?} or
+\texttt{[1-9][0-9]*(\textbackslash.[0-9]+)?([eE][+-]?[0-9]+)?}
+\end{quotation}
+(that is, something resembling \texttt{1.5e+11}).
+
 \begin{table}[ht]
-\verbatiminput{unity-grammars/unity-vou.txt}
-\caption{\label{tabx:vougrammar}The VOUnits grammar}
+\verbatiminput{unity-grammars/unity-vounits.txt}
+\caption[The VOUnits grammar]{\label{tabx:vougrammar}The VOUnits
+grammar.  See \prettyref{appx:vougrammar}.}
 \end{table}
 
-%\clearpage
+\clearpage
+
 \section{Updates of this document}
 \begin{itemize}
 \item 1.0-20130724: Rephrasing and clarification, responding to RFC
@@ -1643,7 +1834,7 @@ Minor typographical fixes
 % \end{itemize}
 \end{itemize}
 
-
+\clearpage
 \bibliographystyle{plainnat-eprints}
 \bibliography{bib}
 

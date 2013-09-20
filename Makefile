@@ -4,7 +4,7 @@
 VOUnits.pdf: VOUnits.tex unity-grammars known-units.tex
 	pdflatex VOUnits
 
-VOUnits.bbl: VOUnits.aux
+VOUnits.bbl: VOUnits.aux bib.bib
 	bibtex VOUnits
 
 unity-grammars: unity-grammars.zip
