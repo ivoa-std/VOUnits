@@ -102,7 +102,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{1.0-20130922}
+\date{1.0-20131011}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -124,9 +124,9 @@ Bruno Rino,
 Jesus Salgado}
 \editor{S\'{e}bastien Derri\`{e}re}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130724.pdf}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
@@ -146,7 +146,6 @@ Jesus Salgado}
 %\usepackage{lscape}
 %mir \textheight 9.0in \hoffset -0.5in \voffset -0.5in
 %\newcommand{\Sensitiv}{Variation}
-\newcommand{\Sensitiv}{Sensitivity}
 \definecolor{orange}{rgb}{0.8,0.5,0.0}
 \newcommand{\unit}[1]{\texttt{\small\color{orange}#1}}
 %\newcommand{\unit}[1]{\textbf{\textsf{\color{orange}#1}}}
@@ -567,7 +566,7 @@ The VOUnits base symbols are listed in \prettyref{tab:voubase}
 \begin{center}
 \def\arraystretch{1.2}
 \begin{tabular}{|rl|rl|rl|rl|}\hline
-\unit{m}&(metre)		&\unit{g}&(gramme) 	&\unit{J}&(joule)     	&\unit{Wb}&(weber)\\
+\unit{m}&(metre)		&\unit{g}&(gram) 	&\unit{J}&(joule)     	&\unit{Wb}&(weber)\\
 \unit{s}&(second of time)	&\unit{rad}&(radian)    &\unit{W}&(watt) 	&\unit{T}&(tesla)\\
 \unit{A}&(ampere)		&\unit{sr}&(steradian)  &\unit{C}&(coulomb)	&\unit{H}&(henry)\\
 \unit{K}&(kelvin)		&\unit{Hz}&(hertz)      &\unit{V}&(volt) 	&\unit{lm}&(lumen)\\
@@ -581,15 +580,6 @@ The VOUnits base symbols are listed in \prettyref{tab:voubase}
 For masses, the SI unit is \unit{kg}. However, existing specifications
 recommend not using scale factors with \unit{kg}, but attaching them
 only to \unit{g} instead.
-%% which makes the parsing potentially difficult. In VOUnits, only the 
-%% \unit{g} base symbol is defined, and \unit{kg} is implicitly allowed
-%% by using the 'k' scale factor with this base symbol. 
-%% This is just a way to simplify the parsing, by simultaneously allowing scale factors for \unit{g} and
-%% disallowing additional scale factors for \unit{kg}.
-
-%% No use of the Ohm was found in astronomy archives, therefore the
-%% possible non-compliance of the OGIP syntax was not considered
-%% critical.
 
 Recognising a known unit takes priority over parsing for prefixes.
 Thus the string \unit{Pa} represents the Pascal, and not the
@@ -1215,12 +1205,12 @@ column lacking a unit?
   % Requires \usepackage{graphicx}
   \includegraphics[width=\textwidth]{./units2.jpg}
   \caption{This shows the levels at which conversions might be done.
-\textcolor{blue}{Blue arrows}: At the point where an astronomer or
+\textcolor{blue}{Plain arrows}: At the point where an astronomer or
   data provider submits input to the VO, we should provide tools to
   ensure that units are labeled consistently according to VOUnits. 
   This implies that a units parsing step is included prior to metadata ingestion into the VO.
-\brown{Brown arrows}: Conversions required to supply results to
-  the user in specified or reasonable units \eg  \texttt{J.s-1} to \texttt{W}, are done where and when they are required.}
+\brown{Dashed arrows}: Conversions required to supply results to
+  the user in specified or user-prefered units \eg  \texttt{J.s-1} to \texttt{W}, are done where and when they are required.}
   \label{fig:units2}
 \end{figure}
 
@@ -1794,6 +1784,8 @@ grammar.  See \prettyref{appx:vougrammar}.}
 
 \section{Updates of this document (informative)}
 \begin{itemize}
+\item 1.0-20131011: Changed gramme in gram; removed color property to distinguish arrows in fig .2;
+Removed astro'l unit typo from known-units.tex
 \item 1.0-20130922: Responding to RFC and mailing list comments.
 Addition of quoted units and arbitrary scale-factor (so updates to
 grammars, which now match Unity v0.9).  Some reformatting of tables.
