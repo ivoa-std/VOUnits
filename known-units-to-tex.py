@@ -14,8 +14,7 @@ nrows = (len(lines)+1)/2
 
 # The name-generating hack below doesn't work well in all cases,
 # so supply some explicit replacements.
-replacements = { 'qudt:AstronomicalUnit': "astro'l unit",
-                 'unity:DetectorChannel': 'channel',
+replacements = { 'unity:DetectorChannel': 'channel',
                  'qudt:DegreeAngle': 'degree (angle)',
                  'unity:DistributionBin': 'bin',
                  'qudt:Gram': 'gramme',
@@ -24,7 +23,7 @@ replacements = { 'qudt:AstronomicalUnit': "astro'l unit",
                  'qudt:SecondTime': 'second (time)',
                  'unity:SolarLuminosity': 'luminosity',
                  'unity:StellarMagnitude': 'magnitudes',
-                'qudt:UnifiedAtomicMassUnit': 'AMU',
+                 'qudt:UnifiedAtomicMassUnit': 'AMU',
                  }
 
 all_uppercase = re.compile('^[A-Z]+$')
