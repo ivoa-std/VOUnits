@@ -113,7 +113,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{1.0-20131025}
+\date{1.0-20131224}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -131,9 +131,10 @@ Mireille Louys\\
 Fran\c{c}ois Ochsenbein}
 \editor{S\'{e}bastien Derri\`{e}re and Norman Gray}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131025/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131025/}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
@@ -253,8 +254,8 @@ When found within normative sections, the key words
 \norm{recommended},
 \norm{may},
 \norm{optional},
-thus formatted, are to be interpreted as described in
-\cite{std:rfc2119}.
+thus formatted, are to be interpreted as described in RFC 2119
+\citep{std:rfc2119}.
 
 \section*{Acknowledgements}
 
@@ -392,7 +393,7 @@ syntax has a number of \textbf{known units}
 one symbol which identifies only that unit.
 
 A \textbf{symbol} is either a base symbol or a base symbol with a
-scaling string prefix.
+scaling prefix.
 
 For example, in the unit of \unit{1.663e-1mm.s**-1}, the scalefactor
 is $1.663\times10^{-1}$, the two unit-components are \texttt{mm}
@@ -494,7 +495,7 @@ specification by reference.
 
 In general, this Recommendation is concerned almost exclusively with
 the syntactic question of what is and is not a valid unit string,
-leaving most questions of interpretation to a higher layer in an
+leaving most questions of interpretation or enforcement to a higher layer in an
 application stack.  Specifically:
 \begin{itemize}
 \item The specification does not forbid `unknown' units.  An
@@ -553,7 +554,18 @@ extensions to this standard \norm{should} be restricted to this same range.
 All VOUnit strings \norm{must} be regarded as case-sensitive (the
 strings in the other syntaxes are also case-sensitive).
 
-\subsection{Identifying prefixes within strings\label{sec:parsing-components}}
+\subsection{Parsing unit strings -- overview\label{sec:parsing-components}}
+
+The unit string \unit{unknown} (in lower-case) is reserved for cases
+when the unit is unknown; that is, it is known that there should be a
+unit, but the unit string has been lost or not been specified.  It is
+not, however, part of the list of known units or the VOUnits grammar,
+and applications \norm{must} check for its presence before unit parsing.
+
+An empty unit string positively indicates that the corresponding
+quantity is dimensionless.  Since an empty string does not conform to
+the grammars below, this also \norm{must} be checked for before
+unit-parsing starts.
 
 A \textbf{symbol} within a unit-component \norm{should} be parsed as follows:
 \begin{enumerate}
@@ -574,6 +586,14 @@ Such symbols \norm{must} be parsed as
 unrecognised unit symbols which are not further examined.
 See \prettyref{sec:quoting} for discussion.
 \end{enumerate}
+
+A library which implements this specification \norm{should} be able to
+distinguish known and unknown units, and identify deviations from the
+restrictions on their use, below.  It \norm{should} be able to
+communicate such information to a caller, but it \norm{should not}
+unilaterally reject unit strings which use unknown units or use known
+units in disapproved ways (of course, a higher-level application is
+free to reject unit strings for any reason it pleases).
 
 \subsection{Base units\label{sec:baseUnits}}
 
@@ -630,6 +650,13 @@ astronomy-specific additions.  This is a particularly comprehensive
 collection of units, and we commend it to the IVOA community as
 a \emph{lingua franca} for this type of work.
 
+Sections \ref{sec:binary} to \ref{sec:other} below, discussing the set
+of known units, are longer than one might expect would be necessary.
+Most of the discussion concerns rather arcane edge-cases, or attempts
+to reconcile the minor deviations between the relevant existing
+standards.  In all cases, we have attempted to be as uninnovative and
+unsurprising as possible.
+
 Future versions of this specification may add to the set of known units.
 
 \begin{table}
@@ -643,15 +670,16 @@ Future versions of this specification may add to the set of known units.
 \hss}
 \caption[Known units in the various syntaxes]
 {\label{tabx:knownunits}Known units in the various syntaxes.
-In the table, a `$\cdot$' indicates that the unit is recognised in that syntax,
-an~`s' that it it additionally permitted to have SI prefixes,
-a~`b' that it is permitted to have binary prefixes,
-and a `d' that it is recognised but deprecated.
-For those units which have alternative symbols, a~`p' indicates the
-preferred one.}
+In the table, and for a given syntax, a `$\cdot$' indicates that the unit is recognised,
+an~`s' that it is additionally permitted to have SI prefixes,
+a~`b' that binary prefixes will be recognised,
+and a~`d' that it is recognised but deprecated.
+For those units which have alternative symbols for a given unit,
+a~`p' indicates the preferred one.}
 \end{table}
 
 \subsection{Binary units}
+\label{sec:binary}
 
 The symbol~`b' is sometimes used for `bits', but this is the SI symbol
 for `barn', and this Recommendation aligns with the SI standard in
@@ -664,21 +692,22 @@ that it should now always be used for eight-bit bytes; we recommend
 the same interpretation here.  The same source notes the theoretical
 confusion between the symbol \unit{B} for `byte' and for `Bel'.  We
 believe it would be perverse in our present context to recommend
-against using `B' for byte, and so resolve this here
+against using `B' for byte, and resolve this here
 in favour of `byte' by mandating that \unit{B} \norm{must} be parsed
 as indicating the `byte', that the \unit{dB} is an
-unprefixable special-case unit (as discussed below), and by implication that the `dB'
+unprefixable special-case unit (as discussed below), and by
+implication that the `dB'
 \norm{must not} be interpreted as a tenth of a byte.\footnote{We have no
 evidence that this has been a common source of confusion within the
 IVOA, or indeed anywhere else.}
 
 \subsection{Scale factors\label{sec:scaleFactors}}
 
-Units \norm{may} be prefixed by any of the 20 SI scale factors, or the eight
-binary scale factors.
+Units \norm{may} be prefixed by any of the 20 SI scale factors, 
+and a subset \norm{may} be prefixed by the eight binary scale factors.
 The SI scale factors -- provided in \prettyref{tab:vouscalefactors}a --
 are the same as those of \citet{si-brochure},
-{of \citet[\S6.5.4]{std:iso80000-1},
+of \citet[\S6.5.4]{std:iso80000-1},
 and of \citet[Table~5]{pence10}
 (see also \prettyref{tabx:comparUnitScale} for further comparisons).
 %\medskip
@@ -740,7 +769,17 @@ of \citet[\S6.5.4]{std:iso80000-1}.
 If data providers wish to use multiples of 1024 (ie, $2^{10}$) for
 units such as bytes or bits, they \norm{must} use the the binary prefixes
 of \citet[\S4]{std:iec80000-13}, reproduced in \prettyref{tab:vouscalefactors}b
-(these were originally specified in \citet{std:ieee1541-2002}).  
+(these originated in \citet{std:ieee1541-2002}).
+
+Note: the~`s' and~`b' annotations in \prettyref{tabx:knownunits}
+are not symmetric: the~`s' annotation indicates that SI
+prefixes are permitted in the given syntax, which means that they are
+also recognised when preceding unknown units (which have no
+restrictions on them); in contrast, binary prefixes are recognised
+exclusively on units with a~`b' annotation, which means that they
+are \emph{not} recognised with unknown units.  That is,
+the \unit{Mifurlong} is the mega-\texttt{ifurlong} and
+the \unit{Kifurlong} is the unknown unit \texttt{Kifurlong}.
 
 Note: The letter \unit{u} is used instead of the
 \micro\ symbol to represent a factor of $10^{-6}$, 
@@ -808,31 +847,21 @@ unit \unit{dadu} -- is this the deka-\unit{du} or the deci-\unit{adu}?
 The only cases where this ambiguity is possible are those involving
 known units starting with~`a' (\texttt{da} is unambiguously a
 deci-year for the same reason that \texttt{d} is unambiguously a day,
-because the presence of a bare unit would be ungrammatical).  We can
-think of no cases where the ambiguity is plausible enough that
-resolving it is worth the specification effort, so we deem the parse
-of \texttt{da.*} to be \textbf{unspecified}.
+because the presence of a bare unit prefix would be ungrammatical).
+We can think of no cases where the prefix is useful enough that
+resolving the ambiguity is worth the specification effort, so we deem
+the parse of \texttt{da.*} to be \textbf{unspecified}. %\footnote{The
+%% Working Group was informed at the specification stage that the
+%% dekagramme is still in use in parts of Europe for certain categories
+%% of delicious comestibles; this was deemed insufficient to save the
+%% prefix, since grocery shopping is not a core VOUnit use-case.}
+In consequence, data providers \norm{must not} use the \texttt{da}
+prefix, and \norm{should not} use the \texttt d prefix (as noted
+in \prettyref{sec:other}, the decibel, \unit{dB} is listed as a `known
+unit', as opposed to a deci-Bel).
 
-A few symbols which might theoretically be ambiguous are listed in
-\prettyref{tab:ambiguous},
-with their correct VOUnit interpretation and what they do not mean.
-
-\begin{table}[bht]
-\begin{center}
-\begin{tabular}{lll}
-\textbf{VOUnit}&\textbf{Correct interpretation}&\textbf{Incorrect}\\
-\unit{Pa}&pascal&peta-year\\
-\unit{ha}&hecto-year&hectare\\
-\unit{cd}&candela&centi-day\\
-\unit{dB}&decibel&deci-byte\\
-\unit{B}&byte&bel\\
-\unit{au}&astronomical unit&atto-atomic-mass\\
-\end{tabular}
-\end{center}
-\caption{\label{tab:ambiguous}Possibly ambiguous units}
-\end{table}
-
-\subsection{Other symbols}
+\subsection{Other symbols, and other remarks}
+\label{sec:other}
 
 \prettyref{tabx:comparUnitDeprecated} corresponds to Table~7 in the IAU document, and the IAU strongly
 recommends no longer using these units. 
@@ -857,15 +886,32 @@ The last set of VOUnits symbols, derived from this comparison, is in
 \unit{Ry} (rydberg)		&\unit{voxel}    		&\unit{solLum} (solar luminosity)&\unit{chan} (channel) 	\\
 \unit{lyr} (light year)		&\unit{bit}   			&\unit{solRad} (solar radius)	&\unit{bin} \\
 \unit{ct} or \unit{count}	&\unit{byte} (8 bits)   	&\unit{Sun} (relative to the Sun, e.g. abundances)&\unit{beam} 	\\
-\unit{ph} or \unit{photon} 	&\unit{adu}                     &\unit{D} (Debye)	&\unit{?} (unknown; see note)\\\hline
+\unit{ph} or \unit{photon} 	&\unit{adu}                     &\unit{D} (Debye)	&\unit{unknown} (unknown; see \prettyref{sec:parsing-components})\\\hline
 \end{tabular}
 \end{center}
 \caption[Miscellaneous VOUnits]
-{\label{tab:voumisc}Miscellaneous VOUnits.
-Note: The question mark (\unit{?}) \norm{should} be reserved for cases when
-the unit is unknown.  It is not, however, part of the list of known
-units or the VOUnits grammar, and should be checked for before unit
-parsing.}
+{\label{tab:voumisc}Miscellaneous VOUnits.}
+\end{table}
+
+A few symbols which might theoretically be ambiguous are listed in
+\prettyref{tab:ambiguous},
+with their consensus VOUnit interpretation.
+
+\begin{table}[bht]
+\begin{center}
+\begin{tabular}{|r|l|l|}
+\hline
+\textbf{VOUnit}&\textbf{Correct interpretation}&\textbf{Incorrect}\\
+\unit{Pa}&pascal&peta-year\\
+\unit{ha}&hecto-year&hectare\\
+\unit{cd}&candela&centi-day\\
+\unit{dB}&decibel&deci-byte\\
+\unit{B}&byte&bel\\
+\unit{au}&astronomical unit&atto-atomic-mass\\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{tab:ambiguous}Possibly ambiguous units}
 \end{table}
 
 It can be noted that some of the units listed in \prettyref{tabx:comparUnitOther} are 
@@ -887,7 +933,8 @@ are always used in lower case and singular form.
 The decibel, \unit{dB} is listed in the SI specification
 \citep[Table 8]{si-brochure} amongst a set of `other non-SI units',
 and mentioned by \citet[\S0.5]{std:iso80000-3} in a `Remark on
-logarithmic quantities'.  The \unit{dB} \norm{must} be parsed as a
+logarithmic quantities'.  The \unit{dB} is included in the list of
+`known units' of \prettyref{tabx:knownunits} and so \norm{must} be parsed as a
 unit by itself -- as opposed to being parsed as the prefix~`d'
 qualifying the unit `Bel' -- and both the decibel and Bel \norm{must
 not} be used with other scaling prefixes.
@@ -1025,13 +1072,18 @@ the software which is handling the units.
 
 \subsection{Quoting unknown units\label{sec:quoting}}
 
+The VOUnits syntax permits the use of `unknown units' (that is, units not listed
+in \prettyref{tabx:knownunits}).  There need be no syntactic indication that
+a unit is `unknown'; this is convenient, but creates some minor
+ambiguities.
+
 In the VOUnits syntax, base symbols may be put between single
 quotes \unit{'...'} (a significant divergence from the other
 syntaxes).  Such symbols \norm{must} be parsed as
 unrecognised unit symbols which are not further examined.
 
 This has two consequences.  Firstly, it means that an unknown symbol
-which happens to start with an SI (or binary) prefix is not broken
+which happens to start with an SI prefix is not broken
 into a base symbol and prefix: thus \unit{'furlong'} is parsed as
 expected, whereas \unit{furlong} would be the femto-`urlong'.
 Secondly, a quoted symbol is parsed as an unrecognised unit, even if
@@ -1043,8 +1095,6 @@ for example, \unit{'martianDay'} or the \unit{'B'}, while still
 remaining conformant with the VOUnits Recommendation, and without
 risking the leading \texttt{m} being misparsed as an SI prefix, or the
 `B' being misparsed as a `byte'.
-
-Functions may also be quoted, with the same interpretation.
 
 Quoted units can take prefixes (they are `unknown units', so there are
 no restrictions on their usage), so that \unit{m'furlong'} is a
@@ -1497,7 +1547,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
      & \unit{} & \unit{Crab} avoid use & \unit{} & \unit{} & not used \\\hline
     No unit, dimensionless & \unit{} & blank string & \unit{-} & \unit{} & empty string \\\hline
     Unitless in percent & \unit{} &  & \unit{\%} & \unit{} & \unit{} \\\hline
-    unknown & \unit{} & {\tiny\unit{UNKNOWN}} & \unit{} & \unit{} & \unit{?} \\\hline
+    unknown & \unit{} & {\tiny\unit{UNKNOWN}} & \unit{} & \unit{} & \unit{unknown} \\\hline
 \end{tabular}
   \caption{Comparison of other symbols.}
   \label{tabx:comparUnitOther}
@@ -1872,6 +1922,11 @@ for the VOUnits grammar}
 
 \section{Updates of this document (informative)}
 \begin{itemize}
+\item 1.0-20131224:
+\begin{itemize}
+\item Grammar changes: minor (now incorporates the grammars of Unity v0.11).
+\item Various clarifications to the text, following on-list discussion.
+\end{itemize}
 \item 1.0-20131025:
 \begin{itemize}
 \item Grammar changes: The `\%' character is now treated as a special
