@@ -133,7 +133,7 @@ Fran\c{c}ois Ochsenbein}
 
 \urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131025/}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
@@ -419,6 +419,18 @@ unit-string syntaxes, although there are some slight ambiguities in
 the specifications of these syntaxes (cf \prettyref{appx:grammar}).
 We therefore include a set of self- and mutually-consistent
 machine-readable grammars for all of the syntaxes discussed.
+
+The unit syntax(es) described here are intended to be human-readable,
+to the extent that, for example, a string such as \unit{mm.s**-2} is
+human-readable (without this restriction, we could easily define a
+much more regular machine-to-machine grammar).  Having an explicit
+unit-string grammar means that data providers can write human-readable
+strings in the confidence that the result will \emph{additionally} be
+machine-readable in a reliable and checkable way.  Or, where a string
+is not fully machine readable (because a data provider needs to use a
+custom unit such as 'jupMass'; see \prettyref{sec:quoting}), that the
+string is at least partially machine readable, and that that partial
+readability is non-ambiguous.
 
 We aim not to reinvent the wheel, and to be as compliant as possible with
 legacy metadata in major archives, and astronomers' habits.
@@ -792,15 +804,16 @@ describe times, angles, distances and a few additional quantities.
 The subset of these used by this specification are
 listed in \prettyref{tab:vouadopted}.
 
-\begin{table}[ht]
+\begin{table}[t]
 \begin{center}
 \def\arraystretch{1.2}
 \begin{tabular}{|rl|rl|rl|}\hline
-\unit{min}&(minute of time)	&\unit{deg}&(degree of angle) 	&\unit{AU}&(astronomical unit)     	\\
+\unit{min}&(minute of time)	&\unit{deg}&(degree of angle) 	&\unit{Jy}&(jansky) 	\\
 \unit{h}&(hour of time)		&\unit{arcmin}&(arcminute)    	&\unit{pc}&(parsec) 	\\
 \unit{d}&(day)			&\unit{arcsec}&(arcsecond)  	&\unit{eV}&(electron volt)	\\
-\unit{a} or \unit{yr}&(year)	&\unit{mas}&(milliarcsecond)    &\unit{Jy}&(jansky) 	\\
-\unit{u}&(atomic mass)		&      				&	\\\hline
+\unit{a}, \unit{yr}&(year)	&\unit{mas}&(milliarcsecond)    &\unit{AU}&(astronomical\\
+\unit{u}&(atomic mass)		&          &                    &         & unit)\\
+\hline
 \end{tabular}
 \end{center}
 \caption{\label{tab:vouadopted}Additional astronomy symbols}
@@ -881,12 +894,12 @@ The last set of VOUnits symbols, derived from this comparison, is in
 \begin{table}[ht]
 \begin{center}
 \def\arraystretch{1.2}
-\begin{tabular}{|l|l|p{3cm}|l|}\hline
+\begin{tabular}{|l|l|L{3cm}|l|}\hline
 \unit{mag} (magnitude)		&\unit{pix}  or \unit{pixel} 	&\unit{solMass} (solar mass)     &\unit{R} (rayleigh) \\
 \unit{Ry} (rydberg)		&\unit{voxel}    		&\unit{solLum} (solar luminosity)&\unit{chan} (channel) 	\\
 \unit{lyr} (light year)		&\unit{bit}   			&\unit{solRad} (solar radius)	&\unit{bin} \\
 \unit{ct} or \unit{count}	&\unit{byte} (8 bits)   	&\unit{Sun} (relative to the Sun, e.g. abundances)&\unit{beam} 	\\
-\unit{ph} or \unit{photon} 	&\unit{adu}                     &\unit{D} (Debye)	&\unit{unknown} (unknown; see \prettyref{sec:parsing-components})\\\hline
+\unit{ph} or \unit{photon} 	&\unit{adu}                     &\unit{D} (Debye)	&\unit{unknown} (\prettyref{sec:parsing-components})\\\hline
 \end{tabular}
 \end{center}
 \caption[Miscellaneous VOUnits]
@@ -1098,7 +1111,8 @@ risking the leading \texttt{m} being misparsed as an SI prefix, or the
 
 Quoted units can take prefixes (they are `unknown units', so there are
 no restrictions on their usage), so that \unit{m'furlong'} is a
-milli-furlong, and \unit{m'm'} is a milli-`m'.
+milli-furlong, and \unit{m'm'} is a milli-`m'.  The only permissible
+prefixes are those of \prettyref{tab:vouscalefactors}.
 
 \subsection{General rationale (informative)}
 \label{sec:rationale}
@@ -1546,10 +1560,10 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     beam & \unit{} & \unit{} & \unit{} & \unit{beam} &\\\hline
      & \unit{} & \unit{Crab} avoid use & \unit{} & \unit{} & not used \\\hline
     No unit, dimensionless & \unit{} & blank string & \unit{-} & \unit{} & empty string \\\hline
-    Unitless in percent & \unit{} &  & \unit{\%} & \unit{} & \unit{} \\\hline
+    Percent &  &  & \unit{\%} & & \unit{\%} \\\hline
     unknown & \unit{} & {\tiny\unit{UNKNOWN}} & \unit{} & \unit{} & \unit{unknown} \\\hline
 \end{tabular}
-  \caption{Comparison of other symbols.}
+  \caption{Miscellaneous other symbols.}
   \label{tabx:comparUnitOther}
 \end{table}
 
@@ -1910,7 +1924,7 @@ and \prettyref{tabx:vounitsterminals} for additional terminals.}
 
 \begin{table}[ht]
 \begin{tabular}{rL{10cm}}
-\texttt{VOUFLOAT}&see text\\
+\texttt{VOUFLOAT}&see text, \prettyref{appx:vougrammar}\\
 \texttt{QUOTED\_STRING}&a \texttt{STRING} between single quote marks
     (ASCII character \hex{27})
 \end{tabular}
