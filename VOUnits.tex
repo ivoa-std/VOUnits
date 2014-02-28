@@ -113,7 +113,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{1.0-20131224}
+\date{1.0-20140226}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -131,9 +131,10 @@ Mireille Louys\\
 Fran\c{c}ois Ochsenbein}
 \editor{S\'{e}bastien Derri\`{e}re and Norman Gray}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140226/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
@@ -531,6 +532,12 @@ VOUnits processor must interpret the symbols
 of \prettyref{tabx:knownunits} compatibly with the indicated units:
 a \unit{m} is always a metre of one type or another, and may not be
 interpreted as, for example, a minute.
+
+\item This Recommendation does not specify how an application should
+compare units for equivalence; for example, an application may or may
+not wish to deem \unit{m/s} and \unit{km/s} to be `equivalent'.
+This Recommendation, similarly, does not specify how to compare units
+with scalefactors (cf \prettyref{sec:scaleFactors}).
 \end{itemize}
 
 \section{The VOUnits syntax (normative)\label{sec:proposal}}
@@ -568,11 +575,12 @@ strings in the other syntaxes are also case-sensitive).
 
 \subsection{Parsing unit strings -- overview\label{sec:parsing-components}}
 
-The unit string \unit{unknown} (in lower-case) is reserved for cases
+The unit strings \unit{unknown} and \unit{UNKNOWN} (that is, in
+all-lowercase or all-uppercase) are reserved for cases
 when the unit is unknown; that is, it is known that there should be a
-unit, but the unit string has been lost or not been specified.  It is
-not, however, part of the list of known units or the VOUnits grammar,
-and applications \norm{must} check for its presence before unit parsing.
+unit, but the unit string has been lost or not been specified.  These
+strings are not, however, part of the list of known units or the VOUnits grammar,
+and applications \norm{must} check for their presence before unit parsing.
 
 An empty unit string positively indicates that the corresponding
 quantity is dimensionless.  Since an empty string does not conform to
@@ -582,7 +590,8 @@ unit-parsing starts.
 A \textbf{symbol} within a unit-component \norm{should} be parsed as follows:
 \begin{enumerate}
 \item If it corresponds to a known \textbf{base symbol}, then it
-\norm{must} be recognised as such.
+\norm{must} be recognised as such (for example the \unit{Pa} must be
+parsed as the known Pascal, and never as the peta-year).
 
 \item If the symbol starts with a multiplicative prefix, then this is
 recognised independently of whether the resulting base symbol is a
@@ -1721,12 +1730,6 @@ For the FITS units syntax, see section~4.3 of~\cite{pence10}, and its
 associated tables.  Our preferred FITS grammar is in
 \prettyref{tabx:fitsgrammar}.
 
-\begin{table}[ht]
-\verbatiminput{unity-grammars/unity-fits.txt}
-\caption[The FITS grammar]{\label{tabx:fitsgrammar}The FITS grammar.
-See \prettyref{appx:fitsgrammar}.}
-\end{table}
-
 As noted above in \prettyref{sec:fitsquote}, 
 the FITS specification isn't completely clear on the topic of 
 solidi, saying ``[t]he IAU style manual forbids
@@ -1771,19 +1774,19 @@ Other ambiguities:
   invalid here.
 \end{itemize}
 
+\clearpage
+\begin{table}[t]
+\verbatiminput{unity-grammars/unity-fits.txt}
+\caption[The FITS grammar]{\label{tabx:fitsgrammar}The FITS grammar.
+See \prettyref{appx:fitsgrammar}.}
+\end{table}
+\clearpage
+
 \subsection{The OGIP grammar (informative)}
 \label{appx:ogipgrammar}
 
 For the OGIP units syntax, see \cite{george95}.  Our preferred OGIP
 grammar is in \prettyref{tabx:ogipgrammar}.
-
-\begin{table}[ht]
-\verbatiminput{unity-grammars/unity-ogip.txt}
-\caption[The OGIP grammar]{\label{tabx:ogipgrammar}The OGIP grammar.
-Note that the \texttt{FLOAT} in the \texttt{scalefactor} production
-must be a power of ten.
-See \prettyref{appx:ogipgrammar}.}
-\end{table}
 
 The OGIP specification somewhat reluctantly concedes (in its section
 3.2) that ``occasionally it may be preferable to include [leading
@@ -1819,6 +1822,16 @@ Specification ambiguities:
   like \texttt{m**-2}, is forbidden.
 \end{itemize}
 
+%\clearpage
+\begin{table}[ht]
+\verbatiminput{unity-grammars/unity-ogip.txt}
+\caption[The OGIP grammar]{\label{tabx:ogipgrammar}The OGIP grammar.
+Note that the \texttt{FLOAT} in the \texttt{scalefactor} production
+must be a power of ten.
+See \prettyref{appx:ogipgrammar}.}
+\end{table}
+\clearpage
+
 \subsection{The CDS grammar (informative)}
 \label{appx:cdsgrammar}
 
@@ -1844,16 +1857,6 @@ take it that this is valid, and equivalent to \units{kg~m^{-1}~s^{-1}}.
 \end{itemize}
 
 This specification places no restrictions on the leading scale factor.
-%% The \texttt{CDSFLOAT} terminal is a string matching the regular
-%% expression
-%% \begin{quotation}
-%% \texttt{[0-9]+\textbackslash.[0-9]+x10[-+][0-9]+}
-%% \end{quotation}
-%% (that is, something resembling \texttt{1.5x10+11}).
-
-%% The \texttt{OPEN\_SQ} and \texttt{CLOSE\_SQ} terminals, used to mark
-%% the logarithm of a unit in this syntax, are the open and close square
-%% brackets, `\texttt{[}' and `\texttt{]}'.
 
 \begin{table}[ht]
 \verbatiminput{unity-grammars/unity-cds.txt}
@@ -1861,7 +1864,6 @@ This specification places no restrictions on the leading scale factor.
 See \prettyref{appx:cdsgrammar} for discussion,
 and \prettyref{tabx:cdsterminals} for the additional terminals.}
 \end{table}
-
 \begin{table}[ht]
 \begin{tabular}{rL{10cm}}
 \texttt{CDSFLOAT}&a string matching the regular
@@ -1875,7 +1877,7 @@ expression \texttt{[0-9]+\textbackslash.[0-9]+x10[-+][0-9]+}
 \caption[Extra CDS terminals]{\label{tabx:cdsterminals}Extra terminals
 for the CDS grammar}
 \end{table}
-
+\clearpage
 
 
 
@@ -1915,23 +1917,22 @@ string matching either of the regular expressions
 \end{itemize}
 (that is, something resembling \texttt{0.123} or \texttt{1.5e+11}).
 
+
 \begin{table}[ht]
 \verbatiminput{unity-grammars/unity-vounits.txt}
 \caption[The VOUnits grammar]{\label{tabx:vougrammar}The VOUnits
 grammar.  See \prettyref{appx:vougrammar} for discussion,
 and \prettyref{tabx:vounitsterminals} for additional terminals.}
 \end{table}
-
 \begin{table}[ht]
 \begin{tabular}{rL{10cm}}
 \texttt{VOUFLOAT}&see text, \prettyref{appx:vougrammar}\\
 \texttt{QUOTED\_STRING}&a \texttt{STRING} between single quote marks
-    (ASCII character \hex{27})
+    (ASCII \hex{27})
 \end{tabular}
 \caption[Extra VOUnits terminals]{\label{tabx:vounitsterminals}Extra terminals
 for the VOUnits grammar}
 \end{table}
-
 \clearpage
 
 \section{Updates of this document (informative)}
