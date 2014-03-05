@@ -396,7 +396,7 @@ one symbol which identifies only that unit.
 A \textbf{symbol} is either a base symbol or a base symbol with a
 scaling prefix.
 
-For example, in the unit of \unit{1.663e-1mm.s**-1}, the scalefactor
+For example, in the unit of \unit{1.663e-1mm.s**-1}, the scale-factor
 is $1.663\times10^{-1}$, the two unit-components are \texttt{mm}
 and \texttt{s**-1}; the first symbol has base symbol \texttt{m} and
 prefix \texttt{m} (for `milli'), and the second has base
@@ -414,7 +414,7 @@ symbol \texttt{s}, no prefix, and the power~$-1$.
 The purpose of this document is to provide a reference specification of how
 to write VOUnits, in order to maximize interoperability within the VO;
 the intention is that VOUnit strings should be reliably
-parseable by humans \emph{and} computers, with a single interpretation.
+parsable by humans \emph{and} computers, with a single interpretation.
 This is broadly the case for the other existing
 unit-string syntaxes, although there are some slight ambiguities in
 the specifications of these syntaxes (cf \prettyref{appx:grammar}).
@@ -537,7 +537,7 @@ interpreted as, for example, a minute.
 compare units for equivalence; for example, an application may or may
 not wish to deem \unit{m/s} and \unit{km/s} to be `equivalent'.
 This Recommendation, similarly, does not specify how to compare units
-with scalefactors (cf \prettyref{sec:scaleFactors}).
+with scale-factors (cf \prettyref{sec:scaleFactors}).
 \end{itemize}
 
 \section{The VOUnits syntax (normative)\label{sec:proposal}}
@@ -639,7 +639,7 @@ The VOUnits base symbols are listed in \prettyref{tab:voubase}
 \end{table}
 
 For masses, the SI unit is \unit{kg}. However, existing specifications
-recommend not using scale factors with \unit{kg}, but attaching them
+recommend not using scale-factors with \unit{kg}, but attaching them
 only to \unit{g} instead.
 
 Recognising a known unit takes priority over parsing for prefixes.
@@ -724,9 +724,9 @@ IVOA, or indeed anywhere else.}
 
 \subsection{Scale factors\label{sec:scaleFactors}}
 
-Units \norm{may} be prefixed by any of the 20 SI scale factors, 
-and a subset \norm{may} be prefixed by the eight binary scale factors.
-The SI scale factors -- provided in \prettyref{tab:vouscalefactors}a --
+Units \norm{may} be prefixed by any of the 20 SI scale-factors, 
+and a subset \norm{may} be prefixed by the eight binary scale-factors.
+The SI scale-factors -- provided in \prettyref{tab:vouscalefactors}a --
 are the same as those of \citet{si-brochure},
 of \citet[\S6.5.4]{std:iso80000-1},
 and of \citet[Table~5]{pence10}
@@ -785,8 +785,7 @@ symbol without space, and \norm{must not} be used without a base symbol.
 The SI prefixes of \prettyref{tab:vouscalefactors}a \emph{\norm{must}
 always refer to multiples of 1000}, even when applied to binary units
 such as bit or byte; this follows the stipulations (and clarifying note) of
-\citet[\S3.1]{si-brochure}, and the proscription
-of \citet[\S6.5.4]{std:iso80000-1}.
+\citet[\S3.1]{si-brochure}, and of \citet[\S6.5.4]{std:iso80000-1}.
 If data providers wish to use multiples of 1024 (ie, $2^{10}$) for
 units such as bytes or bits, they \norm{must} use the the binary prefixes
 of \citet[\S4]{std:iec80000-13}, reproduced in \prettyref{tab:vouscalefactors}b
@@ -1132,7 +1131,7 @@ prefixes are those of \prettyref{tab:vouscalefactors}.
 The aspiration of the VOUnits work was that the syntax should be as
 much as possible in the intersection of the various pre-existing
 syntaxes, so that a unit string which conformed to the VOUnits syntax
-would be parseable in each of those other syntaxes.  This has not been
+would be parsable in each of those other syntaxes.  This has not been
 possible in fact, for four reasons.
 \begin{enumerate}
 \item The CDS syntax permits only a dot to indicate a product, and the
@@ -1151,7 +1150,7 @@ The first is both unavoidable in specification, and largely
 unavoidable in practice; the others are VOUnit extensions which a data
 provider may of course decline to take advantage of.
 
-The scalefactor and quoted-units extensions are intended to support
+The scale-factor and quoted-units extensions are intended to support
 the case where the data provider wishes to distribute data including a
 unit which is `unknown', but which the provider nonetheless feels is
 necessary or useful; this should be done only after weighing the
@@ -1161,8 +1160,8 @@ constructions such as \texttt{M'jupiterMass'}, the grammar permits quoted
 units to take scaling prefixes; this is not often likely to be a good idea.
 
 A VOUnits string which avoids the three extensions above will be
-parseable, with the same meaning, in the CDS and FITS syntaxes, and
-will be parseable by an OGIP parser if dots are replaced by stars.
+parsable, with the same meaning, in the CDS and FITS syntaxes, and
+will be parsable by an OGIP parser if dots are replaced by stars.
 
 \subsubsection{Restrictions to ASCII}
 
@@ -1278,8 +1277,8 @@ VOUnits can help in quantity transformation if all quantities are qualified with
 
 \subsection{Query languages}
 
-Including VOUnits in queries is not an easy task. Some guidelines were defined in the
-reflexion on ADQL.
+Including VOUnits in queries is not an easy task. Some guidelines were
+articulated during the development of the ADQL standard.
 
 \begin{enumerate}
 \item All data providers should be encouraged to supply units for each column
@@ -1390,34 +1389,34 @@ of the comparison tables.
 
 \subsection{Other usages}
 
-\begin{itemize}
-\item
-\violet{\footnotesize{\url{http://arxiv.org/pdf/astro-ph/0511616}}}\\ 
+\begin{description}
+\item[\url{http://arxiv.org/pdf/astro-ph/0511616}]
 Dimensional Analysis applied to spectrum handling in VO context~\citep{osuna05}
 offers a mathematical framework to guess and recompute
 SI units for any quantity in astronomy.
-\item
-\violet{\footnotesize{\url{http://www.mel.nist.gov/msid/sima/07_ndml.htm}}}\\
-NIST (National Institute of Standards \& Technology) project
-UnitsXML builds up an XML representation of units at the granularity
-level of a simple symbol string
-\item \violet{\footnotesize{\url{https://jsr-275.dev.java.net/}}}\\
+
+\item[\url{http://unitsml.nist.gov}]
+The NIST (National Institute of Standards \& Technology) project
+UnitsML builds up an XML representation of units at the granularity
+level of a simple symbol string.
+
+\item[\url{https://www.jcp.org/en/jsr/detail?id=275}]
 JAVA JSR-275 specifies Java packages for the programmatic
 handling of physical quantities and their expression as numbers of
 units.
-\item  \texttt{aips++}
-\violet{\footnotesize{\url{http://aips2.nrao.edu/docs/aips++.html}}} and\\
- \texttt{casacore} \violet{\footnotesize{\url{http://code.google.com/p/casacore/}}}\\ contain modules handling units and
-quantities with high precision. The packages are mainly in use for
-radio astronomy but are designed to be modular and adaptable.  (NB
+\item[\texttt{aips++} and \texttt{casacore}]
+These systems (see \url{http://aips2.nrao.edu/docs/aips++.html} and
+ \url{http://code.google.com/p/casacore/}) contain modules handling
+ units and quantities with high precision. The packages are mainly in use for
+radio astronomy but are designed to be modular and adaptable (NB:
 contrary to the statement on the casacore link, aips++ is still very much in
-use as the toolkit behind the {\sc casa} package.)
+use as the toolkit behind the \textsc{casa} package).
 %\item  IAU SOFA
 %\violet{\footnotesize{\url{http://www.iau-sofa.rl.ac.uk/}}} and\\  
 %USNO NOVAS
 %\violet{\footnotesize{\url{http://aa.usno.navy.mil/software/novas/novas_info.php}}}\\
 %implement the IAU 2000 recommendations.
-\end{itemize}
+\end{description}
 
 \clearpage
 \section{History: Comparison of syntaxes (informative)\label{appx:comparisons}}
@@ -1426,7 +1425,7 @@ use as the toolkit behind the {\sc casa} package.)
 In this section, we compare the existing unit-string syntaxes and the
 proposed standard.  We have included these comparisons for
 more-or-less historical reasons, to try to highlight the variations
-between syntaxes, and so illustrate the motivation motivation for this
+between syntaxes, and so illustrate the motivation for this
 Recommendation, namely that the current practice, though it may at
 first appear to have rough consensus, is disturbingly heterogeneous.
 
@@ -1446,16 +1445,16 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 \begin{tabular}{|L{0.2\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
-    %\multicolumn{6}{|c|}{Base units} \\\hline
-    The 6+1 base & \multicolumn{4}{c|}{\unit{m, s, A, K, mol, cd}} & idem \\
+    The 6+1 base & \multicolumn{5}{c|}{\unit{m, s, A, K, mol, cd}} \\
     \cline{2-6}
      SI units (use \unit{s}, not sec, for seconds) & (1) & \unit{kg} & \unit{g} & \unit{kg}, but \unit{g} allowed & \unit{g}\\
      \hline
-    Dimensionless & \multicolumn{4}{c|}{\unit{rad, sr}} & idem \\
-    \cline{2-5}
-    planar and solid angle&  &  &  & (2) & \\\hline
-    Derived units & \multicolumn{4}{c|}{\unit{Hz, N, Pa, J, W, C, V,}} & \\
-    with symbols & \multicolumn{4}{c|}{\unit{S, F, Wb, T, H, lm, lx}} & idem \\
+    Dimensionless planar and solid angle
+        & \multicolumn{3}{c|}{\unit{rad}, \unit{sr}}
+        & \unit{rad}, \unit{sr}, \unit{deg} (2)
+        & \unit{rad}, \unit{sr}\\ \hline
+    Derived units & \multicolumn{5}{c|}{\unit{Hz, N, Pa, J, W, C, V,}} \\
+    with symbols  & \multicolumn{5}{c|}{\unit{S, F, Wb, T, H, lm, lx}} \\
      & \unit{$\Omega$} & \unit{ohm} & \unit{Ohm} & \unit{Ohm} & \unit{Ohm}\\\hline
 \end{tabular}
   \caption[Comparison of base units]{Comparison of base units.  Notes: (1) unit is \unit{kg}, but use \unit{g} with prefixes; (2) \unit{deg} preferred for decimal angles}
@@ -1468,15 +1467,15 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 \begin{tabular}{|L{0.2\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|}
 \hline
     & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOUnits\\\hline
-    Scale factors,   & \multicolumn{4}{c|}{\unit{d, c, m, n, p, f, a}} & idem \\
-    (multiple) & \multicolumn{4}{c|}{\unit{da, h, k, M, G, T, P, E}}  & \\
+    Scale factors,   & \multicolumn{5}{c|}{\unit{d, c, m, n, p, f, a}} \\
+    (multiple) & \multicolumn{5}{c|}{\unit{da, h, k, M, G, T, P, E}}   \\
     prefixes & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
      &  & \multicolumn{3}{c|}{\unit{z, y, Z, Y}} & \unit{z, y, Z, Y}\\\hline
     Prefix--symbol concatenation & (1) & (2) & no space & no space (implicit) & no space\\\hline
     Prefix-able symbols  & Not \unit{kg}: use \unit{g} & (3) & all & all & (4) \\\hline
     Use compound prefixes & should not & should never & must not & must not & must not\\\hline
 \end{tabular}
-  \caption[Comparison of scale factors]{Comparison of scale factors.
+  \caption[Comparison of scale-factors]{Comparison of scale-factors.
   Notes: (1) no space, regarded as single symbol;
   (2)~no space, regarded as a single unit string;
   (3)~all units above, and \unit{eV, pc, Jy, Crab} Only \unit{mCrab} allowed;
@@ -1758,7 +1757,7 @@ but mean \units{kg~m^{-1}~s^{-1}} in the FITS syntax, and
 
 The FITS specification permits a leading numeric multiplier, but
 ``[c]reators of FITS files are encouraged to use the numeric
-multiplier only when the available standard scale factors of [SI] will
+multiplier only when the available standard scale-factors of [SI] will
 not suffice''.
 
 The FITS specification permits \texttt{m(2)}, to indicate the square of
@@ -1792,7 +1791,7 @@ The OGIP specification somewhat reluctantly concedes (in its section
 3.2) that ``occasionally it may be preferable to include [leading
 scale] factors on the grounds of user-friendliness'', but that ``[t]he
 inclusion of numerical factors should therefore be avoided wherever
-possible'', and it is ``suggested'' that the scale factor should in any case
+possible'', and it is ``suggested'' that the scale-factor should in any case
 be restricted to powers of~10.
 %On these grounds, the \texttt{FLOAT}
 %terminal in the grammar should be extra-syntactically restricted to
@@ -1856,7 +1855,7 @@ though it does not permit OGIP's syntax for powers, \texttt{m**2}), we
 take it that this is valid, and equivalent to \units{kg~m^{-1}~s^{-1}}.
 \end{itemize}
 
-This specification places no restrictions on the leading scale factor.
+This specification places no restrictions on the leading scale-factor.
 
 \begin{table}[ht]
 \verbatiminput{unity-grammars/unity-cds.txt}
@@ -1891,12 +1890,12 @@ plus the extra ones listed in \prettyref{tabx:vounitsterminals})
 and by the list of known units of \prettyref{tabx:knownunits}.
 
 The intention of the VOUnits grammar is that if a VOUnits string
-does not use the scalefactor, quoted-units or binary-prefix
+does not use the scale-factor, quoted-units or binary-prefix
 extensions
 (that is, if it avoids the \texttt{VOUFLOAT}
 and \texttt{QUOTED\_STRING} terminals and is restricted to SI decimal prefixes),
-then it will be parseable, with the same semantics, by FITS
-and CDS parsers, and that it will be parseable by an OGIP parser if
+then it will be parsable, with the same semantics, by FITS
+and CDS parsers, and that it will be parsable by an OGIP parser if
 dots are replaced by stars.
 See \prettyref{sec:deviations} for discussion.
 In particular:
