@@ -431,7 +431,7 @@ unit-string grammar means that data providers can write human-readable
 strings in the confidence that the result will \emph{additionally} be
 machine-readable in a reliable and checkable way.  Or, where a string
 is not fully machine readable (because a data provider needs to use a
-custom unit such as 'jupMass'; see \prettyref{sec:quoting}), that the
+custom unit such as 'jupiterMass'; see \prettyref{sec:quoting}), that the
 string is at least partially machine readable, and that that partial
 readability is non-ambiguous.
 
@@ -527,13 +527,8 @@ detected, and that it is deprecated.
 \item The list of known units in \prettyref{sec:knownunits} is not
 specific about the precise definitions of the units in question; for
 example, it refers to the `second' without distinguishing between the
-various possible definitions that the second may have.  In a
-particular context, a data provider may need to indicate which of a
-number of possible definitions is being used in fact.  That said, a
-VOUnits processor must interpret the symbols
-of \prettyref{tabx:knownunits} compatibly with the indicated units:
-a \unit{m} is always a metre of one type or another, and may not be
-interpreted as, for example, a minute.
+various possible definitions that the second may have.
+See that section for further discussion.
 
 \item This Recommendation does not specify how an application should
 compare units for equivalence; for example, an application may or may
@@ -659,6 +654,19 @@ There are a few units (namely \unit{angstrom} or \unit{Angstrom},
 \unit{pix} or \unit{pixel}, \unit{ph} or \unit{photon} and \unit{a} or \unit{yr}) for
 which there are recognised alternatives in some syntaxes, and in these
 cases `p' marks the preferred one.
+
+This list of known units is not specific about the precise definitions
+of the units in question; for example, it refers to the `second'
+without distinguishing between the various possible definitions that
+the second may have: they may be mean-solar or atomic seconds, and be
+defined at different points in spacetime.  Generally, when data is
+exchanged in those areas where such distinctions matter -- such as
+data connected with pulsar timings -- the fine semantic details will
+be indicated by the data provider through other mechanisms.  That
+said, a VOUnits processor must interpret the symbols
+of \prettyref{tabx:knownunits} compatibly with the indicated units:
+a \unit{m} is always a metre of one type or another, and may not be
+interpreted as, for example, a minute.
 
 \emph{Unrecognised units \norm{should} be accepted by parsers},
 as long as they are parsed giving preference to the syntaxes and
@@ -1081,11 +1089,19 @@ translate the column data into well-known physical units without further
 information, and the data source is thus self-contained.
 The \emph{disadvantage} of doing so is (i) that the intention might be
 obscured (this is a type of provenance information);
-and (ii) that the measurements may be relative to the actual
-jupiter mass rather than merely expressed in those terms, so that they
-should change if the actual mass were to be refined as a result of
-a recalibration.  The data provider retains the choice of which
-strategy to take.
+and (ii) that the measurements may be relative to (in this example)
+the actual mass of Jupiter rather than merely expressed in those terms,
+so that the measurements should change if the actual mass were to be
+refined as a result of a recalibration, or if (in the case of a pulsar
+period for example) the unit were time-varying.  The data provider retains the
+choice of which strategy to take.
+
+A data provider may need to provide further metadata information, to
+clarify the meaning of such a unit, or they may judge that the meaning
+is adequately clear to the intended audience, without further
+complication.  Such further information is out of scope of the VOUnits
+Recommendation, in the same way that even `known' units may be
+ambiguous in some contexts (cf, \prettyref{sec:knownunits}).
 
 This Recommendation does not prescribe how many significant figures
 should be in a scale-factor, nor whether it should be interpreted as
