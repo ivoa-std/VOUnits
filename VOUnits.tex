@@ -162,9 +162,11 @@ Fran\c{c}ois Ochsenbein}
 \usepackage[T1]{fontenc}
 \usepackage{longtable}
 \usepackage{multirow}
+
 %\font\symbo=psyr at 10pt
 %\def\micro{{\symbo \char109}}
-\def\micro{{\ensuremath \mu}}
+\usepackage{upgreek}
+\def\micro{{\ensuremath \upmu}}
 
 %Mir colors definitions
 \newcommand{\bleu}[1]{\textcolor[rgb]{0.00,0.00,1.00}{#1}}
@@ -628,7 +630,7 @@ The VOUnits base symbols are listed in \prettyref{tab:voubase}
 \def\arraystretch{1.2}
 \begin{tabular}{|rl|rl|rl|rl|}\hline
 \unit{m}&(metre)		&\unit{g}&(gram) 	&\unit{J}&(joule)     	&\unit{Wb}&(weber)\\
-\unit{s}&(second of time)	&\unit{rad}&(radian)    &\unit{W}&(watt) 	&\unit{T}&(tesla)\\
+\unit{s}&(second)		&\unit{rad}&(radian)    &\unit{W}&(watt) 	&\unit{T}&(tesla)\\
 \unit{A}&(ampere)		&\unit{sr}&(steradian)  &\unit{C}&(coulomb)	&\unit{H}&(henry)\\
 \unit{K}&(kelvin)		&\unit{Hz}&(hertz)      &\unit{V}&(volt) 	&\unit{lm}&(lumen)\\
 \unit{mol}&(mole)		&\unit{N}&(newton)      &\unit{S}&(siemens)	&\unit{lx}&(lux)\\
@@ -653,8 +655,8 @@ never a milli-`ol', for some unknown unit~`ol'.
 In \prettyref{tabx:knownunits}, we indicate the `known units' for each of the
 described syntaxes, which go beyond the physically motivated set of
 base units.
-There are a few units (namely `\unit{angstrom} or \unit{Angstrom}', 
-\unit{pix} or \unit{pixel}', `\unit{ph} or \unit{photon}' and `\unit{a} or \unit{yr}') for
+There are a few units (namely \unit{angstrom} or \unit{Angstrom}, 
+\unit{pix} or \unit{pixel}, \unit{ph} or \unit{photon} and \unit{a} or \unit{yr}) for
 which there are recognised alternatives in some syntaxes, and in these
 cases `p' marks the preferred one.
 
@@ -1172,7 +1174,7 @@ serialisations of a data model (for example \verb|<unit>...</unit>|),
 we also intend them to be usable within FITS files and within
 databases.  Neither of the latter two contexts is necessarily
 unicode-friendly, so permitting non-ASCII characters in a unit string
-(such as \AA\ or $\mu$) is more likely than not to cause trouble.
+(such as \AA\ or $\micro$) is more likely than not to cause trouble.
 
 Similarly, forbidding spaces within VOUnit strings removes one (minor)
 complication when recognising them in use.
@@ -1491,26 +1493,27 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     hour & \unit{h, $^\mathrm{h}$} & \unit{h} & \unit{h} & \unit{h} & \unit{h}\\\hline
     day & \unit{d, $^\mathrm{d}$} & \unit{d} & \unit{d} & \unit{d} & \unit{d}\\\hline
     year & \unit{a} & \unit{yr} & \unit{a, yr} & \unit{a, yr} (1)& like FITS\\\hline
-    arcsecond & \unit{''} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec}\\\hline
-    arcminute & \unit{'} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin}\\\hline
+    arcsecond & \unit{${}''$} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec} & \unit{arcsec}\\\hline
+    arcminute & \unit{${}'$} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin} & \unit{arcmin}\\\hline
     degree (angle) & \unit{$^\circ$} & \unit{deg} & \unit{deg} & \unit{deg} & \unit{deg}\\\hline
     milliarcsecond & \unit{mas} (use \unit{nrad}!) &  & \unit{mas} & \unit{mas} & \unit{mas}\\\hline
     microarcsec &  &  & \unit{uarcsec} &  & (2)\\\hline
-    cycle & \unit{c, $^\mathrm{c}$} &  &  &  & not used\\\hline
+    cycle & \unit{c, $^\mathrm{c}$} (5) &  &  &  & not used\\\hline
     astronomical unit & \unit{au} & \unit{AU} & \unit{AU} & \unit{AU} & \unit{AU}\\\hline
     parsec & \multicolumn{4}{c|}{\unit{pc}} & \unit{pc}\\\hline
     atomic mass & \unit{u} &  &  & \unit{u} & \unit{u}\\\hline
     electron volt & \multicolumn{4}{c|}{\unit{eV}} & \unit{eV}\\\hline
     jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
-    celsius degree & \unit{$^\circ$C} for meteorology, other use \unit{K}&  &  &  & not used\\\hline
+    celsius degree & \unit{$^\circ$C} for meteorology, otherwise \unit{K}&  &  &  & not used\\\hline
     century & (3)&  &  &  & (4)\\\hline
 \end{tabular}
   \caption[Comparison of astronomy-related units]{Comparison of astronomy-related units.
   Notes: (1) Pa (peta-a) forbidden;
   (2) no dedicated symbol, use \unit{uarcsec};
   (3) ha, cy should not be used;
-  (4) no dedicated symbol, use \unit{ha} or \unit{hyr}}
-  \label{tabx:comparUnitAstro}
+  (4) no dedicated symbol, use \unit{ha} or \unit{hyr};
+  (5) superscript-`c' has also been used to denote `radian'
+  \label{tabx:comparUnitAstro}}
 \end{table}
 
 \begin{table}[ht]
@@ -1537,9 +1540,9 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     Imperial, non-metric & should not be used & \unit{} & \unit{} & \unit{} & not used \\\hline
 \end{tabular}
   \caption[Comparison of symbols deprecated by IAU]{Comparison of
-  symbols deprecated by IAU (from \citet{wilkins89}: ``Table 7. Non-SI
-  units and symbos whose continued use is deprecated'').
-  Note: (1) no symbol -- \unit{mW/m2} used for \units{erg\,cm^{-2}\,s^{-1}}.}
+  symbols deprecated by IAU (from \citet{wilkins89} table~7, ``Non-SI
+  units and symbols whose continued use is deprecated'').
+  Note: (1) no symbol: \unit{mW/m2} is used for \units{erg\,cm^{-2}\,s^{-1}}.}
   \label{tabx:comparUnitDeprecated}
 \end{table}
 
@@ -1935,7 +1938,13 @@ for the VOUnits grammar}
 \clearpage
 
 \section{Updates of this document (informative)}
+
+The detailed (line-by-line) history of the document can be found at 
+\url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounits/VOUnits.tex}.
 \begin{itemize}
+\item 1.0-20140226:
+Minor wording and layout changes, following on-list discussion.
+Released for TCG review.
 \item 1.0-20131224:
 \begin{itemize}
 \item Grammar changes: minor (now incorporates the grammars of Unity v0.11).
