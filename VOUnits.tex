@@ -156,7 +156,7 @@ Fran\c{c}ois Ochsenbein}
 %\usepackage{lscape}
 %mir \textheight 9.0in \hoffset -0.5in \voffset -0.5in
 %\newcommand{\Sensitiv}{Variation}
-\definecolor{orange}{rgb}{0.7,0.5,0.0}
+\definecolor{orange}{rgb}{0.5,0.3,0.0}
 \newcommand{\unit}[1]{\texttt{\small\color{orange}#1}}
 %\newcommand{\unit}[1]{\textbf{\textsf{\color{orange}#1}}}
 \usepackage[T1]{fontenc}
@@ -275,7 +275,7 @@ Bruno Rino,
 Arnold Rots,
 Jesus Salgado,
 Mark Taylor,
-Brian Thomas
+Brian Thomas,
 and recent contributors on the DM and Semantics forums.
 
 \section{Introduction (informative)}
@@ -747,26 +747,26 @@ and of \citet[Table~5]{pence10}
 \begin{center}
 \def\pfx#1#2{#1, $10^{#2}$}
 \begin{tabular}{|rl|rl|}\hline
-\unit{Y}&\pfx{yotta}{24}&
-  \unit{y}&\pfx{yocto}{-24}\\
-\unit{Z}&\pfx{zetta}{21}&
-  \unit{z}&\pfx{zepto}{-21}\\
-\unit{E}&\pfx{exa}{18}&
-  \unit{a}&\pfx{atto}{-18}\\
-\unit{P}&\pfx{peta}{15}&
-  \unit{f}&\pfx{femto}{-15}\\
-\unit{T}&\pfx{tera}{12}&
-  \unit{p}&\pfx{pico}{-12}\\
-\unit{G}&\pfx{giga}{9}&
-  \unit{n}&\pfx{nano}{-9}\\
-\unit{M}&\pfx{mega}{6}&
-  \unit{u}&\pfx{micro}{-6}\\
-\unit{k}&\pfx{kilo}{3}&
-  \unit{m}&\pfx{milli}{-3}\\
-\unit{h}&\pfx{hecto}{2}&
-  \unit{c}&\pfx{centi}{-2}\\
 \unit{da}&\pfx{deca}{1}&
   \unit{d}&\pfx{deci}{-1}\\
+\unit{h}&\pfx{hecto}{2}&
+  \unit{c}&\pfx{centi}{-2}\\
+\unit{k}&\pfx{kilo}{3}&
+  \unit{m}&\pfx{milli}{-3}\\
+\unit{M}&\pfx{mega}{6}&
+  \unit{u}&\pfx{micro}{-6}\\
+\unit{G}&\pfx{giga}{9}&
+  \unit{n}&\pfx{nano}{-9}\\
+\unit{T}&\pfx{tera}{12}&
+  \unit{p}&\pfx{pico}{-12}\\
+\unit{P}&\pfx{peta}{15}&
+  \unit{f}&\pfx{femto}{-15}\\
+\unit{E}&\pfx{exa}{18}&
+  \unit{a}&\pfx{atto}{-18}\\
+\unit{Z}&\pfx{zetta}{21}&
+  \unit{z}&\pfx{zepto}{-21}\\
+\unit{Y}&\pfx{yotta}{24}&
+  \unit{y}&\pfx{yocto}{-24}\\
 \hline
 \end{tabular}
 \qquad
@@ -1448,21 +1448,22 @@ Recommendation, namely that the current practice, though it may at
 first appear to have rough consensus, is disturbingly heterogeneous.
 
 \begin{table}[ht]
-  \begin{tabular}{|L{0.2\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|}
+  \begin{tabular*}\textwidth{@{\extracolsep{\fill}}|L{0.2\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|}
+
 \hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     Units are strings of chars &  & YES &  & YES & YES\\\hline
     Case sensitive & YES & YES & YES & YES & YES\\\hline
     Character set &  &  & No spaces & ASCII text & ASCII printable\\\hline
-\end{tabular}
+\end{tabular*}
   \caption{Comparison of string representation and encoding.}
   \label{tabx:comparUnitEncoding}
 \end{table}
 
 \begin{table}[ht]
-\begin{tabular}{|L{0.2\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|}
+\begin{tabular*}\textwidth{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     The 6+1 base & \multicolumn{5}{c|}{\unit{m, s, A, K, mol, cd}} \\
     \cline{2-6}
      SI units (use \unit{s}, not sec, for seconds) & (1) & \unit{kg} & \unit{g} & \unit{kg}, but \unit{g} allowed & \unit{g}\\
@@ -1474,7 +1475,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     Derived units & \multicolumn{5}{c|}{\unit{Hz, N, Pa, J, W, C, V,}} \\
     with symbols  & \multicolumn{5}{c|}{\unit{S, F, Wb, T, H, lm, lx}} \\
      & \unit{$\Omega$} & \unit{ohm} & \unit{Ohm} & \unit{Ohm} & \unit{Ohm}\\\hline
-\end{tabular}
+\end{tabular*}
   \caption[Comparison of base units]{Comparison of base units.  Notes: (1) unit is \unit{kg}, but use \unit{g} with prefixes; (2) \unit{deg} preferred for decimal angles}
   \label{tabx:comparUnitBase}
 \end{table}
@@ -1482,9 +1483,9 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 %\subsection{Scale factors}
 
 \begin{table}[ht]
-\begin{tabular}{|L{0.2\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|}
+\begin{tabular*}\textwidth{@{\extracolsep{\fill}} |L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
-    & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOUnits\\\hline
+    & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOU\\\hline
     Scale factors,   & \multicolumn{5}{c|}{\unit{d, c, m, n, p, f, a}} \\
     (multiple) & \multicolumn{5}{c|}{\unit{da, h, k, M, G, T, P, E}}   \\
     prefixes & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
@@ -1492,7 +1493,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     Prefix--symbol concatenation & (1) & (2) & no space & no space (implicit) & no space\\\hline
     Prefix-able symbols  & Not \unit{kg}: use \unit{g} & (3) & all & all & (4) \\\hline
     Use compound prefixes & should not & should never & must not & must not & must not\\\hline
-\end{tabular}
+\end{tabular*}
   \caption[Comparison of scale-factors]{Comparison of scale-factors.
   Notes: (1) no space, regarded as single symbol;
   (2)~no space, regarded as a single unit string;
@@ -1502,9 +1503,9 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 \end{table}
 
 \begin{table}[ht]
-\begin{tabular}{|L{0.2\linewidth}|L{0.15\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.15\linewidth}|}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     minute & \unit{min, $^\mathrm{m}$} & \unit{min} & \unit{min} & \unit{min} & \unit{min}\\\hline
     hour & \unit{h, $^\mathrm{h}$} & \unit{h} & \unit{h} & \unit{h} & \unit{h}\\\hline
     day & \unit{d, $^\mathrm{d}$} & \unit{d} & \unit{d} & \unit{d} & \unit{d}\\\hline
@@ -1522,7 +1523,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     jansky & \multicolumn{4}{c|}{\unit{Jy}} & \unit{Jy}\\\hline
     celsius degree & \unit{$^\circ$C} for meteorology, otherwise \unit{K}&  &  &  & not used\\\hline
     century & (3)&  &  &  & (4)\\\hline
-\end{tabular}
+\end{tabular*}
   \caption[Comparison of astronomy-related units]{Comparison of astronomy-related units.
   Notes: (1) Pa (peta-a) forbidden;
   (2) no dedicated symbol, use \unit{uarcsec};
@@ -1533,11 +1534,11 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 \end{table}
 
 \begin{table}[ht]
-\begin{tabular}{|L{0.2\linewidth}|L{0.15\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.12\linewidth}|L{0.15\linewidth}|}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.12\linewidth}|}
 \hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     %\multicolumn{6}{|c|}{IAU (Table 7) strongly recommends to no longer use these} \\\hline
-    \aa{}ngstr\"om & \unit{\AA} & \unit{angstrom} & 0.1nm & \unit{Angstrom} & \unit{angstrom}, \unit{Angstrom}\\\hline
+    \aa{}ngstr\"om &\unit{\AA}& \unit{angstrom} & 0.1nm & \unit{Angstrom} & \unit{angstrom}, \unit{Angstrom}\\\hline
     micron & \unit{\micro} &  &  &  & not used \\\hline
     fermi & no symbol &  &  &  & not used \\\hline
     barn & \unit{b} & \unit{barn} & \unit{barn} & \unit{barn} & \unit{barn}\\\hline
@@ -1554,7 +1555,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     gamma & \unit{$\gamma$} & \unit{} & \unit{} & \unit{} & not used \\\hline
     oersted & \unit{Oe} & \unit{} & \unit{} & \unit{} & not used \\\hline
     Imperial, non-metric & should not be used & \unit{} & \unit{} & \unit{} & not used \\\hline
-\end{tabular}
+\end{tabular*}
   \caption[Comparison of symbols deprecated by IAU]{Comparison of
   symbols deprecated by IAU (from \citet{wilkins89} table~7, ``Non-SI
   units and symbols whose continued use is deprecated'').
@@ -1563,9 +1564,9 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 \end{table}
 
 \begin{table}[ht]
-\begin{tabular}{|p{0.2\linewidth}|p{0.15\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.12\linewidth}|p{0.15\linewidth}|}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
-    & IAU & OGIP  & StdCats & FITS  & VOUnits\\\hline
+    & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     magnitude & \multicolumn{4}{c|}{\unit{mag}} & \unit{mag}\\\hline
     rydberg & \unit{} & \unit{} & \unit{Ry} & \unit{Ry} & \multirow{19}{0.15\linewidth}{same as FITS} \\\hline
     solar mass & \unit{$\mathrm{M}_\odot$} &  & \unit{solMass} & \unit{solMass} &\\\cline{1-5}
@@ -1589,44 +1590,78 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     No unit, dimensionless & \unit{} & blank string & \unit{-} & \unit{} & empty string \\\hline
     Percent &  &  & \unit{\%} & & \unit{\%} \\\hline
     unknown & \unit{} & {\tiny\unit{UNKNOWN}} & \unit{} & \unit{} & \unit{unknown} \\\hline
-\end{tabular}
+\end{tabular*}
   \caption{Miscellaneous other symbols.}
   \label{tabx:comparUnitOther}
 \end{table}
 
 \begin{table}[th]
 \begingroup
-\begin{tabular}{|L{0.2\linewidth}|L{0.15\linewidth}|L{0.15\linewidth}|L{0.15\linewidth}|L{0.15\linewidth}|}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
-    & IAU & OGIP  & StdCats & FITS \\\hline
+    & IAU & OGIP  & StdCats & FITS &VOU\\\hline
     %\multicolumn{6}{|c|}{Compound units} \\\hline
-    Multiplication & space or dot (1)
+    Multiplication
+        & space or dot (1)
     	& space or star (2)
 	& dot
-	& space or\hfil\break star (3) \\\hline
-    Division & per (4)
+	& space, dot or star (3)
+        & dot \\\hline
+    Division
+        & per (4)
     	& \unit{/} (5)
 	& \unit{/}, no space
-	& \unit{/}, no space\\\hline
-    Use of multiple / & never
+	& \unit{/}, no space
+        & \unit{/}, no space\\\hline
+    Use of multiple /
+        & never
     	& allowed 
 	& allowed 
-	& discouraged (6) \\\hline
-    \unit{sym} raised to the power $y$ & superscript 
+	& discouraged (6)
+        & never\\\hline
+    \unit{sym} raised to the power $y$
+        & superscript 
     	& (7)
 	& (8)
-	& (9) \\\hline
-    Exponential of \unit{sym} &  & \unit{exp(sym)} &  & \unit{exp(sym)} \\\hline\hline
-    Natural log of \unit{sym} &  & \unit{ln(sym)} &  & \unit{ln(sym)} \\\hline\hline
-    Decimal log of \unit{sym} &  & \unit{log(sym)} & \unit{[sym]} & \unit{log(sym)} \\\hline
-    Square root of \unit{sym} &  & \unit{sqrt(sym)} &  & \unit{sqrt(sym)} \\\hline
-    Other math &  & (10) &  & not used \\\hline
-    ( ) &  & allowed & allowed & optional around powers \\\hline
-    powers & superscripts & (11) & integers & (12) \\\hline
-    Numeric factor & not used & (13) & allowed & (14) \\\hline
-\end{tabular}
+	& (9)
+        & \unit{**}\\\hline
+    Exponential of \unit{sym}
+        &
+        & \unit{exp(sym)}
+        &
+        & \unit{exp(sym)}
+        & \unit{exp(sym)}\\\hline
+    Natural log of \unit{sym}
+        &
+        & \unit{ln(sym)}
+        &
+        & \unit{ln(sym)} 
+        & \unit{ln(sym)} \\\hline
+    Decimal log of \unit{sym}
+        &
+        & \unit{log(sym)}
+        & \unit{[sym]}
+        & \unit{log(sym)}
+        & \unit{log(sym)} \\\hline
+    Square root of \unit{sym}
+        &
+        & \unit{sqrt(sym)}
+        &
+        & \unit{sqrt(sym)}
+        & \unit{sqrt(sym)} \\\hline
+    Other math &  & (10) &  & not used  & not used \\\hline
+    ( ) &  & allowed & allowed & optional around powers & allowed \\\hline
+    powers & superscripts & (11) & integers & (12) & (12) \\\hline
+    Numeric factor & not used & (13) & allowed & (14) & (15) \\\hline
+\end{tabular*}
 \endgroup
-\caption[Mathematical expressions and combinations]{Mathematical expressions and symbol combinations.
+\caption[Mathematical expressions and combinations]{Mathematical
+    expressions and symbol combinations.
+    This table is derived from the specification texts; any deviation
+    from the grammars
+    of \prettyref{appx:fitsgrammar}--\ref{appx:cdsgrammar} is
+    unintentional.  This table, and those appendices, are informative;
+    only \prettyref{appx:vougrammar} is normative.
   \label{tabx:comparUnitCombine}
   Notes: (1) space, except if previous unit ends with superscript; dot (\unit{.}) may be used;
   (2)~one or more spaces OR one asterisk (\unit{*}) with optional spaces on either side;
@@ -1642,7 +1677,8 @@ first appear to have rough consensus, is disturbingly heterogeneous.
   (11)~decimal and integer fractions allowed;
   (12)~integer (sign and () optional), OR decimal or ratio between ();
   (13)~should be avoided; only powers of 10 allowed; should precede any unit string;
-  (14)~optional 10**k, 10\texttt{\^}k, or 10$\pm$k.}
+  (14)~optional 10**k, 10\texttt{\^}k, or 10$\pm$k;
+  (15)~see \prettyref{sec:scalefactor}.}
 \end{table}
 
 \iffalse
@@ -1694,7 +1730,7 @@ CDS grammars are not normative: the corresponding specification
 documents do not provide grammars, and instead describe the syntaxes
 in text, so that the grammars here are deductions from the
 specification text.
-This unfortunately means that some of these syntaxes are ambiguous.
+This unfortunately means that some of these syntaxes were discovered to be ambiguous.
 These ambiguities are discussed in the sections below.  We recommend
 that VO applications parse these syntaxes in a way which is consistent
 with the grammars here.
@@ -1902,11 +1938,12 @@ for the CDS grammar}
 \subsection{The VOUnits grammar (normative)}
 \label{appx:vougrammar}
 
-The VOUnits grammar is defined by this section, by the grammar in
-\prettyref{tabx:vougrammar}
+The VOUnits grammar is defined by this section,
+by the grammar in \prettyref{tabx:vougrammar}
 (with the terminals of \prettyref{tabx:terminals}
-plus the extra ones listed in \prettyref{tabx:vounitsterminals})
-and by the list of known units of \prettyref{tabx:knownunits}.
+plus the extra terminals listed in \prettyref{tabx:vounitsterminals}),
+the list of known units of \prettyref{tabx:knownunits},
+and the list of known functions of \prettyref{tab:functions}.
 
 The intention of the VOUnits grammar is that if a VOUnits string
 does not use the scale-factor, quoted-units or binary-prefix
