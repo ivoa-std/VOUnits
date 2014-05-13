@@ -113,7 +113,7 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{1.0-20140226}
+\date{1.0-20140513}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -131,9 +131,10 @@ Mireille Louys\\
 Fran\c{c}ois Ochsenbein}
 \editor{S\'{e}bastien Derri\`{e}re and Norman Gray}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140226/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140513/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140226/}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf}}}
@@ -263,7 +264,9 @@ thus formatted, are to be interpreted as described in RFC 2119
 \section*{Acknowledgements}
 
 We thank all those participants in IVOA and EuroVO workshops who have
-contributed by exposing use cases and providing comments, especially
+contributed by exposing use cases and providing comments during this
+document's long development.  These include
+Bob Hanisch,
 Rick Hessman,
 Paddy Leahy,
 Jeff Lusted,
@@ -1217,6 +1220,9 @@ incorporate the description of concepts themselves.
 The notion of unit conversion and quantity manipulation is discussed in
 \prettyref{sec:conversion}.
 
+% Add some extra stretchability, to avoid a weird page break after
+% this heading
+\vskip 0pt plus 1cm
 \section{Use cases and applications (informative)\label{sec:useCase}}
 
 \subsection{Unit parsing}
@@ -1249,8 +1255,8 @@ astronomical libraries is AST which includes a unit conversion
 facility attached to astronomical coordinate systems \citep{berry12}.
 
 Another library has been developed at
-CDS\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}},
-and can be tested online\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}}. This library covers all
+CDS,\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}}
+and can be tested online.\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}} This library covers all
 the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
 additional symbols and notations.
 
@@ -1321,7 +1327,7 @@ provide libraries and a parser to assist in assigning and checking a
 new unit, and attach this to the returned values via the SQL CAST
 operator. 
 This is implemented already in database related applications such as 
-Saada\footnote{\url{http://saada.unistra.fr/}}, for instance. 
+Saada,\footnote{\url{http://saada.unistra.fr/}} for instance. 
 If any column used in responding to a query lacks a necessary unit, the output
 involving that column will be unitless.
 
@@ -1741,7 +1747,7 @@ We believe that the grammars below are such that if a string
 successfully parses in two distinct grammars, it means the same in
 both.
 
-The grammars here are from the `Unity' package at
+The grammars here are from release 1.0 of the `Unity' package at
 \url{https://bitbucket.org/nxg/unity}, which includes machine-readable
 grammars, lists of recommended units, and a collection of test cases.  These are also extracted in
 machine-readable form
@@ -1995,6 +2001,8 @@ for the VOUnits grammar}
 The detailed (line-by-line) history of the document can be found at 
 \url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounits/VOUnits.tex}.
 \begin{itemize}
+\item 1.0-20140513:
+A few rewordings, addressing comments made during the TCG review period.
 \item 1.0-20140226:
 Minor wording and layout changes, following on-list discussion.
 Released for TCG review.
