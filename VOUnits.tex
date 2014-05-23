@@ -113,15 +113,15 @@
 % Provide a title for your document
 \title{Units in the VO}
 % Give date and version number
-\date{1.0-20140513}
+\date{1.0}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
 %\ivoatype{IVOA Working Draft}
-\ivoatype{IVOA Proposed Recommendation}
-%\ivoatype{IVOA Recommendation}
+%\ivoatype{IVOA Proposed Recommendation}
+\ivoatype{IVOA Recommendation}
 
-\version{1.0}
+\version{REC-1.0}
 % Give author list: separate different authors with \\
 % You can add email addresses with links \url{mailto:yourname@ivoa.net}
 \author{Markus Demleitner\\
@@ -131,9 +131,10 @@ Mireille Louys\\
 Fran\c{c}ois Ochsenbein}
 \editor{S\'{e}bastien Derri\`{e}re and Norman Gray}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140513/}}}
+\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140523/}}}
 \urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140226/}}}
+\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140513/}}}
+%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140226/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
 %\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
@@ -2001,17 +2002,18 @@ for the VOUnits grammar}
 The detailed (line-by-line) history of the document can be found at 
 \url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounits/VOUnits.tex}.
 \begin{itemize}
-\item 1.0-20140513:
+\item REC-1.0-20140523: Approved as REC by Exec, at the IVOA Madrid Interop.
+\item PR-1.0-20140513:
 A few rewordings, addressing comments made during the TCG review period.
-\item 1.0-20140226:
+\item PR-1.0-20140226:
 Minor wording and layout changes, following on-list discussion.
 Released for TCG review.
-\item 1.0-20131224:
+\item PR-1.0-20131224:
 \begin{itemize}
 \item Grammar changes: minor (now incorporates the grammars of Unity v0.11).
 \item Various clarifications to the text, following on-list discussion.
 \end{itemize}
-\item 1.0-20131025:
+\item WD-1.0-20131025:
 \begin{itemize}
 \item Grammar changes: The `\%' character is now treated as a special
     case, rather than being a permitted 'STRING' character; it's only
@@ -2029,28 +2031,28 @@ Released for TCG review.
     unresolved, and the correct behaviour unspecified (is it
     deci-\texttt{adu} or deka-\texttt{du}?).
 \end{itemize}
-\item 1.0-20131011: Changed gramme in gram; removed color property to distinguish arrows in fig .2;
+\item WD-1.0-20131011: Changed gramme in gram; removed color property to distinguish arrows in fig .2;
 Removed astro'l unit abbreviation from known-units.tex
-\item 1.0-20130922: Responding to RFC and mailing list comments.
+\item WD-1.0-20130922: Responding to RFC and mailing list comments.
 Addition of quoted units and arbitrary scale-factor (so updates to
 grammars, which now match Unity v0.9).  Some reformatting of tables.
-\item 1.0-20130724: Rephrasing and clarification, responding to RFC
+\item WD-1.0-20130724: Rephrasing and clarification, responding to RFC
 comments.  Update unity grammars to current version (ie, version of 2013-07-22 18:40).
-\item 1.0-20130701: Simplified Architecture diagram. Added example
+\item WD-1.0-20130701: Simplified Architecture diagram. Added example
 with scientific notation.  Adjusted locations of grammar tables to try
 to keep them closer to the associated text.
-\item 1.0-20130429: Some restructuring, some rephrasing, and a few layout changes.
-\item 1.0-20130225: Large tables from section 3 moved to Appendix A. Short summaries of symbols added
+\item WD-1.0-20130429: Some restructuring, some rephrasing, and a few layout changes.
+\item WD-1.0-20130225: Large tables from section 3 moved to Appendix A. Short summaries of symbols added
 to section 3. Changes to table of known units for consistency with text. Added explanations for units Sun and byte.  
-\item 1.0-20121212:
+\item WD-1.0-20121212:
 Minor typographical fixes. Added definition of OGIP. Removed last sentence from acknowledgements, which have been moved to the beginning of the document. Changed figure 1 to move Units in Semantics. Added 'discouraged' in first line of \prettyref{tab:VOUnitCombine}. Color change in figure 2 and its label.
-\item 1.0-20120801:
+\item WD-1.0-20120801:
 Minor typographical fixes
-\item 1.0-20120801:
+\item WD-1.0-20120801:
   \begin{itemize}
     \item Included yacc-style grammars in document.
     \end{itemize}
-\item 1.0-20120718:
+\item WD-1.0-20120718:
 	\begin{itemize}
 	\item Removed external tables refs in tables to avoid confusion.
 	\item Removed refs to SOFA and NOVAS.
@@ -2058,7 +2060,7 @@ Minor typographical fixes
 	\item Added formal grammar in annex.
 	\item Minor editing and typo fixes.
 	\end{itemize}
-\item 1.0-20120521:
+\item WD-1.0-20120521:
 	\begin{itemize}
 	\item Typos fixed, removed F. Bonnarel from authors. 
 	\item One sentence rephrased in section 1.2 for clarity.
@@ -2068,7 +2070,7 @@ Minor typographical fixes
 	\item \prettyref{tabx:comparUnitDeprecated} completed.
 	\item Added numeric factors in \prettyref{tabx:comparUnitCombine} and discussion in text.
 	\end{itemize}
-\item 1.0-20111216: Major rework of the document.
+\item WD-1.0-20111216: Major rework of the document.
 \item 0.3: initial public release.
 %\item version 0.1 to 0.2
 % \begin{itemize}
