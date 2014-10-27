@@ -692,8 +692,8 @@ Future versions of this specification may add to the set of known units.
 \hbox to \textwidth{\hss
 \catcode`\%=11
 \begin{tabular}{rlcccc|rlcccc}
-\emph{unit}&\emph{description}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}&
-\emph{unit}&\emph{description}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}\\
+\emph{symbol}&\emph{description}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}&
+\emph{symbol}&\emph{description}&\emph{fits}&\emph{ogip}&\emph{cds}&\emph{vou}\\
 \input{known-units.tex}
 \end{tabular}
 \hss}
@@ -704,7 +704,7 @@ an~`s' that it is additionally permitted to have SI prefixes,
 a~`b' that binary prefixes will be recognised,
 and a~`d' that it is recognised but deprecated.
 For those units which have alternative symbols for a given unit,
-a~`p' indicates the preferred one.}
+a~`p' indicates the one preferred for output.}
 \end{table}
 
 \subsection{Binary units}
@@ -799,19 +799,36 @@ units such as bytes or bits, they \norm{must} use the the binary prefixes
 of \citet[\S4]{std:iec80000-13}, reproduced in \prettyref{tab:vouscalefactors}b
 (these originated in \citet{std:ieee1541-2002}).
 
-Note: the~`s' and~`b' annotations in \prettyref{tabx:knownunits}
-are not symmetric: the~`s' annotation indicates that SI
-prefixes are permitted in the given syntax, which means that they are
-also recognised when preceding unknown units (which have no
-restrictions on them); in contrast, binary prefixes are recognised
-exclusively on units with a~`b' annotation, which means that they
-are \emph{not} recognised with unknown units.  That is,
-the \unit{Mifurlong} is the mega-\texttt{ifurlong} and
-the \unit{Kifurlong} is the unknown unit \texttt{Kifurlong}.
+Note 1: the~`s' and~`b' annotations in \prettyref{tabx:knownunits} are
+not symmetric: the~`s' annotation indicates that SI prefixes are
+permitted in the given syntax, which means that they are also
+recognised when preceding unknown units (which have no restrictions on
+them); in contrast, binary prefixes are recognised exclusively on
+units with a~`b' annotation, which means that they are \emph{not}
+recognised with unknown units.  That is, the \unit{Mifurlong} is the
+mega-\texttt{ifurlong} (because it starts with the decimal `M' prefix)
+and the \unit{Kifurlong} is the unknown unit \texttt{Kifurlong}
+(because `K' is not a decimal prefix, and the binary prefix `Ki' is not
+recognised when prefixed to an unknown unit).
 
-Note: The letter \unit{u} is used instead of the
+Note 2: The letter \unit{u} is used instead of the
 \micro\ symbol to represent a factor of $10^{-6}$, 
 following the character set defined in \prettyref{sec:encoding}.
+
+Note 3: The FITS deprecations in \prettyref{tabx:knownunits} are those
+where that standard's Table~4 notes that the unit is ``Deprecated in
+IAU Style Manual but still in use.''  The VOUnits
+deprecations inherit these, and add (by community acclaim) the
+besselian and tropical years.
+
+Note 4: The unit \emph{names} `angstrom' and `ohm' are correctly spelled with
+a lowercase initial letter (as required by \citet{std:iso80000-1}), but
+in both cases their usual unit \emph{symbol} is a non-ASCII character,
+so that their all-ASCII version here must be a word.  Following the
+lead of the FITS and CDS standards, and of SI unit-symbols derived from
+surnames, and disagreeing with the OGIP standard, we have preferred the
+initial-capital symbol in VOUnits (thus `Angstrom' as the unit symbol,
+rather than `angstrom').
 
 \subsection{Astronomy symbols}
 
