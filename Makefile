@@ -47,9 +47,9 @@ unity-grammars: unity-grammars.zip
 # document is buildable on a machine without 'make' or 'python'.
 known-units.tex: unity-grammars known-units-to-tex.py
 	rm -f $@
-	echo '\\iffalse\n% Generated from unity-grammars.zip/known-units.csv\n%' >$@
+	echo -e '\\iffalse\n% Generated from unity-grammars.zip/known-units.csv\n%' >$@
 	sed 's/^/% /' unity-grammars/README >>$@
-	echo '\\fi' >>$@
+	echo -e '\\fi' >>$@
 	python known-units-to-tex.py < unity-grammars/known-units.csv >>$@
 #	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >>$@
 

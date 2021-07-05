@@ -2,6 +2,9 @@
 \input tthdefs
 \input gitmeta
 
+\lstset{flexiblecolumns=true,basicstyle=\ttfamily\footnotesize}
+\usepackage{multirow}
+
 %Mir colors definitions
 \definecolor{orange}{rgb}{0.5,0.3,0.0}
 \newcommand{\blue}{\textcolor{blue}}
@@ -1699,7 +1702,7 @@ Other ambiguities:
 
 \clearpage
 \begin{table}[t]
-\verbatiminput{unity-grammars/unity-fits.txt}
+\lstinputlisting{unity-grammars/unity-fits.txt}
 \caption[The FITS grammar]{\label{tabx:fitsgrammar}The FITS grammar.
 See \prettyref{appx:fitsgrammar}.}
 \end{table}
@@ -1747,7 +1750,7 @@ Specification ambiguities:
 
 %\clearpage
 \begin{table}[ht]
-\verbatiminput{unity-grammars/unity-ogip.txt}
+\lstinputlisting{unity-grammars/unity-ogip.txt}
 \caption[The OGIP grammar]{\label{tabx:ogipgrammar}The OGIP grammar.
 Note that the \texttt{FLOAT} in the \texttt{scalefactor} production
 must be a power of ten.
@@ -1782,7 +1785,7 @@ take it that this is valid, and equivalent to \units{kg~m^{-1}~s^{-1}}.
 This specification places no restrictions on the leading scale-factor.
 
 \begin{table}[ht]
-\verbatiminput{unity-grammars/unity-cds.txt}
+\lstinputlisting{unity-grammars/unity-cds.txt}
 \caption[The CDS grammar]{\label{tabx:cdsgrammar}The CDS grammar.
 See \prettyref{appx:cdsgrammar} for discussion,
 and \prettyref{tabx:cdsterminals} for the additional terminals.}
@@ -1843,7 +1846,7 @@ string matching either of the regular expressions
 
 
 \begin{table}[ht]
-\verbatiminput{unity-grammars/unity-vounits.txt}
+\lstinputlisting{unity-grammars/unity-vounits.txt}
 \caption[The VOUnits grammar]{\label{tabx:vougrammar}The VOUnits
 grammar.  See \prettyref{appx:vougrammar} for discussion,
 and \prettyref{tabx:vounitsterminals} for additional terminals.}
@@ -1956,7 +1959,6 @@ Minor typographical fixes
 \end{itemize}
 
 \clearpage
-\bibliographystyle{plainnat-eprints}
 \bibliography{bib}
 
 
