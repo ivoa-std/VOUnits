@@ -1,7 +1,6 @@
-#! /usr/bin/python
+#!/usr/bin/python3
 
 import sys
-import string
 import re
 
 lines = []
@@ -10,7 +9,7 @@ for line in sys.stdin:
     if not re.search('#',line):
         lines.append(line.strip().split(','))
 
-nrows = (len(lines)+1)/2
+nrows = (len(lines)+1)//2
 
 # The name-generating hack below doesn't work well in all cases,
 # so supply some explicit replacements.
@@ -35,24 +34,25 @@ def fmtname(uname):
     else:
         nameparts = uname.split(':')
         if len(nameparts) != 2:
-            print >>sys.stderr, "name %s malformed" % uname
+            print("name %s malformed" % uname, file=sys.stderr)
             rval ='XXX'
         else:
             tname = nameparts[1]
             if all_uppercase.match(tname):
                 rval = tname
             elif initial_capital.match(tname):
-                rval = string.join(map(string.lower, initial_capital.findall(tname)), ' ')
+                rval = " ".join(s.lower() 
+                	for s in initial_capital.findall(tname))
             else:
                 rval = tname
     return [rval]
 
 def fmtrow(r):
-    return string.join([r[0]] + fmtname(r[1]) + (map(lambda s: "$\\cdot$" if s=="1" else s[1:], r[2:])),'&')
+    return "&".join([r[0]] + fmtname(r[1]) + (["$\\cdot$" if s=="1" else s[1:] for s in r[2:]]))
 
 for r in range(nrows):
     r2 = r+nrows
     if r2 >= len(lines):
-        print "%s\\\\" % (fmtrow(lines[r]))
+        print("%s\\\\" % (fmtrow(lines[r])))
     else:
-        print "%s & %s\\\\" % (fmtrow(lines[r]), fmtrow(lines[r2]))
+        print("%s & %s\\\\" % (fmtrow(lines[r]), fmtrow(lines[r2])))
