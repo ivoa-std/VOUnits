@@ -29,7 +29,10 @@ FIGURES = role_diagram.svg
 VECTORFIGURES = 
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES = 
+AUX_FILES =
+
+# This has to be a python3 -- override on the command-line if necessary.
+PYTHON=python
 
 -include ivoatex/Makefile
 
@@ -45,12 +48,16 @@ unity-grammars: unity-grammars.zip
 
 # The file known-units.tex is generated but checked in, so that the
 # document is buildable on a machine without 'make' or 'python'.
+#
+# FIXME: need we retain this file?
+# If we can (ie, are willing to) presume 'make' is present,
+# then we can avoid known-units.tex being checked in.
 known-units.tex: unity-grammars known-units-to-tex.py
 	rm -f $@
-	echo -e '\\iffalse\n% Generated from unity-grammars.zip/known-units.csv\n%' >$@
-	sed 's/^/% /' unity-grammars/README >>$@
-	echo -e '\\fi' >>$@
-	python known-units-to-tex.py < unity-grammars/known-units.csv >>$@
+	{ echo '\\iffalse'; echo '% Generated from unity-grammars.zip/known-units.csv'; echo '%'; \
+	  sed 's/^/% /' unity-grammars/README; \
+	  echo '\\fi'; } >$@
+	$(PYTHON) known-units-to-tex.py < unity-grammars/known-units.csv >>$@
 #	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >>$@
 
 
