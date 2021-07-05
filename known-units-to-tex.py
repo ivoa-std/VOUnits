@@ -34,25 +34,26 @@ def fmtname(uname):
     else:
         nameparts = uname.split(':')
         if len(nameparts) != 2:
-            print("name %s malformed" % uname, file=sys.stderr)
+            print("name {} malformed".format(uname), file=sys.stderr)
             rval ='XXX'
         else:
             tname = nameparts[1]
             if all_uppercase.match(tname):
                 rval = tname
             elif initial_capital.match(tname):
-                rval = " ".join(s.lower() 
-                	for s in initial_capital.findall(tname))
+                rval = " ".join(s.lower()
+                	        for s in initial_capital.findall(tname))
             else:
                 rval = tname
     return [rval]
 
 def fmtrow(r):
-    return "&".join([r[0]] + fmtname(r[1]) + (["$\\cdot$" if s=="1" else s[1:] for s in r[2:]]))
+    s = "&".join([r[0]] + fmtname(r[1]) + (["$\\cdot$" if s=="1" else s[1:] for s in r[2:]]))
+    return s.replace("%", "\\%") # one of the units is '%' (ie, the TeX comment character)
 
 for r in range(nrows):
     r2 = r+nrows
     if r2 >= len(lines):
-        print("%s\\\\" % (fmtrow(lines[r])))
+        print("{}\\\\".format(fmtrow(lines[r])))
     else:
-        print("%s & %s\\\\" % (fmtrow(lines[r]), fmtrow(lines[r2])))
+        print("{}\n\t& {}\\\\".format(fmtrow(lines[r]), fmtrow(lines[r2])))
