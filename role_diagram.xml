@@ -1,0 +1,12 @@
+<archdiag xmlns="http://ivoa.net/archdiag">
+	<rec name="VOTable" x="270" y="325" w="50"/>
+
+	<rec name="DALI" x="310" y="290" w="33"/>
+	<rec name="ADQL" x="250" y="160" w="37"/>
+
+	<rec name="STC" x="580" y="255" w="30"/>
+	<prerec name="Meas" x="456" y="305" w="35"/>
+	<prerec name="Coords" x="501" y="305" w="44"/>
+
+	<thisrec name="VOUnits" x="220" y="250" w="50"/>
+</archdiag>
