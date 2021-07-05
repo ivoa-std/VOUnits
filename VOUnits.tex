@@ -1,42 +1,17 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  For an conversion via cgiprint (HTX):
-%  See http://vizier.u-strasbg.fr/local/man/cgiprint.htx
-\def\ifhtx{\iffalse}    % Lines used only for the HTML version
-\ifhtx
-% . . .
-% . . . Definitions in HTX context
-% . . .
-\else
-\documentclass[11pt,notitlepage,onecolumn]{ivoa}
-% . . .
-% . . . Definitions in LaTeX context
-% . . .
-\fi
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,a4paper]{ivoa}
+\input tthdefs
+\input gitmeta
 
-\def\SVN$#1: #2 ${\expandafter\def\csname SVN#1\endcsname{#2}}
-\SVN$Revision$
-\SVN$Date$
-\SVN$HeadURL$
+%Mir colors definitions
+\definecolor{orange}{rgb}{0.5,0.3,0.0}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\violet}{\textcolor[rgb]{0.50,0.00,0.50}}
+\newcommand{\brown}{\textcolor[rgb]{0.50,0.10,0.10}}
+\newcommand{\unit}[1]{\texttt{\small\color{orange}#1}}
+%\newcommand{\unit}[1]{\textbf{\textsf{\color{orange}#1}}}
 
-\usepackage{natbib} % use author-year citations
-
-\usepackage{prettyref} % ensure consistent cross-references
-\newrefformat{sec}{Sect.~\ref{#1}}
-\newrefformat{appx}{Appx.~\ref{#1}}
-\newrefformat{fig}{Fig.~\ref{#1}}
-\newrefformat{tab}{Table~\ref{#1}}
-\usepackage{varioref}
-\newrefformat{tabx}{Table~\vref{#1}}
-
-% Extend the {tabular} column types, so we can conveniently get
-% raggedright (ie non-insanely-spaced) column entries.  Follows the
-% excellent answer at <http://tex.stackexchange.com/questions/12703/>
-\usepackage{array}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
-
-
-%\usepackage{supertabular,multicol}
+\usepackage{upgreek}
+\def\micro{{\ensuremath \upmu}}
 
 % Physical units in \rm.  Unstarred version includes leading
 % \thinspace.  Starred version doesn't, and is used when referring to
@@ -53,16 +28,7 @@
   \fi}}
 
 \newcommand*\hex[1]{\uppercase{#1}${}_{16}$}
-%\newcommand*\hex[1]{\texttt{0x#1}} % alternative formatting
-
-\usepackage{verbatim} % for \verbatiminput
-\def\verbatim@font{\fontsize{9}{11}\selectfont\ttfamily}
-% \DeclareRobustCommand{\^}{%
-%    \ifmmode\nfss@text{\textasciicircum}\else\textasciicircum\fi}
-
-%\definecolor{normative}{rgb}{0.1,0.1,0.5}
 \newcommand*\norm[1]{\textbf{\color{ivoacolor}#1}}
-
 \makeatother
 
 % abbreviation for 'e.g.', which (a) gets spacing right after the full
@@ -70,133 +36,47 @@
 % decide to.
 \def\eg{e.g.,~}
 
-%%
-%% If document is processed with latex, dvips and ps2pdf
-%%
-\ifx\pdftexversion\undefined
-  \usepackage[dvips]{graphicx}
-  \DeclareGraphicsExtensions{.eps,.ps}
-%% Uncomment following line if you want PDF thumbnails
-%  \usepackage[ps2pdf]{thumbpdf}
-% for old hyperref, use:
-  \usepackage[ps2pdf]{hyperref}
-%% for recent hyperref, use:
-%  \usepackage[ps2pdf,bookmarks=true,bookmarksnumbered=true,hypertexnames=false,breaklinks=true,%
-%  colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage{prettyref} % ensure consistent cross-references
+\newrefformat{sec}{Sect.~\ref{#1}}
+\newrefformat{appx}{Appx.~\ref{#1}}
+\newrefformat{fig}{Fig.~\ref{#1}}
+\newrefformat{tab}{Table~\ref{#1}}
+\usepackage{varioref}
+\newrefformat{tabx}{Table~\vref{#1}}
 
-%%
-%% else if document is processed with pdflatex
-%%
-\else
-  \usepackage[pdftex]{graphicx} %% graphics for pdftex (supports .pdf .jpg .png)
-  \usepackage{epstopdf}         %% requires epstopdf
-%% this is to support .ps files :
-  \makeatletter
-  \g@addto@macro\Gin@extensions{,.ps}
-  \@namedef{Gin@rule@.ps}#1{{pdf}{.pdf}{`ps2pdf #1}}
-  \makeatother
-%% comment above lines if you have included ps files
-%\DeclareGraphicsExtensions{.pdf,.jpg,.png}
-%% Uncomment following line if you want PDF thumbnails
-%  \usepackage[pdftex]{thumbpdf}
-%% for old hyperref, use:
-%  \usepackage[ps2pdf]{hyperref}
-% for recent hyperref, use:
- \usepackage[pdftex,bookmarks=true,bookmarksnumbered=true,hypertexnames=false,breaklinks=true,%
-  colorlinks,allcolors=ivoacolor]{hyperref}
-  \pdfadjustspacing=1
-\fi
-\usepackage[final]{pdfpages}
-%\usepackage{tabulary} %%
-%%  Header of the document...
-%%
-% Provide a title for your document
+% Extend the {tabular} column types, so we can conveniently get
+% raggedright (ie non-insanely-spaced) column entries.  Follows the
+% excellent answer at <http://tex.stackexchange.com/questions/12703/>
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+
+
 \title{Units in the VO}
-% Give date and version number
-\date{1.0}
 
-% Choose one document type from below
-%\ivoatype{IVOA Note}
-%\ivoatype{IVOA Working Draft}
-%\ivoatype{IVOA Proposed Recommendation}
-\ivoatype{IVOA Recommendation}
+\ivoagroup{Semantics}
 
-\version{REC-1.0}
-% Give author list: separate different authors with \\
-% You can add email addresses with links \url{mailto:yourname@ivoa.net}
-\author{Markus Demleitner\\
-S\'{e}bastien Derri\`ere\\
-Norman Gray\\
-Mireille Louys\\
-Fran\c{c}ois Ochsenbein}
-\editor{S\'{e}bastien Derri\`{e}re and Norman Gray}
+\author{Demleitner, M.}
+\author{Derri\`ere, S.}
+\author{Gray, N.}
+\author{Louys, M.}
+\author{Ochsenbein, F.}
 
-\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140523/}}}
-\urllastversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/}}}
-\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140513/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20140226/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131224/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130922/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20131011/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130429/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120522.pdf}}}
-%\urlthisversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20130225/}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/internal/IVOA/UnitsDesc/WD-VOUnits-v1.0-20120718.pdf}}}
-%\previousversion{\footnotesize{\url{http://www.ivoa.net/Documents/VOUnits/20120801/}}}
+\editor{Gray, N.}
 
-
-
-%%%%%%%%%%%%%%%%%
-%mir \documentclass[12pt]{article}
-%\usepackage{graphicx}
-%\usepackage{hyperref}
-%\usepackage{psfig}
-%\usepackage{html}
-%\usepackage{epsf}
-%\usepackage{lscape}
-%mir \textheight 9.0in \hoffset -0.5in \voffset -0.5in
-%\newcommand{\Sensitiv}{Variation}
-\definecolor{orange}{rgb}{0.5,0.3,0.0}
-\newcommand{\unit}[1]{\texttt{\small\color{orange}#1}}
-%\newcommand{\unit}[1]{\textbf{\textsf{\color{orange}#1}}}
-\usepackage[T1]{fontenc}
-\usepackage{longtable}
-\usepackage{multirow}
-
-%\font\symbo=psyr at 10pt
-%\def\micro{{\symbo \char109}}
-\usepackage{upgreek}
-\def\micro{{\ensuremath \upmu}}
-
-%Mir colors definitions
-\newcommand{\bleu}[1]{\textcolor[rgb]{0.00,0.00,1.00}{#1}}
-\newcommand{\blue}{\textcolor{blue}}
-\newcommand{\violet}{\textcolor[rgb]{0.50,0.00,0.50}}
-\newcommand{\brown}{\textcolor[rgb]{0.50,0.10,0.10}}
-%%%%%%%%%%%%%%%%%
-
-%\usepackage{showlabels}
-
+\previousversion[http://www.ivoa.net/documents/VOUnits/20140523/]{REC-1.0}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20140513/]{PR-20140513}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20140226/]{PR-20140226}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20131224/]{PR-20131224}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20131011/]{PR-20131011}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20130922/]{PR-20130922}
+\previousversion[http://www.ivoa.net/documents/VOUnits/20130724/PR-VOUnits-1.0-20130922.pdf]{PR-20130922}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20130429/]{PR-20130429}
+\previousversion[http://www.ivoa.net/Documents/VOUnits/20130225/]{PR-20130225}
 
 
 \begin{document}
-\maketitle % print header in standard form
-\thispagestyle{empty}
-\begingroup
-%%\input{versions}
-\vfill
-%%\hbox to \textwidth{\hfil\tiny Volute: \SVNRevision, \SVNDate}
-\hbox to \textwidth{\hfil\tiny code.google.com/p/volute, rev\SVNRevision, \SVNDate}
-%\hbox to \textwidth{\hfil\tiny Volute: \SVNHeader}
-\endgroup
-\newpage
-\tableofcontents 
-\newpage
-\listoftables
-\newpage
-\section*{Abstract}
+\begin{abstract}
 This document describes a recommended syntax for writing the string
 representation of unit labels (`VOUnits').  In addition, it describes
 a set of recognised and deprecated units, which is as far as possible
@@ -205,56 +85,9 @@ consistent with other relevant standards (BIPM, ISO/IEC and the IAU).
 The intention is that units written to conform to this specification
 will likely also be parsable by other well-known parsers.  To this
 end, we include machine-readable grammars for other units syntaxes.
+\end{abstract}
 
-\section*{Status of this document}
 
-This document has been produced by the IVOA Semantics Working Group.
-It has been reviewed by IVOA Members and other interested parties, and
-has been endorsed by the IVOA Executive Committee as an IVOA
-Recommendation. It is a stable document and may be used as reference
-material or cited as a normative reference from another
-document. IVOA's role in making the Recommendation is to draw
-attention to the specification and to promote its widespread
-deployment. This enhances the functionality and interoperability
-inside the Astronomical Community.
-
-The place for discussions related to this document is the
-Semantics IVOA mailing list {\tt semantics\@@ivoa.net}.
-
-A list of current IVOA recommendations and other technical documents can be found at
-\url{http://www.ivoa.net/Documents/}.
-
-\subsection*{Note on conformance}
-
-Text within the following document is classified as either
-`normative' or `informative'.
-
-\textbf{Normative} text means information that is required
-to implement the Recommendation; an implementation of this
-Recommendation is conformant if it abides by all the prescriptions
-contained in normative text.  \textbf{Informative} text is
-information provided to clarify or illustrate a requirement but which
-is not required for conformance.
-
-The sections and subsections of this Recommendation are labeled,
-after the section heading, to specify whether they are normative or
-informative.  If a subsection is not labeled, it has the same
-normativity as its parent section.  References are normative if they
-are referred to within normative text.
-
-When found within normative sections, the key words
-\norm{must},
-\norm{must not},
-\norm{required},
-\norm{shall},
-\norm{shall not},
-\norm{should},
-\norm{should not},
-\norm{recommended},
-\norm{may},
-\norm{optional},
-thus formatted, are to be interpreted as described in RFC 2119
-\citep{std:rfc2119}.
 
 \section*{Acknowledgements}
 
@@ -275,6 +108,21 @@ Jesus Salgado,
 Mark Taylor,
 Brian Thomas,
 and recent contributors on the DM and Semantics forums.
+
+\section*{Conformance-related definitions}
+
+The words ``MUST'', ``SHALL'', ``SHOULD'', ``MAY'', ``RECOMMENDED'', and
+``OPTIONAL'' (in upper or lower case) used in this document are to be
+interpreted as described in IETF standard RFC2119 \citep{std:RFC2119}.
+
+The \emph{Virtual Observatory (VO)} is a
+general term for a collection of federated resources that can be used
+to conduct astronomical research, education, and outreach.
+The \href{https://www.ivoa.net}{International
+Virtual Observatory Alliance (IVOA)} is a global
+collaboration of separately funded projects to develop standards and
+infrastructure that enable VO applications.
+
 
 \section{Introduction (informative)}
 \label{sec:intro}

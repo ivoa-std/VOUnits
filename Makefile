@@ -31,6 +31,13 @@ VECTORFIGURES =
 # Additional files to distribute (e.g., CSS, schema files, examples...)
 AUX_FILES = 
 
+-include ivoatex/Makefile
+
+ivoatex/Makefile:
+	@echo "*** ivoatex submodule not found.  Initialising submodules."
+	@echo
+	git submodule update --init
+
 unity-grammars: unity-grammars.zip
 	if test -d unity-grammars; then rm -Rf unity-grammars; else :; fi
 	unzip unity-grammars.zip
@@ -47,9 +54,3 @@ known-units.tex: unity-grammars known-units-to-tex.py
 #	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >>$@
 
 
--include ivoatex/Makefile
-
-ivoatex/Makefile:
-	@echo "*** ivoatex submodule not found.  Initialising submodules."
-	@echo
-	git submodule update --init
