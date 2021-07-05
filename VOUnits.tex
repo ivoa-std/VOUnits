@@ -190,7 +190,7 @@ layer have some legacy units, which are mandatory for any scientific use of
 the corresponding data.  Units can be embedded in data (\eg FITS headers) or be
 implied by convention and/or (preferably) specified in metadata.
 
-Units also appear in the VOTable format \citep{ochsenbein11}, through the use
+Units also appear in the VOTable format \citep{2019ivoa.spec.1021O}, through the use
 of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
 elements. Because of the widespread dependency of many other VO standards on VOTable,
 these standards inherit a dependency on Units.
@@ -300,7 +300,6 @@ In particular:
   multiple specifications of base and known units
   (we refer, in particular, to 
   specifications from BIPM, ISO/IEC and the IAU);
-  %\citet{si-brochure,std:iec80000-13,iau12});
   these are broadly, but not completely, mutually consistent.
 \item Where there are some ambiguities in, or contradictions between,
   these various specifications, we recommend that application authors should
@@ -1864,8 +1863,15 @@ for the VOUnits grammar}
 
 \section{Updates of this document (informative)}
 
-The detailed (line-by-line) history of the document can be found at 
-\url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounits/VOUnits.tex}.
+\subsection{Changes since REC-1.0}
+
+\begin{itemize}
+\item Ported to ivoatex
+\item Clarifying that Besselian year is not in FITS.
+\end{itemize}
+
+\subsection{Changes before REC-1.0}
+
 \begin{itemize}
 \item 2014 July 2: minor adjustment, to remove `proposed
 recommendation' text which was retained in the final version by accident.
@@ -1958,8 +1964,7 @@ Minor typographical fixes
 % \end{itemize}
 \end{itemize}
 
-\clearpage
-\bibliography{bib}
+\bibliography{bib,ivoatex/ivoabib,ivoatex/docrepo}
 
 
 \end{document}
