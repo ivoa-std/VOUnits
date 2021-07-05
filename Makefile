@@ -54,10 +54,11 @@ unity-grammars: unity-grammars.zip
 # then we can avoid known-units.tex being checked in.
 known-units.tex: unity-grammars known-units-to-tex.py
 	rm -f $@
-	{ echo '\\iffalse'; echo '% Generated from unity-grammars.zip/known-units.csv'; echo '%'; \
+	{ echo '% DO NOT EDIT'; \
+	  echo '% Generated from unity-grammars.zip/known-units.csv'; \
+	  echo; echo; \
 	  sed 's/^/% /' unity-grammars/README; \
-	  echo '\\fi'; } >$@
-	$(PYTHON) known-units-to-tex.py < unity-grammars/known-units.csv >>$@
-#	tr -d '\r' <unity-grammars/known-units.csv | grep -v '^"*#' | awk -F, -f known-units-to-tex.awk | sort -f >>$@
-
+	  echo; echo; \
+	  $(PYTHON) known-units-to-tex.py < unity-grammars/known-units.csv; \
+	} >$@.tmp && mv $@.tmp $@
 
