@@ -39,13 +39,21 @@
 % decide to.
 \def\eg{e.g.,~}
 
-\usepackage{prettyref} % ensure consistent cross-references
+\iftth
+  % prettyref support is included in ivoatex/tthdefs.tex
+\else
+  \usepackage{prettyref} % ensure consistent cross-references
+  \usepackage{varioref}
+\fi
 \newrefformat{sec}{Sect.~\ref{#1}}
 \newrefformat{appx}{Appx.~\ref{#1}}
 \newrefformat{fig}{Fig.~\ref{#1}}
 \newrefformat{tab}{Table~\ref{#1}}
-\usepackage{varioref}
-\newrefformat{tabx}{Table~\vref{#1}}
+\iftth
+  \newrefformat{tabx}{Table~\ref{#1}}
+\else
+  \newrefformat{tabx}{Table~\vref{#1}}
+\fi
 
 % Extend the {tabular} column types, so we can conveniently get
 % raggedright (ie non-insanely-spaced) column entries.  Follows the
