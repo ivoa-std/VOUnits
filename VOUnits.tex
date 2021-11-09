@@ -533,7 +533,7 @@ string \unit{furlong/week} \norm{should} parse successfully (though
 perhaps with suitably prominent warnings) as the femto-`urlong' per
 week.
 
-The Unity library (\prettyref{sec:libraries}) recognises units with
+The Unity library (\prettyref{sec:parsers}) recognises units with
 respect to a subset of the QUDT unit framework~\cite{qudt}, with some
 astronomy-specific additions.  This is a particularly comprehensive
 collection of units, and we commend it to the IVOA community as
@@ -1097,33 +1097,47 @@ The notion of unit conversion and quantity manipulation is discussed in
 \section{Use cases and applications (informative)\label{sec:useCase}}
 
 \subsection{Unit parsing}
+\label{sec:parsers}
 
-The rules defined in \prettyref{sec:proposal} allow us to build VOUnit parsers.
-Several services can be built on top of a VOUnit parser:
+A programme implementing the rules laid down in \prettyref{sec:proposal}
+is a VOUnit parser.   The
+Unity library\footnote{\url{https://bitbucket.org/nxg/unity}} is a
+reference implementation for such a parser.
+
+In addition to VOUnits, Unity also supports
+OGIP, StdCats and FITS syntaxes.  It provides yacc-style grammars for
+the various syntaxes, as well as implementing them in parsers written
+in Java and~C.  The grammars of \prettyref{appx:grammar} are extracted
+from the Unity distribution.
+
+Programmes may want to parse units for a variety of reasons:
 
 \begin{enumerate}
-\item Validation. A service checking that a VOUnit is well written. The output
-of such a service can have different levels: fully valid unit; valid syntax, but
+\item Validation.  Here, an application can try to parse units given in,
+typcially, table metadata and, depending on the result, label them one of:
+fully valid unit expression involving only known units;
+fully valid unit expression; valid syntax, but
 not the preferred one (\eg  use of deprecated symbols); parsing error. 
-\item Explanation. A service returning a plain-text explanation of the unit label.
-\item Typesetting. A service returning an equivalent of the unit label suitable for inclusion in
-a \LaTeX\ or HTML document.
-\item Dimensional equation. As described by \citet{osuna05}, VOUnits can be translated
-into a dimensional equation, allowing to build up conversions methods from one string 
-representation to another one (see also \prettyref{sec:conversion}). 
+\item Explanation. From a unit parse tree, a plain-text explanation can
+be generated.
+\item Typesetting. When an application needs publication-quality
+renderings of a unit string, it is relatively straightforward to
+generate inputs for \LaTeX\ or MathML processors from parse trees.
+\item Programmatic manipulation of units.  For example, a programme may
+want to determine the unit of a product of quantities by forming a new
+unit string from a product of the two incoming unit strings.  A very
+common manipulation of this kind, conversion of values expressed in one
+unit to some other, commensurable unit, is discussed in the next
+section.
+
 \end{enumerate}
 
-\subsection{Libraries\label{sec:libraries}}
-
 There are a few existing libraries able to interpret unit labels.
-In all cases,
-some software effort is required if they are to be used in translating
-between data provider unit labels, and those to be adopted by
-the IVOA for internal use.
-
 One of the most widely-used specialised
 astronomical libraries is AST which includes a unit conversion
 facility attached to astronomical coordinate systems \citep{berry12}.
+The Python library astropy \citep{2013A&A...558A..33A} implements the
+VOUnit standard.
 
 Another library has been developed at
 CDS,\footnote{\url{http://cds.u-strasbg.fr/resources/doku.php?id=units}}
@@ -1142,18 +1156,18 @@ from the Unity distribution.
 
 \subsection{Unit conversion and quantity transformation\label{sec:conversion}}
 
-Unit conversion is the simple task of converting a quantity expressed
+Unit conversion is the task of converting a quantity expressed
 in a given unit into a different unit, while the concept remains the
-same. For example, such a library might be able to convert a distance
+same. For example, a programme may want to convert a distance
 in \unit{pc} into a distance in \unit{AU} or \unit{km}, or convert a
 flux from \unit{mJy} to \unit{W.m-2.Hz-1}. This is rather easy with
 existing libraries, using dimensional analysis or SI units as a
 reference.
 
-Quantity transformation consists in deriving a new quantity from one or several original
+Quantity transformation consists of deriving a new quantity from one or several original
 quantities. It is more complex, because it requires having a precise model 
 (a simple equation in simple cases) for computing the transformation. The model involves
-quantities, each described with a UCD or utype, value and VOUnit. Some of the quantities
+quantities, each described with UCD or utype, value and VOUnit. Some of the quantities
 involved might be physical constants (\eg  Boltzmann's constant $k_{\mathrm{B}}$).
 
 Examples of such transformations can be:
@@ -1170,69 +1184,32 @@ number of photons emitted per second.
 
 VOUnits can help in quantity transformation if all quantities are qualified with proper VOUnits.
 
-\subsection{Query languages}
+This type of unit conversion is particularly useful when querying
+catalogues in astronomical databases using advanced query languages like
+ADQL.  In that scenario, forgetting unit coversions is a common source
+of error, in particular when porting queries from one service to
+another.
 
-Including VOUnits in queries is not an easy task. Some guidelines were
-articulated during the development of the ADQL standard.
+ADQL 2.1 \citep{TODO-not-a-rec-yet} offers the 
+\verb|IN_UNIT(expr, to_unit)| 
+function as a mitigation.  When an ADQL engine can establish the
+unit of the \verb|expr| argument, normally based on the service's table
+metadata, and that unit and the \verb|to_unit| argument are
+commensurable (i.e, one can be expressed in the other), the value of this
+function is \verb|expr| expressed in \verb|to_unit|.
 
-\begin{enumerate}
-\item All data providers should be encouraged to supply units for each column
-of a table. Columns should also have associated UCDs, so that quantities can be
-properly identified.
+For instance, a simple approximation for a declination of an object with
+a known linear proper motion might be expressed in ADQL as 
+$$
+\hbox{\verb|dec + IN_UNIT(pmdec, 'deg/yr')*IN_UNIT(dt, 'yr')|}
+$$
+regardless of the units of \verb|pmdec| and
+\verb|dt|, assuming \verb|dec| is in degrees.  Of course, exact
+treatment of proper motion as offsets grow large needs more care.
 
-%In most published tables in Astronomical journals and Vizier server as well, unitless values are
-%represented by "---". This could be adopted for the VO convention as well.
-\item The IVOA needs to provide a parser to relate the native units to the standard IVOA
-labels (in this context, the `native units' are the units of the
-underlying database table or metadata).   
+Conversions between VOUnits is implemented and used in, for instance,
+the publication package DaCHS \citep{2014A+C.....7...27D}.
 
-\item
-The default response to a query which does not specify units, will be
-in the native units of the table. 
-%\emph{We recommand that the output units will be labelled using the IVOA standard label ???}
-
-\item
-Where queries involve combining or otherwise operating on the content
-of columns to produce an output column with modified units, we can
-provide libraries and a parser to assist in assigning and checking a
-new unit, and attach this to the returned values via the SQL CAST
-operator. 
-This is implemented already in database related applications such as 
-Saada,\footnote{\url{http://saada.unistra.fr/}} for instance. 
-If any column used in responding to a query lacks a necessary unit, the output
-involving that column will be unitless.
-
-\item
-If the user wants to change the output units with respect to the table
-units, this could be done by specifying the units in the initial
-SELECT statement. There are several issues to consider: 
-	\begin{enumerate}
-	\item Does the user also need to include the conversion expression, or does the unit
-parser take care of that?  
-	\item Can the user use this to assign units (based on prior knowledge) to output from a 
-column lacking a unit?
-	\end{enumerate}
-\end{enumerate} 
-
-
-\subsection{Broader use in the VO}
-
-\begin{figure}[thb]
-  % Requires \usepackage{graphicx}
-  \includegraphics[width=\textwidth]{./units2.jpg}
-  \caption{This shows the levels at which conversions might be done.
-\textcolor{blue}{Plain arrows}: At the point where an astronomer or
-  data provider submits input to the VO, we should provide tools to
-  ensure that units are labeled consistently according to VOUnits. 
-  This implies that a units parsing step is included prior to metadata ingestion into the VO.
-\brown{Dashed arrows}: Conversions required to supply results to
-  the user in specified or user-prefered units \eg  \texttt{J.s-1} to \texttt{W}, are done where and when they are required.}
-  \label{fig:units2}
-\end{figure}
-
-Different VO entities require and consume metadata with units attached like registries, 
-applications and interoperate via protocols. \prettyref{fig:units2} illustrates the places where the IVOA
-could intervene to ensure consistent use of units.
 
 
 \clearpage
