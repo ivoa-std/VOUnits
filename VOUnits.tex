@@ -1131,7 +1131,7 @@ and can be tested online.\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}
 the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
 additional symbols and notations.
 
-The Unity library\footnote{\url{https://bitbucket.org/nxg/unity}} is a new
+The Unity library\footnote{\url{https://purl.org/nxg/dist/unity}} is a new
 standalone library intended to parse unit strings in the VOUnits,
 OGIP, StdCats and FITS syntaxes; it was used as a vehicle for
 developing and testing the grammars and 
@@ -1595,7 +1595,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 
 \clearpage
 \section{Formal grammars\label{appx:grammar}}
-% These grammars are extracted from http://bitbucket.org/nxg/unity:
+% These grammars are extracted from http://hg.sr.ht/~nxg/unity:
 %     % cd src/grammars
 %     % make unity-grammars.zip
 
@@ -1619,11 +1619,11 @@ We believe that the grammars below are such that if a string
 successfully parses in two distinct grammars, it means the same in
 both.
 
-The grammars here are from release 1.0 of the `Unity' package at
-\url{https://bitbucket.org/nxg/unity}, which includes machine-readable
+The grammars here are from release 1.1-SNAPSHOT of the `Unity' package at
+\url{https://hg.sr.ht/~nxg/unity}, which includes machine-readable
 grammars, lists of recommended units, and a collection of test cases.  These are also extracted in
 machine-readable form
-at \url{https://code.google.com/p/volute/source/browse/trunk/projects/std-vounits/unity-grammars.zip}.
+at \url{https://github.com/ivoa-std/VOUnits/blob/master/unity-grammars.zip}.
 
 In these grammars, the common terminals are as given in
 \prettyref{tabx:terminals}.  Lexers \norm{must not} swallow whitespace
