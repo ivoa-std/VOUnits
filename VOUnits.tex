@@ -1831,7 +1831,10 @@ string matching either of the regular expressions
 \item\texttt{0\textbackslash.[0-9]+([eE][+-]?[0-9]+)?}
 \item\texttt{[1-9][0-9]*(\textbackslash.[0-9]+)?([eE][+-]?[0-9]+)?}
 \end{itemize}
-(that is, something resembling \texttt{0.123} or \texttt{1.5e+11}).
+(that is, something resembling \texttt{0.123} or \texttt{1.5e+11};
+but forbidding \texttt{0}, which would be meaningless, and numbers
+with a decimal point but no fractional part, such as \texttt{1.}
+or \texttt{1.e1}, which would be liable to misinterpretation).
 
 
 \begin{table}[ht]
@@ -1865,7 +1868,9 @@ for the VOUnits grammar}
     corresponding quantity is dimensionless'.  An application is free
     to interpret the empty string as indicating a dimensionless
     quantity, that the units are unknown, or that this is a parsing
-    error (see \prettyref{sec:parsing-components}, GitHub issues~8 and~9).
+    error (see \prettyref{sec:parsing-components}, GitHub issue~9).
+  \item Added brief rationale for the syntax of the \texttt{VOUFLOAT}
+    terminal (see \prettyref{appx:vougrammar}, GitHub issue~8).
   \item Document management: ported to ivoatex
 \end{itemize}
 
