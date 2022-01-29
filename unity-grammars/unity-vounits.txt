@@ -1,0 +1,42 @@
+input: complete_expression 
+        | scalefactor complete_expression 
+        | LIT1 
+
+complete_expression: product_of_units 
+        | product_of_units division unit_expression 
+
+product_of_units: unit_expression 
+        | product_of_units product unit_expression 
+
+unit_expression: term 
+        | function_application 
+        | OPEN_P complete_expression CLOSE_P 
+
+function_application: STRING OPEN_P complete_expression CLOSE_P 
+
+scalefactor: LIT10 power numeric_power 
+        | LIT10 
+        | LIT1 
+        | VOUFLOAT 
+
+division: DIVISION
+
+term: unit 
+        | unit power numeric_power 
+
+unit: STRING 
+        | QUOTED_STRING 
+        | STRING QUOTED_STRING 
+
+power: STARSTAR
+
+numeric_power: integer 
+        | parenthesized_number 
+
+parenthesized_number: OPEN_P integer CLOSE_P 
+        | OPEN_P FLOAT CLOSE_P 
+        | OPEN_P integer division UNSIGNED_INTEGER CLOSE_P 
+
+integer: SIGNED_INTEGER | UNSIGNED_INTEGER
+
+product: DOT

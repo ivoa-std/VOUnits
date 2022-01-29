@@ -1,0 +1,88 @@
+"# Known units, taken from Pence et al, the OGIP specification, and the CDS specification",,,,,
+"# In the FITS/OGIP/CDS columns, a 1 indicates that the unit is permitted,",,,,,
+"# s indicates that SI prefixes are allowed,",,,,,
+"# b that IEC binary prefixes are allowed,",,,,,,
+# d that the unit is deprecated in some way.,,,,,
+# and p that the symbol is the preferred one in this syntax (where there is more than one symbol that maps to this unit),,,,,
+# The CDS standard doesn’t indicate which units may or may not take SI prefixes:,,,,,
+"# in the table below, we generally follow the FITS prescription, except where the CDS specification suggests otherwise.",,,,,
+# Where there are two possible abbreviations for a unit in a syntax,,,,,
+"# (eg FITS allows ‘pixel’ and ‘pix’), we prefer the one marked with a 'p'",,,,,
+# unit,meaning,FITS,OGIP,CDS,VOUnits
+# This is a bloody weird unit....,,,,,
+#Sun,relative to sun,1,,1,1s
+%,qudt:Percent,,,1,
+A,qudt:Ampere,1s,1s,1s,1s
+a,unity:JulianYear,1ps,,1s,1s
+adu,unity:ADU,1,,,1s
+Angstrom,qudt:Angstrom,1d,,1,1dp
+angstrom,qudt:Angstrom,,1,,1d
+arcmin,qudt:ArcMinute,1,1,1,1s
+arcsec,qudt:ArcSecond,1,1,1s,1s
+AU,qudt:AstronomicalUnit,1,1,1,1p
+au,qudt:AstronomicalUnit,,,,1
+Ba,unity:BesselianYear,,,,1d
+barn,qudt:Barn,1sd,1,1s,1sd
+beam,unity:Beam,1,,,1s
+bin,unity:DistributionBin,1,1,,1s
+bit,qudt:Bit,1s,,1s,1sb
+byte,qudt:Byte,1s,1,1s,1sbp
+# Note that 'B' is byte rather than bel; cf ISO/IEC-80000-13 item 13-9c
+B,qudt:Byte,,,,1sb
+C,qudt:Coulomb,1s,1s,1s,1s
+cd,qudt:Candela,1s,1s,1s,1s
+chan,unity:DetectorChannel,1,1,,1s
+count,qudt:Number,1,1,,1sp
+Crab,unity:Crab,,1s,,
+ct,qudt:Number,1,,1,1s
+cy,unity:JulianCentury,1,,,
+d,qudt:Day,1,1,1,1s
+# Decibel is anomalous in that we regard it as a unit by itself, rather than 10^-1 Bel.
+dB,qudt:Decibel,,,,1
+D,qudt:Debye,1,,1,1s
+deg,qudt:DegreeAngle,1,1,1,1s
+erg,qudt:Erg,1d,1,,1sd
+eV,qudt:ElectronVolt,1s,1s,1s,1s
+F,qudt:Farad,1s,1s,1s,1s
+g,qudt:Gram,1s,1s,1s,1s
+G,qudt:Gauss,1sd,1,,1sd
+H,qudt:Henry,1s,1s,1s,1s
+h,qudt:Hour,1,1,1,1s
+Hz,qudt:Hertz,1s,1s,1s,1s
+J,qudt:Joule,1s,1s,1s,1s
+Jy,unity:Jansky,1s,1s,1s,1s
+K,qudt:Kelvin,1s,1s,1s,1s
+lm,qudt:Lumen,1s,1s,1s,1s
+lx,qudt:Lux,1s,1s,1s,1s
+lyr,qudt:LightYear,1,1,,1s
+m,qudt:Meter,1s,1s,1s,1s
+mag,unity:StellarMagnitude,1s,1,1s,1s
+mas,unity:MilliArcSecond,1,,1,1
+min,qudt:MinuteTime,1,1,1,1s
+mol,qudt:Mole,1s,1s,1s,1s
+N,qudt:Newton,1s,1s,1s,1s
+Ohm,qudt:Ohm,1s,,1s,1s
+ohm,qudt:Ohm,,1s,,
+Pa,qudt:Pascal,1s,1s,1s,1s
+pc,qudt:Parsec,1s,1s,1s,1s
+ph,unity:Photon,1,,,1s
+photon,unity:Photon,1p,1,,1sp
+pix,unity:Pixel,1,,1,1s
+pixel,unity:Pixel,1p,1,,1sp
+R,unity:Rayleigh,1s,,,1s
+rad,qudt:Radian,1s,1s,1s,1s
+Ry,unity:Rydberg,1,,1s,1s
+s,qudt:SecondTime,1s,1s,1s,1s
+S,qudt:Siemens,1s,1s,1s,1s
+solLum,unity:SolarLuminosity,1,,1,1s
+solMass,unity:SolarMass,1,,1,1s
+solRad,unity:SolarRadius,1,,1,1s
+sr,qudt:Steradian,1s,1s,1s,1s
+T,qudt:Tesla,1s,1s,1s,1s
+ta,qudt:YearTropical,,,,1d
+u,qudt:UnifiedAtomicMassUnit,1,,,1s
+V,qudt:Volt,1s,1s,1s,1s
+voxel,unity:Voxel,1,1,,1s
+W,qudt:Watt,1s,1s,1s,1s
+Wb,qudt:Weber,1s,1s,1s,1s
+yr,unity:JulianYear,1s,1,1sp,1sp

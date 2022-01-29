@@ -431,16 +431,22 @@ strings in the other syntaxes are also case-sensitive).
 \subsection{Parsing unit strings -- overview\label{sec:parsing-components}}
 
 The unit strings \unit{unknown} and \unit{UNKNOWN} (that is, in
-all-lowercase or all-uppercase) are reserved for cases
-when the unit is unknown; that is, it is known that there should be a
-unit, but the unit string has been lost or not been specified.  These
-strings are not, however, part of the list of known units or the VOUnits grammar,
-and applications \norm{must} check for their presence before unit parsing.
+all-lowercase or all-uppercase) are reserved for cases when the unit
+is unknown; that is, it is known that there should be a unit, but the
+unit string has been lost or not been specified.  These strings are
+not, however, part of the list of known units or the VOUnits grammar.
+Although these strings are reserved here, their use is not required,
+and an application is free to use any other mechanism to indicate that
+a quantity has unknown units.
 
-An empty unit string positively indicates that the corresponding
-quantity is dimensionless.  Since an empty string does not conform to
-the grammars below, this also \norm{must} be checked for before
-unit-parsing starts.
+In each of the grammars here, the empty string is
+\emph{not} a valid units string -- in particular, it is not taken to
+indicate a dimensionless quantity.
+If a particular context wishes to interpret such a string as indicating a
+dimensionless quantity, or perhaps instead indicating `units unknown',
+then it should handle that case separately.
+The VOUnits syntax, though it also deems the empty string to be
+invalid, recognises the string \unit{1} as positively indicating a dimensionless quantity.
 
 A \textbf{symbol} within a unit-component \norm{should} be parsed as follows:
 \begin{enumerate}
@@ -508,7 +514,7 @@ never a milli-`ol', for some unknown unit~`ol'.
 In \prettyref{tabx:knownunits}, we indicate the `known units' for each of the
 described syntaxes, which go beyond the physically motivated set of
 base units.
-There are a few units (namely \unit{angstrom} or \unit{Angstrom}, 
+There are a few units (namely \unit{angstrom} or \unit{Angstrom},
 \unit{pix} or \unit{pixel}, \unit{ph} or \unit{photon} and \unit{a} or \unit{yr}) for
 which there are recognised alternatives in some syntaxes, and in these
 cases `p' marks the preferred one.
@@ -1850,8 +1856,17 @@ for the VOUnits grammar}
 \subsection{Changes since REC-1.0}
 
 \begin{itemize}
-\item Ported to ivoatex
-\item Clarifying that Besselian year is not in FITS.
+  \item Clarified: that Besselian year is not in FITS.
+  \item In FITS 4.0 \citep{fits4}, the preferred symbol for the year is
+    \unit{a}, not \unit{yr} (see \prettyref{tabx:knownunits}).
+  \item The VOUnits syntax now accepts \unit{1} as positively
+    indicating a dimensionless unit string, and the text no longer
+    recommends that the empty string `positively indicates that the
+    corresponding quantity is dimensionless'.  An application is free
+    to interpret the empty string as indicating a dimensionless
+    quantity, that the units are unknown, or that this is a parsing
+    error (see \prettyref{sec:parsing-components}, GitHub issues~8 and~9).
+  \item Document management: ported to ivoatex
 \end{itemize}
 
 \subsection{Changes before REC-1.0}

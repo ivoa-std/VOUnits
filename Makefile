@@ -41,18 +41,13 @@ ivoatex/Makefile:
 	@echo
 	git submodule update --init
 
-unity-grammars: unity-grammars.zip
-	if test -d unity-grammars; then rm -Rf unity-grammars; else :; fi
-	unzip unity-grammars.zip
-	touch unity-grammars
-
 # The file known-units.tex is generated but checked in, so that the
 # document is buildable on a machine without 'make' or 'python'.
 #
 # FIXME: need we retain this file?
 # If we can (ie, are willing to) presume 'make' is present,
 # then we can avoid known-units.tex being checked in.
-known-units.tex: unity-grammars known-units-to-tex.py
+known-units.tex: unity-grammars/README unity-grammars/known-units.csv known-units-to-tex.py
 	rm -f $@
 	{ echo '% DO NOT EDIT'; \
 	  echo '% Generated from unity-grammars.zip/known-units.csv'; \
