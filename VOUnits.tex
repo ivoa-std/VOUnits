@@ -1105,7 +1105,7 @@ The notion of unit conversion and quantity manipulation is discussed in
 \subsection{Unit parsing}
 \label{sec:parsers}
 
-A programme implementing the rules laid down in \prettyref{sec:proposal}
+A program implementing the rules laid down in \prettyref{sec:proposal}
 is a VOUnit parser.   The
 Unity library\footnote{\url{https://bitbucket.org/nxg/unity}} is a
 reference implementation for such a parser.
@@ -1116,26 +1116,24 @@ the various syntaxes, as well as implementing them in parsers written
 in Java and~C.  The grammars of \prettyref{appx:grammar} are extracted
 from the Unity distribution.
 
-Programmes may want to parse units for a variety of reasons:
-
+Programs may want to parse units for a variety of reasons:
 \begin{enumerate}
 \item Validation.  Here, an application can try to parse units given in,
 typcially, table metadata and, depending on the result, label them one of:
 fully valid unit expression involving only known units;
 fully valid unit expression; valid syntax, but
-not the preferred one (\eg  use of deprecated symbols); parsing error. 
+not the preferred one (\eg  use of deprecated symbols); parsing error.
 \item Explanation. From a unit parse tree, a plain-text explanation can
 be generated.
 \item Typesetting. When an application needs publication-quality
 renderings of a unit string, it is relatively straightforward to
 generate inputs for \LaTeX\ or MathML processors from parse trees.
-\item Programmatic manipulation of units.  For example, a programme may
+\item Programmatic manipulation of units.  For example, a program may
 want to determine the unit of a product of quantities by forming a new
 unit string from a product of the two incoming unit strings.  A very
 common manipulation of this kind, conversion of values expressed in one
 unit to some other, commensurable unit, is discussed in the next
 section.
-
 \end{enumerate}
 
 There are a few existing libraries able to interpret unit labels.
@@ -1164,7 +1162,7 @@ from the Unity distribution.
 
 Unit conversion is the task of converting a quantity expressed
 in a given unit into a different unit, while the concept remains the
-same. For example, a programme may want to convert a distance
+same. For example, a program may want to convert a distance
 in \unit{pc} into a distance in \unit{AU} or \unit{km}, or convert a
 flux from \unit{mJy} to \unit{W.m-2.Hz-1}. This is rather easy with
 existing libraries, using dimensional analysis or SI units as a
