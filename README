@@ -1,17 +1,15 @@
 To build this document, if you have 'make' and 'awk', simply give the command:
 
-  % make
+  % make VOUnits.pdf
 
-If you don't have make and awk, then:
+This generates the file `known-units.tex` (derived from
+`unity-grammars/known-units.csv`) and runs LaTeX on the document source.
 
-  % unzip unity-grammars.zip
-  % pdflatex VOUnits
-
-(or equivalent).  The file known-units.tex is generated from
-unity-grammars/known-units.csv, but is checked into the repository so
-that it can be build by hand in this way.
-
-The file unity-grammars.zip should be kept up-to-date with the product
-of the Unity project, at https://bitbucket.org/nxg/unity.  To obtain
-an updated copy of that file, check out the repository, and build
-src/grammar/unity-grammars.zip 
+The contents of the directory `unity-grammars`, containing the
+machine-readable version of the list of known units, and the
+yacc-style grammars, is derived from the Unity project; see
+<https://purl.org/nxg/dist/unity>, and the repository at
+<https://hg.sr.ht/~nxg/unity>.  You can obtain an updated copy of the
+grammars from the Unity distribution, or by checking out the
+repository, and building `src/grammar/unity-grammars.zip`.  In either
+case, unzip the contents here and commit the update.
