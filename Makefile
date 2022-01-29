@@ -41,12 +41,8 @@ ivoatex/Makefile:
 	@echo
 	git submodule update --init
 
-# The file known-units.tex is generated but checked in, so that the
-# document is buildable on a machine without 'make' or 'python'.
-#
-# FIXME: need we retain this file?
-# If we can (ie, are willing to) presume 'make' is present,
-# then we can avoid known-units.tex being checked in.
+VOUnits.pdf: known-units.tex
+
 known-units.tex: unity-grammars/README unity-grammars/known-units.csv known-units-to-tex.py
 	rm -f $@
 	{ echo '% DO NOT EDIT'; \
