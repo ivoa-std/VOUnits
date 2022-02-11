@@ -16,23 +16,15 @@
 \usepackage{upgreek}
 \def\micro{{\ensuremath \upmu}}
 
-% Physical units in \rm.  Unstarred version includes leading
-% \thinspace.  Starred version doesn't, and is used when referring to
-% the unit by itself (eg axis is $B/\units*T$), and is not qualifying
-% a number
-\makeatletter
-\def\units{\@ifstar{\let\un@tsspace\relax    \un@ts}%
-                   {\let\un@tsspace\thinspace\un@ts}}
-\newcommand{\un@ts}[1]{{\let~\thinspace
+\newcommand{\units}[1]{{\let~\thinspace
   \ifmmode
-    \un@tsspace\mathrm{#1}%
+    \,\textrm{#1}%
   \else
-    \nobreak$\un@tsspace\mathrm{#1}$%
+    \nobreak$\,\mathrm{#1}$%
   \fi}}
 
 \newcommand*\hex[1]{\uppercase{#1}${}_{16}$}
 \newcommand*\norm[1]{\textbf{\color{ivoacolor}#1}}
-\makeatother
 
 % abbreviation for 'e.g.', which (a) gets spacing right after the full
 % stop, and (b) allows us to change the punctuation globally if we
@@ -705,6 +697,8 @@ listed in \prettyref{tab:vouadopted}.
 \begin{table}[t]
 \begin{center}
 \def\arraystretch{1.2}
+
+\hbox to\textwidth{\hss\hbox{%
 \begin{tabular}{|rl|rl|rl|}\hline
 \unit{min}&(minute of time)	&\unit{deg}&(degree of angle) 	&\unit{Jy}&(jansky) 	\\
 \unit{h}&(hour of time)		&\unit{arcmin}&(arcminute)    	&\unit{pc}&(parsec) 	\\
@@ -712,7 +706,7 @@ listed in \prettyref{tab:vouadopted}.
 \unit{a}, \unit{yr}&(year)	&\unit{mas}&(milliarcsecond)    &\unit{AU}&(astronomical\\
 \unit{u}&(atomic mass)		&          &                    &         & unit)\\
 \hline
-\end{tabular}
+\end{tabular}\hss}}
 \end{center}
 \caption{\label{tab:vouadopted}Additional astronomy symbols}
 \end{table}
@@ -792,7 +786,7 @@ The last set of VOUnits symbols, derived from this comparison, is in
 \begin{table}[ht]
 \begin{center}
 \def\arraystretch{1.2}
-\begin{tabular}{|l|l|L{3cm}|l|}\hline
+\begin{tabular}{|l|l|L{2.9cm}|l|}\hline
 \unit{mag} (magnitude)		&\unit{pix}  or \unit{pixel} 	&\unit{solMass} (solar mass)     &\unit{R} (rayleigh) \\
 \unit{Ry} (rydberg)		&\unit{voxel}    		&\unit{solLum} (solar luminosity)&\unit{chan} (channel) 	\\
 \unit{lyr} (light year)		&\unit{bit}   			&\unit{solRad} (solar radius)	&\unit{bin} \\
@@ -1140,7 +1134,7 @@ There are a few existing libraries able to interpret unit labels.
 One of the most widely-used specialised
 astronomical libraries is AST which includes a unit conversion
 facility attached to astronomical coordinate systems \citep{berry12}.
-The Python library astropy \citep{2013A&A...558A..33A} implements the
+The Python library astropy \citep{2013A+A...558A..33A} implements the
 VOUnit standard.
 
 Another library has been developed at
@@ -1180,7 +1174,7 @@ Examples of such transformations can be:
 the corresponding angular separation in \unit{arcsec}. This can be done if the quantity representing the pixel
 scale is given, with its value and a compatible unit like \unit{deg/pixel}.
 \item converting a photon wavelength in the corresponding photon energy or frequency.
-\item deriving the flux for a given photon emission rate (in \units* W) from Planck's
+\item deriving the flux for a given photon emission rate (in \!\units W) from Planck's
 constant ($6.63 \times 10^{-34}\units{J~s}$), the radiation frequency (in \units{GHz}), and the
 number of photons emitted per second.
 \item transforming a magnitude into a flux, as needed for SED building.
@@ -1265,7 +1259,7 @@ of the comparison tables.
 
 \subsection{Other usages}
 
-\begin{description}
+\begin{bigdescription}
 \item[\url{http://arxiv.org/pdf/astro-ph/0511616}]
 Dimensional Analysis applied to spectrum handling in VO context~\citep{osuna05}
 offers a mathematical framework to guess and recompute
@@ -1292,7 +1286,7 @@ use as the toolkit behind the \textsc{casa} package).
 %USNO NOVAS
 %\violet{\footnotesize{\url{http://aa.usno.navy.mil/software/novas/novas_info.php}}}\\
 %implement the IAU 2000 recommendations.
-\end{description}
+\end{bigdescription}
 
 \clearpage
 \section{History: Comparison of syntaxes (informative)\label{appx:comparisons}}
@@ -1307,19 +1301,21 @@ Recommendation, namely that the current practice, though it may at
 first appear to have rough consensus, is disturbingly heterogeneous.
 
 \begin{table}[ht]
-  \begin{tabular*}\textwidth{@{\extracolsep{\fill}}|L{0.2\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|}
+\centering
+  \begin{tabular}{@{\extracolsep{\fill}}|L{0.2\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|p{0.11\linewidth}|}
 
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     Units are strings of chars &  & YES &  & YES & YES\\\hline
     Case sensitive & YES & YES & YES & YES & YES\\\hline
     Character set &  &  & No spaces & ASCII text & ASCII printable\\\hline
-\end{tabular*}
+\end{tabular}
   \caption{Comparison of string representation and encoding.}
   \label{tabx:comparUnitEncoding}
 \end{table}
 
 \begin{table}[ht]
+\centering
 \begin{tabular*}\textwidth{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
@@ -1393,7 +1389,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 \end{table}
 
 \begin{table}[ht]
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.12\linewidth}|}
+\begin{tabular}{@{\extracolsep{\fill}}|L{0.18\linewidth}|L{0.11\linewidth}|L{0.12\linewidth}|L{0.11\linewidth}|L{0.12\linewidth}|L{0.14\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     %\multicolumn{6}{|c|}{IAU (Table 7) strongly recommends to no longer use these} \\\hline
@@ -1414,7 +1410,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     gamma & \unit{$\gamma$} & \unit{} & \unit{} & \unit{} & not used \\\hline
     oersted & \unit{Oe} & \unit{} & \unit{} & \unit{} & not used \\\hline
     Imperial, non-metric & should not be used & \unit{} & \unit{} & \unit{} & not used \\\hline
-\end{tabular*}
+\end{tabular}
   \caption[Comparison of symbols deprecated by IAU]{Comparison of
   symbols deprecated by IAU (from \citet{wilkins89} table~7, ``Non-SI
   units and symbols whose continued use is deprecated'').
@@ -1422,12 +1418,14 @@ first appear to have rough consensus, is disturbingly heterogeneous.
   \label{tabx:comparUnitDeprecated}
 \end{table}
 
+\renewcommand\multirowsetup{\centering}
 \begin{table}[ht]
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
+\begin{tabular}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS  & VOU\\\hline
     magnitude & \multicolumn{4}{c|}{\unit{mag}} & \unit{mag}\\\hline
-    rydberg & \unit{} & \unit{} & \unit{Ry} & \unit{Ry} & \multirow{19}{0.15\linewidth}{same as FITS} \\\hline
+    rydberg & \unit{} & \unit{} & \unit{Ry} & \unit{Ry} &
+    \multirow{19}{\linewidth}{same as FITS} \\\hline
     solar mass & \unit{$\mathrm{M}_\odot$} &  & \unit{solMass} & \unit{solMass} &\\\cline{1-5}
     solar luminosity & \unit{} & \unit{} & \unit{solLum} & \unit{solLum} &\\\cline{1-5}
     solar radius & \unit{} & \unit{} & \unit{solRad} & \unit{solRad} &\\\cline{1-5}
@@ -1449,14 +1447,15 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     No unit, dimensionless & \unit{} & blank string & \unit{-} & \unit{} & empty string \\\hline
     Percent &  &  & \unit{\%} & & \unit{\%} \\\hline
     unknown & \unit{} & {\tiny\unit{UNKNOWN}} & \unit{} & \unit{} & \unit{unknown} \\\hline
-\end{tabular*}
+\end{tabular}
   \caption{Miscellaneous other symbols.}
   \label{tabx:comparUnitOther}
 \end{table}
 
 \begin{table}[th]
 \begingroup
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}|L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
+\hbox to\textwidth{\hss\hbox{%
+\begin{tabular}{|L{0.2\linewidth}|L{0.1\linewidth}|L{0.13\linewidth}|L{0.13\linewidth}|L{0.13\linewidth}|L{0.13\linewidth}|}
 \hline
     & IAU & OGIP  & StdCats & FITS &VOU\\\hline
     %\multicolumn{6}{|c|}{Compound units} \\\hline
@@ -1512,7 +1511,7 @@ first appear to have rough consensus, is disturbingly heterogeneous.
     ( ) &  & allowed & allowed & optional around powers & allowed \\\hline
     powers & superscripts & (11) & integers & (12) & (12) \\\hline
     Numeric factor & not used & (13) & allowed & (14) & (15) \\\hline
-\end{tabular*}
+\end{tabular}}\hss}
 \endgroup
 \caption[Mathematical expressions and combinations]{Mathematical
     expressions and symbol combinations.
@@ -1613,7 +1612,7 @@ string only where the corresponding grammar permits
 the \texttt{WHITESPACE} terminal.
 
 \begin{table}[ht]
-\begin{tabular}{rL{9cm}}
+\begin{tabular}{rL{8.5cm}}
 \texttt{CARET}&the \texttt{\^{}} character (\hex{5e})\\
 \texttt{DIVISION}&the solidus, \texttt{/} (\hex{2f})\\
 \texttt{DOT}&the dot/period/full-stop character (\hex{2e})\\
@@ -1670,7 +1669,7 @@ but mean \units{kg~m^{-1}~s^{-1}} in the FITS syntax, and
 \units{kg~m^{-1}~s} in the OGIP one.
 
 The FITS specification permits a leading numeric multiplier, but
-``[c]reators of FITS files are encouraged to use the numeric
+``[c]re\-ators of FITS files are encouraged to use the numeric
 multiplier only when the available standard scale-factors of [SI] will
 not suffice''.
 
@@ -1817,8 +1816,8 @@ In particular:
 \begin{itemize}
 \item The product of units is indicated only by a dot, with no
   whitespace: \texttt{N.m}.
-\item Raising a unit to a power is done only with a double-star:
-  \texttt{kg.m**2.s**-2}.
+\item Raising a unit to a power is done only with a double-star, for
+  instance \texttt{kg.m**2.s**-2}.
 \item There may be at most one division sign at the top level of an
   expression.
 \end{itemize}
@@ -1842,7 +1841,7 @@ grammar.  See \prettyref{appx:vougrammar} for discussion,
 and \prettyref{tabx:vounitsterminals} for additional terminals.}
 \end{table}
 \begin{table}[ht]
-\begin{tabular}{rL{10cm}}
+\begin{tabular}{rL{9cm}}
 \texttt{VOUFLOAT}&see text, \prettyref{appx:vougrammar}\\
 \texttt{QUOTED\_STRING}&a \texttt{STRING} between single quote marks
     (ASCII \hex{27})
