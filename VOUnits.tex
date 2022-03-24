@@ -13,8 +13,12 @@
 \newcommand{\unit}[1]{\texttt{\small\color{orange}#1}}
 %\newcommand{\unit}[1]{\textbf{\textsf{\color{orange}#1}}}
 
-\usepackage{upgreek}
-\def\micro{{\ensuremath \upmu}}
+\iftth
+  \def\micro{{\ensuremath \mu}}
+\else
+  \usepackage{upgreek}
+  \def\micro{{\ensuremath \upmu}}
+\fi
 
 \newcommand{\units}[1]{{\let~\thinspace
   \ifmmode
