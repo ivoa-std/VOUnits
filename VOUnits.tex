@@ -198,6 +198,9 @@ Units also appear in the VOTable format \citep{2019ivoa.spec.1021O}, through the
 of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
 elements. Because of the widespread dependency of many other VO standards on VOTable,
 these standards inherit a dependency on Units.
+Since VOTable 1.4, the syntax for its {\tt unit} attribute is
+declared to follow VOUnits; earlier VOTable versions
+referenced the CDS StdCats syntax discussed in the Appendices.
 
 Somewhat independently of VOTable, the VO Registry is unit-aware.
 VODataService \citep{2021ivoa.spec.1102D} allows operators to declare
