@@ -686,14 +686,16 @@ and the \unit{Kifurlong} is the unknown unit \texttt{Kifurlong}
 recognised when prefixed to an unknown unit).
 
 Note 2: The letter \unit{u} is used instead of the
-\micro\ symbol to represent a factor of $10^{-6}$, 
+\micro\ symbol to represent a factor of $10^{-6}$,
 following the character set defined in \prettyref{sec:encoding}.
 
 Note 3: The FITS deprecations in \prettyref{tabx:knownunits} are those
-where that standard's Table~4 notes that the unit is ``Deprecated in
+where Table~4 in FITS\,3 \citep{pence10} notes that the unit is ``Deprecated in
 IAU Style Manual but still in use.''  The VOUnits
-deprecations inherit these, and add (by community acclaim) the
-besselian and tropical years.
+deprecations inherit these, and adds (by community acclaim) the
+besselian and tropical years.  Note that FITS\,4 remarks that use of
+either of these years ``is not encouraged'' \citep[\S9.3]{fits4}, and
+this is expanded on in FITS WCS Paper IV \citep[\S4.2]{rots15}.
 
 Note 4: The unit \emph{names} `angstrom' and `ohm' are correctly spelled with
 a lowercase initial letter (as required by \citet{std:iso80000-1}), but
@@ -1241,7 +1243,7 @@ the publication package DaCHS \citep{2014A+C.....7...27D}.
 
 Many other projects have already produced lists of preferred
 representations of units. Those most commonly used in
-astronomy are described in this section. 
+astronomy are described in this section.
 
 The four first schemes described below are used as references for the
 comparison tables presented later in this document.
@@ -1257,24 +1259,27 @@ The IAU style will be summarized in the second column of the comparison tables.
 
 \subsection{OGIP 1993}
 
-NASA has defined a list of character strings specifying the basic physical units 
-used within OGIP (Office of Guest Investigator Programs) FITS files \citep{george95}. Rules and guidelines on the construction 
-of compound units are also outlined. 
+NASA has defined a list of character strings specifying the basic physical units
+used within OGIP (Office of Guest Investigator Programs) FITS files
+\citep{george95}. Rules and guidelines on the construction of compound
+units are also outlined.  See also \prettyref{appx:ogipgrammar}.
 
 HEASARC datasets follow these conventions, presented in the third column
 of the comparison tables.
 
 \subsection{Standards for astronomical catalogues}
 
-The conventions adopted at CDS are summarized in the Standards for Astronomical 
+The conventions adopted at CDS are summarized in the Standards for Astronomical
 Catalogues, Version 2.0 \citep[\S3.2]{cds00}. They are presented in the fourth column
-of the comparison tables.
+of the comparison tables.  See also \prettyref{appx:cdsgrammar}.
 
 \subsection{FITS 2010}
 
-In Section 4.3 of the reference FITS paper, \citet{pence10} describe how unit strings are to be expressed in
-FITS files. The recommendations are presented in the fifth column
-of the comparison tables.
+In Section 4.3 of the reference FITS\,3 and FITS\,4 papers
+\citep{pence10,fits4}, there is a description of
+how unit strings are to be expressed in FITS files. The
+recommendations are presented in the fifth column of the comparison
+tables.  See also \prettyref{appx:fitsgrammar}.
 
 \subsection{Other usages}
 
@@ -1305,8 +1310,10 @@ use as the toolkit behind the \textsc{casa} package).
 %USNO NOVAS
 %\violet{\footnotesize{\url{http://aa.usno.navy.mil/software/novas/novas_info.php}}}\\
 %implement the IAU 2000 recommendations.
+\item The QUDT unit framework~\citep{qudt} is a set of detailed
+  semantic specifications for units of measure, quantity kind,
+  dimensions and data types, as used in the physical sciences.
 \end{bigdescription}
-
 \clearpage
 \section{History: Comparison of syntaxes (informative)\label{appx:comparisons}}
 %\section{History: Comparison of unit-string schemes (informative)\label{appx:comparisons}}
@@ -1658,12 +1665,13 @@ the digits are \hex{30} to \hex{39}, the letters are \hex{41} to \hex{5a} and \h
 \subsection{The FITS grammar (informative)}
 \label{appx:fitsgrammar}
 
-For the FITS units syntax, see section~4.3 of~\cite{pence10}, and its
+For the FITS units syntax, see section~4.3 of the FITS\,3
+or FITS\,4 specifications \citep{pence10,fits4}, and the
 associated tables.  Our preferred FITS grammar is in
 \prettyref{tabx:fitsgrammar}.
 
-As noted above in \prettyref{sec:fitsquote}, 
-the FITS specification isn't completely clear on the topic of 
+As noted above in \prettyref{sec:fitsquote},
+the FITS specification isn't completely clear on the topic of
 solidi, saying ``[t]he IAU style manual forbids
 the use of more than one solidus (/) character in a units
 string. However, since normal mathematical precedence rules apply
