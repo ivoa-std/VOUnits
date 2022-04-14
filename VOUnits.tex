@@ -549,7 +549,7 @@ perhaps with suitably prominent warnings) as the femto-`urlong' per
 week.
 
 The Unity library (\prettyref{sec:parsers}) recognises units with
-respect to a subset of the QUDT unit framework~\cite{qudt}, with some
+respect to a subset of the QUDT unit framework~\citep{qudt}, with some
 astronomy-specific additions.  This is a particularly comprehensive
 collection of units, and we commend it to the IVOA community as
 a \emph{lingua franca} for this type of work.
@@ -1117,8 +1117,7 @@ The notion of unit conversion and quantity manipulation is discussed in
 \label{sec:parsers}
 
 A program implementing the rules laid down in \prettyref{sec:proposal}
-is a VOUnit parser.   The
-Unity library\footnote{\url{https://purl.org/nxg/dist/unity}} is a
+is a VOUnit parser.   The Unity library (see below) is a
 reference implementation for such a parser.
 
 In addition to VOUnits, Unity also supports
@@ -1160,11 +1159,13 @@ and can be tested online.\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}
 the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
 additional symbols and notations.
 
-The Unity library\footnote{\url{https://purl.org/nxg/dist/unity}} is a
+The Unity library\footnote{\url{https://purl.org/nxg/dist/unity}
+(note, if citing this library, please use this URL rather than the URL
+it resolves to).} is a
 standalone library introduced alongside VOUnits 1.0
 intended to parse unit strings in the VOUnits,
 OGIP, StdCats and FITS syntaxes; it was used as a vehicle for
-developing and testing the grammars and 
+developing and testing the grammars and
 ideas for this present document.  It provides yacc-style grammars for
 the various syntaxes, as well as implementing them in parsers written
 in Java and~C.  The grammars of \prettyref{appx:grammar} are extracted
@@ -1593,7 +1594,8 @@ first appear to have rough consensus, is disturbingly heterogeneous.
 
 \clearpage
 \section{Formal grammars\label{appx:grammar}}
-% These grammars are extracted from http://hg.sr.ht/~nxg/unity:
+% These grammars are extracted from the repository
+% referred to at https://purl.org/nxg/dist/unity:
 %     % cd src/grammars
 %     % make unity-grammars.zip
 
@@ -1613,15 +1615,15 @@ with the grammars here.
 %
 The grammar for the VOUnits syntax, in \prettyref{appx:vougrammar}, is normative.
 
-We believe that the grammars below are such that if a string 
+We believe that the grammars below are such that if a string
 successfully parses in two distinct grammars, it means the same in
 both.
 
-The grammars here are from release 1.1-SNAPSHOT of the `Unity' package at
-\url{https://hg.sr.ht/~nxg/unity}, which includes machine-readable
+The grammars here are from release 1.1-b1 of the `Unity' package at
+\url{https://purl.org/nxg/dist/unity}, which includes machine-readable
 grammars, lists of recommended units, and a collection of test cases.  These are also extracted in
 machine-readable form
-at \url{https://github.com/ivoa-std/VOUnits/blob/master/unity-grammars.zip}.
+at \url{https://github.com/ivoa-std/VOUnits/tree/master/unity-grammars}.
 
 In these grammars, the common terminals are as given in
 \prettyref{tabx:terminals}.  Lexers \norm{must not} swallow whitespace
