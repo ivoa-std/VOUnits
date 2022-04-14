@@ -1,5 +1,5 @@
-These are the grammars from the Unity library, v1.1-SNAPSHOT
+These are the grammars from the Unity library, v1.1
     webpage: https://purl.org/nxg/dist/unity
     repo: https://hg.sr.ht/~nxg/unity
-    revision: Hg-0c9d2fb86d26 (tag "1.0" + 58)
-    date: 2022 January 29
+    revision: Hg-3782adc3000c (tag 1.1-b1)
+    date: 2022 April 10
