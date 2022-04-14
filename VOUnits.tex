@@ -39,7 +39,10 @@
   % prettyref support is included in ivoatex/tthdefs.tex
 \else
   \usepackage{prettyref} % ensure consistent cross-references
-  \usepackage{varioref}
+  % varioref (adding `on the previous page', etc) is cute, but I think
+  % a little fragile: it's not of massive use, so it seems safer not
+  % to use it.
+  %\usepackage{varioref}
 \fi
 \newrefformat{sec}{Sect.~\ref{#1}}
 \newrefformat{appx}{Appx.~\ref{#1}}
@@ -48,7 +51,8 @@
 \iftth
   \newrefformat{tabx}{Table~\ref{#1}}
 \else
-  \newrefformat{tabx}{Table~\vref{#1}}
+  \newrefformat{tabx}{Table~\ref{#1}}
+  %\newrefformat{tabx}{Table~\vref{#1}}
 \fi
 
 % Extend the {tabular} column types, so we can conveniently get
