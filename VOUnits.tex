@@ -198,14 +198,27 @@ Units also appear in the VOTable format \citep{2019ivoa.spec.1021O}, through the
 of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
 elements. Because of the widespread dependency of many other VO standards on VOTable,
 these standards inherit a dependency on Units.
+Since VOTable 1.4, the syntax for its {\tt unit} attribute is
+declared to follow VOUnits; earlier VOTable versions
+referenced the CDS StdCats syntax discussed in the Appendices.
 
-The Units also appear in many Data Models, through the use of dedicated elements in
+Somewhat independently of VOTable, the VO Registry is unit-aware.
+VODataService \citep{2021ivoa.spec.1102D} allows operators to declare
+the units of services' input parameters and of columns of underlying
+tables in tableset elements.  While its version 1.2 does not require the
+use of VOUnits syntax, using it will certainly improve interoperability,
+e.g., when user interfaces attempt to adapt units of input parameters.
+
+In analogy to VODataService's tablesets, the Table Access Protocol
+\citep{2019ivoa.spec.0927D} has an internal, queriable repository of
+column metadata in its TAP schema, Again, as of version 1.1, TAP does
+not require the use of the VOUnits syntax in the table\_column table's
+unit column, but employing it will make this column machine-parseable.
+Since operators have to provide VOUnits syntax in VOTables anyway, using
+it in the TAP schema will usually also not require extra effort.
+
+Units also appear in many Data Models, through the use of dedicated elements in
 the models and schemas.
-At present, each VO standard either refers to some external reference document, or 
-provides explicit examples of the Units to be used in its scope, on a case-by-case
-basis.
-
-The registry records can also contain units, for the description of table metadata.
 The definition of VO Data Access protocols uses units by specifying in which units the input
 parameters have to be expressed, or by restricting the possible units in which some 
 output must be returned.
