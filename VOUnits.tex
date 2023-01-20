@@ -610,13 +610,18 @@ IVOA, or indeed anywhere else.}
 
 \subsection{Scale factors\label{sec:scaleFactors}}
 
-Units \norm{may} be prefixed by any of the 20 SI scale-factors, 
+Units \norm{may} be prefixed by any of the 24 SI scale-factors,
 and a subset \norm{may} be prefixed by the eight binary scale-factors.
 The SI scale-factors -- provided in \prettyref{tab:vouscalefactors}a --
 are the same as those of \citet{si-brochure},
 of \citet[\S6.5.4]{std:iso80000-1},
 and of \citet[Table~5]{pence10}
-(see also \prettyref{tabx:comparUnitScale} for further comparisons).
+(see also \prettyref{tabx:comparUnitScale} for further
+comparisons).\footnote{The list was extended to 24 prefixes by the
+27th CGPM, resolution 3
+\url{https://www.bipm.org/en/cgpm-2022/resolution-3}.  Note that,
+although the resolution mentioned `the needs of data science', it made
+no extension to the list of binary prefixes.}
 %\medskip
 \begin{table}
 \def\arraystretch{1.2}
@@ -643,6 +648,10 @@ and of \citet[Table~5]{pence10}
   \unit{z}&\pfx{zepto}{-21}\\
 \unit{Y}&\pfx{yotta}{24}&
   \unit{y}&\pfx{yocto}{-24}\\
+\unit{R}&\pfx{ronna}{27}&
+  \unit{r}&\pfx{ronto}{-27}\\
+\unit{Q}&\pfx{quetta}{30}&
+  \unit{q}&\pfx{quecto}{-30}\\
 \hline
 \end{tabular}
 \qquad
