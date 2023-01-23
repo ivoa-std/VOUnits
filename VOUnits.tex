@@ -911,7 +911,7 @@ as summarized in \prettyref{tab:VOUnitCombine}.
 \unit{str1**expr} & Raised to the power expr \\
 %\unit{str1\^{}expr} & Raised to the power expr \\
 %\unit{str1expr} & Raised to the power expr \\
-\unit{fn(str1)} & Function applied to a unit string\\
+\unit{fn(expr)} & Function applied to a unit string\\
 %% \unit{log(str1)} & Common Logarithm (to base 10) \\
 %% \unit{ln(str1)} & Natural Logarithm \\
 %% \unit{exp(str1)} & Exponential (e$^\mathrm{str1}$) \\
@@ -945,13 +945,19 @@ indicate that they \norm{must not} be interpreted as in this table.
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{tab:functions}Functions of units.}
+\caption{\label{tab:functions}Functions of units, listed as `known'
+  for VOUnits expressions.}
 \end{table}
+
 Note that since functions such as `log' require dimensionless
 arguments, when a quantity~$x$ is (for example) represented by numbers
 labelled with units \unit{log(Hz)}, that indicates that the numbers
 are related to~$x$ by the function
-$\log\bigl(x/(\mathrm{1\,Hz})\bigr)$.
+$\log\bigl(x/(\mathrm{1\,Hz})\bigr)$.  In the VOUnits syntax, function
+operands can include a scale factor, so that if a column were
+labelled with the expression \unit{log(10**6Hz)}, the numbers in the
+column represent $\log\bigl(x/(\mathrm{10^6\,Hz})\bigr)$ (though
+representing this as \unit{log(MHz)} would be preferable.
 
 %\subsection{Quantities}
 %\label{sec:quantities}
@@ -1680,8 +1686,8 @@ the digits are \hex{30} to \hex{39}, the letters are \hex{41} to \hex{5a} and \h
 
 For the FITS units syntax, see section~4.3 of the FITS\,3
 or FITS\,4 specifications \citep{pence10,fits4}, and the
-associated tables.  Our preferred FITS grammar is in
-\prettyref{tabx:fitsgrammar}.
+associated tables.  Our preferred interpretation of the FITS grammar
+is in \prettyref{tabx:fitsgrammar}.
 
 As noted above in \prettyref{sec:fitsquote},
 the FITS specification isn't completely clear on the topic of
@@ -1718,9 +1724,16 @@ The FITS specification permits \texttt{m(2)}, to indicate the square of
 unit~`m'.  The grammar has to special-case this, in order to
 distinguish it from function application.
 
+A reasonably narrow interpretation of the FITS spec appears to rule
+out numeric scale factors in function-application (ie, expressions
+such as \unit{log(10**6Hz)}).  The OGIP spec largely inherits the FITS
+spec, but includes language which arguably permits such an
+expression.  The grammars for the FITS and OGIP syntaxes, presented
+here, do not permit a scale factor in such a position.
+
 Other ambiguities:
 \begin{itemize}
-\item The FITS specification may or may not be intended to permit 
+\item The FITS specification may or may not be intended to permit
   \texttt{10+3 /m}, but we don't.
 \item It is possible to read the FITS spec as permitting
   \texttt{m\^{}1.5}, without parentheses.  We take it to be
