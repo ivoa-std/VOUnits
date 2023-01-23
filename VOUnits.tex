@@ -256,10 +256,9 @@ most general case to a combination of several (possibly prefixed)
 symbols with mathematical operations expressed in a controlled syntax.
 
 A \textbf{unit} consists of a sequence of \textbf{unit components},
-each of which represents a \textbf{base unit}, possibly modified by a
-multiplicative \textbf{prefix} (of one or two characters), and raised
+each of which consists of a \textbf{symbol}, possibly raised
 to an integer or rational power.  The whole unit may (in some
-syntaxes) be prefixed by a numerical \textbf{scale-factor}.
+syntaxes) be prefixed by a numerical \textbf{scale-factor} (\prettyref{sec:scalefactor}).
 
 Each of the \textbf{base units} (for example, the metre) is
 represented by a \textbf{base symbol} (for example \unit{m}).  Each
@@ -267,8 +266,8 @@ syntax has a number of \textbf{known units}
 (\prettyref{sec:knownunits}), for each one of which there is at least
 one symbol which identifies only that unit.
 
-A \textbf{symbol} is either a base symbol or a base symbol with a
-scaling prefix.
+A \textbf{symbol} is either a base symbol or a base symbol with an SI
+scaling prefix (\prettyref{sec:scalingprefixes}).
 
 For example, in the unit of \unit{1.663e-1mm.s**-1}, the scale-factor
 is $1.663\times10^{-1}$, the two unit-components are \texttt{mm}
@@ -405,7 +404,7 @@ See that section for further discussion.
 compare units for equivalence; for example, an application may or may
 not wish to deem \unit{m/s} and \unit{km/s} to be `equivalent'.
 This Recommendation, similarly, does not specify how to compare units
-with scale-factors (cf \prettyref{sec:scaleFactors}).
+with scaling prefixes (cf \prettyref{sec:scalingprefixes}).
 \end{itemize}
 
 \section{The VOUnits syntax (normative)\label{sec:proposal}}
@@ -513,7 +512,7 @@ The VOUnits base symbols are listed in \prettyref{tab:voubase}
 \end{table}
 
 For masses, the SI unit is \unit{kg}. However, existing specifications
-recommend not using scale-factors with \unit{kg}, but attaching them
+recommend not using scaling prefixes with \unit{kg}, but attaching them
 only to \unit{g} instead.
 
 Recognising a known unit takes priority over parsing for prefixes.
@@ -608,11 +607,11 @@ implication that the `dB'
 evidence that this has been a common source of confusion within the
 IVOA, or indeed anywhere else.}
 
-\subsection{Scale factors\label{sec:scaleFactors}}
+\subsection{Scaling prefixes\label{sec:scalingprefixes}}
 
-Units \norm{may} be prefixed by any of the 24 SI scale-factors,
-and a subset \norm{may} be prefixed by the eight binary scale-factors.
-The SI scale-factors -- provided in \prettyref{tab:vouscalefactors}a --
+Units \norm{may} be prefixed by any of the 24 SI scaling prefixes,
+and a subset \norm{may} be prefixed by the eight binary scaling prefixes.
+The SI prefixes -- provided in \prettyref{tab:vouscalingprefixes}a --
 are the same as those of \citet{si-brochure},
 of \citet[\S6.5.4]{std:iso80000-1},
 and of \citet[Table~5]{pence10}
@@ -668,7 +667,7 @@ no extension to the list of binary prefixes.}
 \hline
 \end{tabular}
 \end{center}
-\caption[VOUnits prefixes]{\label{tab:vouscalefactors}VOUnits prefixes:
+\caption[VOUnits prefixes]{\label{tab:vouscalingprefixes}VOUnits prefixes:
 (a, left) decimal prefixes;
 (b, right) binary prefixes}
 \end{table}
@@ -677,13 +676,13 @@ Writers of unit strings \norm{must not} use compound prefixes (that is,
 more than one SI prefix). Prefixes are concatenated to the base
 symbol without space, and \norm{must not} be used without a base symbol.
 
-The SI prefixes of \prettyref{tab:vouscalefactors}a \emph{\norm{must}
+The SI prefixes of \prettyref{tab:vouscalingprefixes}a \emph{\norm{must}
 always refer to multiples of 1000}, even when applied to binary units
 such as bit or byte; this follows the stipulations (and clarifying note) of
 \citet[\S3.1]{si-brochure}, and of \citet[\S6.5.4]{std:iso80000-1}.
 If data providers wish to use multiples of 1024 (ie, $2^{10}$) for
 units such as bytes or bits, they \norm{must} use the the binary prefixes
-of \citet[\S4]{std:iec80000-13}, reproduced in \prettyref{tab:vouscalefactors}b
+of \citet[\S4]{std:iec80000-13}, reproduced in \prettyref{tab:vouscalingprefixes}b
 (these originated in \citet{std:ieee1541-2002}).
 
 Note 1: the~`s' and~`b' annotations in \prettyref{tabx:knownunits} are
@@ -1050,7 +1049,7 @@ risking the leading \texttt{m} being misparsed as an SI prefix, or the
 Quoted units can take prefixes (they are `unknown units', so there are
 no restrictions on their usage), so that \unit{m'furlong'} is a
 milli-furlong, and \unit{m'm'} is a milli-`m'.  The only permissible
-prefixes are those of \prettyref{tab:vouscalefactors}.
+prefixes are those of \prettyref{tab:vouscalingprefixes}.
 
 \subsection{General rationale (informative)}
 \label{sec:rationale}
@@ -1068,13 +1067,13 @@ possible in fact, for four reasons.
 OGIP syntax only a star, while FITS permits both.  The VOUnits syntax
 uses a dot, so that non-trivial OGIP unit strings are therefore
 necessarily invalid VOUnits strings in this one respect.
-\item The VOUnits syntax permits (but does not require) a scale-factor
+\item The VOUnits syntax permits (but does not require) a numeric scale-factor
 at the beginning of the string, which is not a power of 10.  Only the
 CDS syntax permits a similar factor.
 See \prettyref{sec:scalefactor} for discussion.
 \item Only the VOUnits syntax permits quoted units.
 \item Only the VOUnits syntax permits the use of the binary prefixes
-of \prettyref{tab:vouscalefactors}.
+of \prettyref{tab:vouscalingprefixes}.
 \end{enumerate}
 The first is both unavoidable in specification, and largely
 unavoidable in practice; the others are VOUnit extensions which a data
@@ -1380,21 +1379,19 @@ first appear to have rough consensus, is disturbingly heterogeneous.
   \label{tabx:comparUnitBase}
 \end{table}
 
-%\subsection{Scale factors}
-
 \begin{table}[ht]
 \begin{tabular*}\textwidth{@{\extracolsep{\fill}} |L{0.2\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|L{0.11\linewidth}|}
 \hline
     & IAU & OGIP & StdCats sec.~3.2.3 & FITS & VOU\\\hline
-    Scale factors,   & \multicolumn{5}{c|}{\unit{d, c, m, n, p, f, a}} \\
-    (multiple) & \multicolumn{5}{c|}{\unit{da, h, k, M, G, T, P, E}}   \\
-    prefixes & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
-     &  & \multicolumn{3}{c|}{\unit{z, y, Z, Y}} & \unit{z, y, r, q, Z, Y, R, Q}\\\hline
+    Scale prefixes   & \multicolumn{5}{c|}{\unit{d, c, m, n, p, f, a}} \\
+     & \multicolumn{5}{c|}{\unit{da, h, k, M, G, T, P, E}}   \\
+     & \unit{\micro} & \multicolumn{3}{c|}{\unit{u}} & \unit{u}\\
+     &  & \multicolumn{3}{c|}{\unit{z, y, Z, Y}} & \unit{z, y, Z, Y}\\\hline
     Prefix--symbol concatenation & (1) & (2) & no space & no space (implicit) & no space\\\hline
     Prefix-able symbols  & Not \unit{kg}: use \unit{g} & (3) & all & all & (4) \\\hline
     Use compound prefixes & should not & should never & must not & must not & must not\\\hline
 \end{tabular*}
-  \caption[Comparison of scale-factors]{Comparison of scale-factors.
+  \caption[Comparison of scaling prefixes]{Comparison of scaling prefixes.
   Notes: (1) no space, regarded as single symbol;
   (2)~no space, regarded as a single unit string;
   (3)~all units above, and \unit{eV, pc, Jy, Crab} Only \unit{mCrab} allowed;
@@ -1657,6 +1654,13 @@ in generating these terminals; whitespace is permitted in a units
 string only where the corresponding grammar permits
 the \texttt{WHITESPACE} terminal.
 
+Although the SI prefixes of \prettyref{sec:scalingprefixes} are part of
+these grammars, they do not appear explicitly.  They appear instead as
+part of the parse of the \texttt{STRING} terminal of the \texttt{unit}
+production (ie, there is an implicit auxiliary parse of this
+\texttt{STRING}): the \texttt{unit} is a unit with optional prefix,
+such as \texttt{m}, \texttt{km} or, in the case of VOUnits \texttt{m'jupiterMass'}.
+
 \begin{table}[ht]
 \begin{tabular}{rL{8.5cm}}
 \texttt{CARET}&the \texttt{\^{}} character (\hex{5e})\\
@@ -1853,7 +1857,10 @@ for the CDS grammar}
 The VOUnits grammar is defined by this section,
 by the grammar in \prettyref{tabx:vougrammar}
 (with the terminals of \prettyref{tabx:terminals}
-plus the extra terminals listed in \prettyref{tabx:vounitsterminals}),
+plus
+the SI scaling prefixes of \prettyref{sec:scalingprefixes},
+the extensions of \prettyref{sec:scalefactor} and \prettyref{sec:quoting},
+the extra terminals listed in \prettyref{tabx:vounitsterminals}),
 the list of known units of \prettyref{tabx:knownunits},
 and the list of known functions of \prettyref{tab:functions}.
 
@@ -1886,7 +1893,6 @@ string matching either of the regular expressions
 but forbidding \texttt{0}, which would be meaningless, and numbers
 with a decimal point but no fractional part, such as \texttt{1.}
 or \texttt{1.e1}, which would be liable to misinterpretation).
-
 
 \begin{table}[ht]
 \lstinputlisting{unity-grammars/unity-vounits.txt}
@@ -1922,6 +1928,7 @@ for the VOUnits grammar}
     error (see \prettyref{sec:parsing-components}, GitHub issue~9).
   \item Added brief rationale for the syntax of the \texttt{VOUFLOAT}
     terminal (see \prettyref{appx:vougrammar}, GitHub issue~8).
+  \item Now allowing new SI prefixes r, q, R, Q.
   \item Document management: ported to ivoatex
 \end{itemize}
 
@@ -1993,7 +2000,7 @@ Minor typographical fixes
 	\item Typos fixed, removed F. Bonnarel from authors. 
 	\item One sentence rephrased in section 1.2 for clarity.
 	\item Clarification of \unit{g} and \unit{kg} issue in \prettyref{sec:baseUnits}.
-	\item Added remark on \unit{Pa} in \prettyref{sec:scaleFactors}.
+	\item Added remark on \unit{Pa} in \prettyref{sec:scalingprefixes}.
 	\item Micro-arcsecond and century explained in \prettyref{tabx:comparUnitAstro}.
 	\item \prettyref{tabx:comparUnitDeprecated} completed.
 	\item Added numeric factors in \prettyref{tabx:comparUnitCombine} and discussion in text.
