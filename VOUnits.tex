@@ -1731,23 +1731,6 @@ spec, but includes language which arguably permits such an
 expression.  The grammars for the FITS and OGIP syntaxes, presented
 here, do not permit a scale factor in such a position.
 
-%% Discussion from https://github.com/ivoa-std/VOUnits/issues/17
-%%
-%% Specifically (detail...): The nearest to a proscription is the FITS
-%% spec, which says that 'The final units string is the compound string,
-%% or a compound of compounds, preceded by an optional numeric
-%% multiplier...', implicitly distinguishing 'the final units string'
-%% from 'base unit strings': a narrow interpretation of this would deem
-%% the operand to log(x) to be a 'base unit string', which doesn't have
-%% this 'optional numeric multiplier' prepended). The OGIP spec largely
-%% inherits the FITS spec, but is slightly contradictory, in that it says
-%% that str1 in 'log(str1)' is 'strings conforming to the rules given in
-%% Section 2 to specify physical units.' (which could be taken to rule
-%% out permitting a scalefactor, but also says 'the numerical factor can
-%% simply be considered a basic unit string', which would seem to
-%% more-or-less explicitly permit it.
-
-
 Other ambiguities:
 \begin{itemize}
 \item The FITS specification may or may not be intended to permit
