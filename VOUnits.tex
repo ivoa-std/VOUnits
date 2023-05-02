@@ -2,6 +2,9 @@
 \input tthdefs
 \input gitmeta
 
+\tolerance 4000
+\hbadness 4000
+
 \lstset{flexiblecolumns=true,basicstyle=\ttfamily\footnotesize}
 \usepackage{multirow}
 
@@ -75,6 +78,8 @@
 
 \editor{Gray, N.}
 
+\previousversion[https://ivoa.net/documents/VOUnits/20220525/]{WD-1.1
+2022-05-25}
 \previousversion[http://www.ivoa.net/documents/VOUnits/20140523/]{REC-1.0}
 \previousversion[http://www.ivoa.net/Documents/VOUnits/20140513/]{PR-20140513}
 \previousversion[http://www.ivoa.net/Documents/VOUnits/20140226/]{PR-20140226}
@@ -155,8 +160,8 @@ We also provide, for information, a set of self- and mutually-consistent
 machine-readable grammars for all of the syntaxes discussed.
 
 The introduction gives the motivation for
-this proposal in the context of the VO architecture, from the legacy 
-metadata available in the resource layer, to the requirements of the various 
+this proposal in the context of the VO architecture, from the legacy
+metadata available in the resource layer, to the requirements of the various
 VO protocols and standards and applications.
 
 This document is organised as follows. \prettyref{sec:proposal}
@@ -184,13 +189,13 @@ The normative content of this document is \prettyref{sec:proposal} and \prettyre
 \includegraphics[width=0.9\textwidth]{role_diagram.pdf}
   \caption{Units is a core building block in the VO.  Most parts of the
   architecture rely on it: the User Layer with tools and clients, the
-  Resource Layer with data.  Protocols, registries entries, and
-  data models also re-use these Units definitions.}
+  Resource Layer with data.  Protocols, registry records, and
+  data models also re-use definitions in VOUnits.}
   \label{fig:architecture}
 \end{figure}
 
 Generally, every quantity provided in astronomy has a unit attached to
-its value or is unitless (\eg a ratio, or a numerical multiplier).  
+its value or is unitless (\eg a ratio, or a numerical multiplier).
 
 Units lie at the core of the VO architecture, as can be seen in \prettyref{fig:architecture}.
 Most of the existing data and metadata collections accessible in the resource
@@ -199,7 +204,7 @@ the corresponding data.  Units can be embedded in data (\eg FITS headers) or be
 implied by convention and/or (preferably) specified in metadata.
 
 Units also appear in the VOTable format \citep{2019ivoa.spec.1021O}, through the use
-of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO} 
+of a {\tt unit} attribute that can be used in the {\tt FIELD}, {\tt PARAM} and {\tt INFO}
 elements. Because of the widespread dependency of many other VO standards on VOTable,
 these standards inherit a dependency on Units.
 Since VOTable 1.4, the syntax for its {\tt unit} attribute is
@@ -224,25 +229,25 @@ it in the TAP schema will usually also not require extra effort.
 Units also appear in many Data Models, through the use of dedicated elements in
 the models and schemas.
 The definition of VO Data Access protocols uses units by specifying in which units the input
-parameters have to be expressed, or by restricting the possible units in which some 
+parameters have to be expressed, or by restricting the possible units in which some
 output must be returned.
 
 And last but not least, tools can interpret units, for example to display
-heterogeneous data in a single diagram by applying conversions to a reference 
+heterogeneous data in a single diagram by applying conversions to a reference
 unit on each axis.
 
 \subsection{Adopted terms and notations\label{sec:notations}}
 
 Discussions about units often suffer from misunderstandings arising from cultural
-differences or ambiguities in the adopted vocabulary. For the sake of clarity, in this 
+differences or ambiguities in the adopted vocabulary. For the sake of clarity, in this
 document, the following concepts are used:
 
 %\begin{itemize}
-%\item 
+%\item
 A \textbf{quantity} is the combination of a (numerical) {\em
 value}, measured for a {\em concept} and expressed in terms of a given
 {\em unit}; there may be other structure to a quantity, such as
-uncertainty or even provenance. 
+uncertainty or even provenance.
 In the VO context, the nature of the concept can be expressed with a UCD or a utype. This document does not address the full issue of
 representing quantities, but focusses on the {\em unit} part.
 
@@ -275,7 +280,7 @@ and \texttt{s**-1}; the first symbol has base symbol \texttt{m} and
 prefix \texttt{m} (for `milli'), and the second has base
 symbol \texttt{s}, no prefix, and the power~$-1$.
 
-%% Remark: some complex questions, more related to data modeling than to units, such as how a quantity 
+%% Remark: some complex questions, more related to data modeling than to units, such as how a quantity
 %% is associated to its measurement error, or how groups of coordinates are described, are not addressed in this
 %% document. They can always be broken down, with appropriate modeling, into smaller bits to which VOUnits can
 %% be applied.
@@ -318,12 +323,12 @@ In particular:
   these are broadly endorsed by this specification.
 \item In addition to the unit syntaxes described above, there are
   multiple specifications of base and known units
-  (we refer, in particular, to 
+  (we refer, in particular, to
   specifications from BIPM, ISO/IEC and the IAU);
   these are broadly, but not completely, mutually consistent.
 \item Where there are some ambiguities in, or contradictions between,
   these various specifications, we recommend that application authors should
-  resolve them as indicated in this specification.  
+  resolve them as indicated in this specification.
 \item This document defines a syntax, called `VOUnits', which is as
   far as is feasible in the intersection of the three existing
   syntaxes, and which we recommend that applications should use when
@@ -443,7 +448,7 @@ strings in the other syntaxes are also case-sensitive).
 \subsection{Parsing unit strings -- overview\label{sec:parsing-components}}
 
 The unit strings \unit{unknown} and \unit{UNKNOWN} (that is, in
-all-lowercase or all-uppercase) are reserved for cases when the unit
+all-lowercase or all-upper\-case) are reserved for cases when the unit
 is unknown; that is, it is known that there should be a unit, but the
 unit string has been lost or not been specified.  These strings are
 not, however, part of the list of known units or the VOUnits grammar.
@@ -800,16 +805,16 @@ unit', as opposed to a deci-Bel).
 \label{sec:other}
 
 \prettyref{tabx:comparUnitDeprecated} corresponds to Table~7 in the IAU document, and the IAU strongly
-recommends no longer using these units. 
-Data producers are strongly advised to prefer the equivalent notation using symbols and prefixes listed in 
-Tables~\ref{tabx:comparUnitBase}, \ref{tabx:comparUnitScale} and \ref{tabx:comparUnitAstro}. 
+recommends no longer using these units.
+Data producers are strongly advised to prefer the equivalent notation using symbols and prefixes listed in
+Tables~\ref{tabx:comparUnitBase}, \ref{tabx:comparUnitScale} and \ref{tabx:comparUnitAstro}.
 
 However, in order to be compatible with legacy metadata, VOUnit
 parsers \norm{should} be able to interpret symbols \unit{angstrom}
 or \unit{Angstrom} (for \aa{}ngstr\"om), \unit{barn}, \unit{erg}
 and \unit{G} (for gauss).
 
-\prettyref{tabx:comparUnitOther} compares other miscellaneous symbols. 
+\prettyref{tabx:comparUnitOther} compares other miscellaneous symbols.
 The last set of VOUnits symbols, derived from this comparison, is in
 \prettyref{tab:voumisc}.
 
@@ -850,7 +855,7 @@ with their consensus VOUnit interpretation.
 \caption{\label{tab:ambiguous}Possibly ambiguous units}
 \end{table}
 
-It can be noted that some of the units listed in \prettyref{tabx:comparUnitOther} are 
+It can be noted that some of the units listed in \prettyref{tabx:comparUnitOther} are
 questionable. They arise in fact from a need to describe quantities, when the only
 piece of metadata available is the unit label. Count, photon, pixel, bin, voxel, bit,
 byte are concepts, just as apple or banana. The associated quantities could be fully
@@ -858,7 +863,7 @@ described with a UCD, a value and a void unit label.
 It is possible to count a number of bananas, or to express a distance measured in
 bananas, but this does not make a banana a reference unit.
 
-The FITS document provides the most general description of all the compared schemes, 
+The FITS document provides the most general description of all the compared schemes,
 and VOUnits adopts similar definitions, for the sake of legacy metadata.
 The VOUnits symbol for magnitudes is \unit{mag}.
 %% The symbol \unit{Sun} is used to express ratios relative to solar
@@ -883,7 +888,7 @@ indicate this with an empty string rather than blanks or dashes.
 
 \subsection{Mathematical expressions containing symbols}
 
-\prettyref{tabx:comparUnitCombine} summarizes how, 
+\prettyref{tabx:comparUnitCombine} summarizes how,
 in the various existing syntaxes, mathematical operations may
 be applied on unit symbols for exponentiation, multiplication,
 division, and other computations.
@@ -968,7 +973,7 @@ representing this as \unit{log(MHz)} would be preferable.
 %Some quantities are also reused as units. Many units are expressed, or
 %converted, in terms of physical constants such as the speed of light,
 %\begin{itemize}
-%	\item \texttt{$c=$~2.998 10+8~m.s-1;} 
+%	\item \texttt{$c=$~2.998 10+8~m.s-1;}
 %	\item Boltzman's constant, \texttt{$K_{\mathrm{B}}=$1.38065~10-23}
 %	\item \texttt{1 AU $=$ 1.499 10+11 m.}
 %\end{itemize}
@@ -1202,7 +1207,7 @@ existing libraries, using dimensional analysis or SI units as a
 reference.
 
 Quantity transformation consists of deriving a new quantity from one or several original
-quantities. It is more complex, because it requires having a precise model 
+quantities. It is more complex, because it requires having a precise model
 (a simple equation in simple cases) for computing the transformation. The model involves
 quantities, each described with UCD or utype, value and VOUnit. Some of the quantities
 involved might be physical constants (\eg  Boltzmann's constant $k_{\mathrm{B}}$).
@@ -1227,8 +1232,8 @@ ADQL.  In that scenario, forgetting unit coversions is a common source
 of error, in particular when porting queries from one service to
 another.
 
-ADQL 2.1 \citep{TODO-not-a-rec-yet} offers the 
-\verb|IN_UNIT(expr, to_unit)| 
+ADQL 2.1 \citep{TODO-not-a-rec-yet} offers the
+\verb|IN_UNIT(expr, to_unit)|
 function as a mitigation.  When an ADQL engine can establish the
 unit of the \verb|expr| argument, normally based on the service's table
 metadata, and that unit and the \verb|to_unit| argument are
@@ -1236,7 +1241,7 @@ commensurable (i.e, one can be expressed in the other), the value of this
 function is \verb|expr| expressed in \verb|to_unit|.
 
 For instance, a simple approximation for a declination of an object with
-a known linear proper motion might be expressed in ADQL as 
+a known linear proper motion might be expressed in ADQL as
 $$
 \hbox{\verb|dec + IN_UNIT(pmdec, 'deg/yr')*IN_UNIT(dt, 'yr')|}
 $$
@@ -1324,7 +1329,7 @@ radio astronomy but are designed to be modular and adaptable (NB:
 contrary to the statement on the casacore link, aips++ is still very much in
 use as the toolkit behind the \textsc{casa} package).
 %\item  IAU SOFA
-%\violet{\footnotesize{\url{http://www.iau-sofa.rl.ac.uk/}}} and\\  
+%\violet{\footnotesize{\url{http://www.iau-sofa.rl.ac.uk/}}} and\\
 %USNO NOVAS
 %\violet{\footnotesize{\url{http://aa.usno.navy.mil/software/novas/novas_info.php}}}\\
 %implement the IAU 2000 recommendations.
@@ -1520,12 +1525,12 @@ takes priority.
         & \unit{/}, no space\\\hline
     Use of multiple /
         & never
-    	& allowed 
-	& allowed 
+    	& allowed
+	& allowed
 	& discouraged (6)
         & never\\\hline
     \unit{sym} raised to the power $y$
-        & superscript 
+        & superscript
     	& (7)
 	& (8)
 	& (9)
@@ -1540,7 +1545,7 @@ takes priority.
         &
         & \unit{ln(sym)}
         &
-        & \unit{ln(sym)} 
+        & \unit{ln(sym)}
         & \unit{ln(sym)} \\\hline
     Decimal log of \unit{sym}
         &
@@ -1593,19 +1598,19 @@ takes priority.
     %\multicolumn{6}{|c|}{Compound units} \\\hline
     Multiplication & space, except if previous unit ends with superscript; dot (\unit{.}) may be used
     	& one or more spaces OR one asterisk (\unit{*}) with optional spaces on either side
-	& dot (\unit{.}), no space 
+	& dot (\unit{.}), no space
 	& single space OR asterisk (\unit{*}, no spaces) OR dot (\unit{.}, no spaces) \\\hline
     Division & per. Use negative index or solidus (\unit{/})
     	& solidus (\unit{/}) with optional spaces on either side, space not recommended after / OR negative index
-	& \unit{/} with no spaces 
+	& \unit{/} with no spaces
 	& \unit{/} with no spaces  \\\hline\hline
     Use of multiple / & MUST never use two /
-    	& allowed 
-	& allowed 
+    	& allowed
+	& allowed
 	& may be used, discouraged, math precedence rule \\\hline\hline
-    \unit{sym} raised to the power $y$ & superscript 
-    	& \unit{sym**($y$)} parenthesis optional if $y>0$ 
-	& nothing: \unit{sym$y$} use +/- sign for \unit{10+21} 
+    \unit{sym} raised to the power $y$ & superscript
+    	& \unit{sym**($y$)} parenthesis optional if $y>0$
+	& nothing: \unit{sym$y$} use +/- sign for \unit{10+21}
 	& \unit{sym$y$} OR \unit{sym**($y$)} OR \unit{sym\^{}($y$)}, no space \\\hline\hline
     Exponential of \unit{sym} &  & \unit{exp(sym)} &  & \unit{exp(sym)} \\\hline\hline
     Natural log of \unit{sym} &  & \unit{ln(sym)} &  & \unit{ln(sym)} \\\hline\hline
@@ -1934,7 +1939,8 @@ for the VOUnits grammar}
   \item Added brief rationale for the syntax of the \texttt{VOUFLOAT}
     terminal (see \prettyref{appx:vougrammar}, GitHub issue~8).
   \item Now allowing new SI prefixes r, q, R, Q.
-  \item Document management: ported to ivoatex
+  \item Document management: ported to ivoatex, streamlined use cases,
+    several editorial changes.
 \end{itemize}
 
 \subsection{Changes before REC-1.0}
@@ -1983,7 +1989,7 @@ with scientific notation.  Adjusted locations of grammar tables to try
 to keep them closer to the associated text.
 \item WD-1.0-20130429: Some restructuring, some rephrasing, and a few layout changes.
 \item WD-1.0-20130225: Large tables from section 3 moved to Appendix A. Short summaries of symbols added
-to section 3. Changes to table of known units for consistency with text. Added explanations for units Sun and byte.  
+to section 3. Changes to table of known units for consistency with text. Added explanations for units Sun and byte.
 \item WD-1.0-20121212:
 Minor typographical fixes. Added definition of OGIP. Removed last sentence from acknowledgements, which have been moved to the beginning of the document. Changed figure 1 to move Units in Semantics. Added 'discouraged' in first line of \prettyref{tab:VOUnitCombine}. Color change in figure 2 and its label.
 \item WD-1.0-20120801:
@@ -2002,7 +2008,7 @@ Minor typographical fixes
 	\end{itemize}
 \item WD-1.0-20120521:
 	\begin{itemize}
-	\item Typos fixed, removed F. Bonnarel from authors. 
+	\item Typos fixed, removed F. Bonnarel from authors.
 	\item One sentence rephrased in section 1.2 for clarity.
 	\item Clarification of \unit{g} and \unit{kg} issue in \prettyref{sec:baseUnits}.
 	\item Added remark on \unit{Pa} in \prettyref{sec:scalingprefixes}.

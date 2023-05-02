@@ -6,8 +6,8 @@
   <rec name="TAP" x="686" y="255" w="28"/>
 
 	<rec name="STC" x="580" y="255" w="30"/>
-	<prerec name="Meas" x="456" y="305" w="35"/>
-	<prerec name="Coords" x="501" y="305" w="44"/>
+	<rec name="Meas" x="456" y="305" w="35"/>
+	<rec name="Coords" x="501" y="305" w="44"/>
 
 	<thisrec name="VOUnits" x="220" y="250" w="50"/>
 </archdiag>
