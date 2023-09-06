@@ -597,10 +597,10 @@ for `barn', and this Recommendation aligns with the SI standard in
 this respect.  Since the same symbol is sometimes used for `bytes', it
 is probably best avoided in any case.
 
-\citet[item 13-9.c]{std:iec80000-13} notes that the term `byte'
+ISO/IEC 80000-13 \citep[item 13-9.c]{std:iec80000-13} notes that the term `byte'
 `has been used for numbers of bits other than eight' in the past, but
-that it should now always be used for eight-bit bytes; we recommend
-the same interpretation here.  The same source notes the theoretical
+that it should now always be used for eight-bit bytes; IEEE-1541
+\citep{std:ieee1541-2021} agrees.  The same source notes the theoretical
 confusion between the symbol \unit{B} for `byte' and for `Bel'.  We
 believe it would be perverse in our present context to recommend
 against using `B' for byte, and resolve this here
@@ -617,8 +617,8 @@ IVOA, or indeed anywhere else.}
 Units \norm{may} be prefixed by any of the 24 SI scaling prefixes,
 and a subset \norm{may} be prefixed by the eight binary scaling prefixes.
 The SI prefixes -- provided in \prettyref{tab:vouscalingprefixes}a --
-are the same as those of \citet{si-brochure},
-of \citet[\S6.5.4]{std:iso80000-1},
+are the same as those of the SI Brochure \citep{si-brochure},
+of ISO~80000-1 \citep[\S6.5.4]{std:iso80000-1},
 and of \citet[Table~5]{pence10}
 (see also \prettyref{tabx:comparUnitScale} for further
 comparisons).\footnote{The list was extended to 24 prefixes by the
@@ -683,12 +683,17 @@ symbol without space, and \norm{must not} be used without a base symbol.
 
 The SI prefixes of \prettyref{tab:vouscalingprefixes}a \emph{\norm{must}
 always refer to multiples of 1000}, even when applied to binary units
-such as bit or byte; this follows the stipulations (and clarifying note) of
-\citet[\S3.1]{si-brochure}, and of \citet[\S6.5.4]{std:iso80000-1}.
+such as bit or byte; this follows the stipulations
+of the SI Brochure \citep[\S3.1 and clarifying note]{si-brochure},
+of ISO~80000-1 \citep[\S6.5.4]{std:iso80000-1},
+and of IEEE-1541 \citep[`The SI decimal prefixes shall be used only to represent powers of 10']{std:ieee1541-2021}.
 If data providers wish to use multiples of 1024 (ie, $2^{10}$) for
 units such as bytes or bits, they \norm{must} use the the binary prefixes
-of \citet[\S4]{std:iec80000-13}, reproduced in \prettyref{tab:vouscalingprefixes}b
-(these originated in \citet{std:ieee1541-2002}).
+of IEEE-1541, reproduced in \prettyref{tab:vouscalingprefixes}.
+% Note: there is some relationship with ISO~80000-13
+% \citep[\S4]{std:iec80000-13}, but since I (Norman) can't get a copy
+% of that from British Standards _even though_ my institution has a
+% subscription, I'm going to ignore them.
 
 Note 1: the~`s' and~`b' annotations in \prettyref{tabx:knownunits} are
 not symmetric: the~`s' annotation indicates that SI prefixes are
@@ -715,7 +720,7 @@ expanded on in FITS WCS Paper IV \citep[\S4.2]{rots15}).  The VOUnits
 deprecations inherit these.
 
 Note 4: The unit \emph{names} `angstrom' and `ohm' are correctly spelled with
-a lowercase initial letter (as required by \citet{std:iso80000-1}), but
+a lowercase initial letter (as required by ISO~80000-1 \citep{std:iso80000-1}), but
 in both cases their usual unit \emph{symbol} is a non-ASCII character,
 so that their all-ASCII version here must be a word.  Following the
 lead of the FITS and CDS standards, and of SI unit-symbols derived from
@@ -754,7 +759,7 @@ the candela, not the centi-day.\footnote{We therefore rule out
 interpreting \units{dB/cd} as 0.9\units{mbit/s}.}  The year \norm{may} be expressed by
 \unit{yr} (common practice),
 or \unit{a},
-as recommended by ISO \citep[Annex C]{std:iso80000-3}
+as recommended by ISO~80000-3 \citep[Annex C]{std:iso80000-3}
 and the IAU \citep[Table 6]{wilkins89}.
 However peta-year must only be written \unit{Pyr},
 to avoid the collision with the pascal, \unit{Pa}.
@@ -871,9 +876,9 @@ The VOUnits symbol for magnitudes is \unit{mag}.
 Note that all symbols like \unit{count}, \unit{photon}, \unit{pixel}
 are always used in lower case and singular form.
 
-The decibel, \unit{dB} is listed in the SI specification
+The decibel, \unit{dB} is listed in the SI Brochure
 \citep[Table 8]{si-brochure} amongst a set of `other non-SI units',
-and mentioned by \citet[\S0.5]{std:iso80000-3} in a `Remark on
+and mentioned by ISO~80000-3 \citep[\S0.5]{std:iso80000-3} in a `Remark on
 logarithmic quantities'.  The \unit{dB} is included in the list of
 `known units' of \prettyref{tabx:knownunits} and so \norm{must} be parsed as a
 unit by itself -- as opposed to being parsed as the prefix~`d'
