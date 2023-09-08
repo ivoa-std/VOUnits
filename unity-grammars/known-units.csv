@@ -11,7 +11,7 @@
 # unit,meaning,FITS,OGIP,CDS,VOUnits
 # This is a bloody weird unit....,,,,,
 #Sun,relative to sun,1,,1,1s
-%,qudt:Percent,,,1,
+%,qudt:Percent,,,1,1
 A,qudt:Ampere,1s,1s,1s,1s
 a,unity:JulianYear,1ps,,1s,1s
 adu,unity:ADU,1,,,1s
@@ -21,7 +21,7 @@ arcmin,qudt:ArcMinute,1,1,1,1s
 arcsec,qudt:ArcSecond,1,1,1s,1s
 AU,qudt:AstronomicalUnit,1,1,1,1p
 au,qudt:AstronomicalUnit,,,,1
-Ba,unity:BesselianYear,,,,1d
+Ba,unity:BesselianYear,1d,,,1d
 barn,qudt:Barn,1sd,1,1s,1sd
 beam,unity:Beam,1,,,1s
 bin,unity:DistributionBin,1,1,,1s
@@ -79,7 +79,7 @@ solMass,unity:SolarMass,1,,1,1s
 solRad,unity:SolarRadius,1,,1,1s
 sr,qudt:Steradian,1s,1s,1s,1s
 T,qudt:Tesla,1s,1s,1s,1s
-ta,qudt:YearTropical,,,,1d
+ta,qudt:YearTropical,1d,,,1d
 u,qudt:UnifiedAtomicMassUnit,1,,,1s
 V,qudt:Volt,1s,1s,1s,1s
 voxel,unity:Voxel,1,1,,1s

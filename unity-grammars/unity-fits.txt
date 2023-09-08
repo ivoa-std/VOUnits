@@ -1,42 +1,42 @@
-input: complete_expression 
-        | scalefactor complete_expression 
-        | scalefactor WHITESPACE complete_expression 
-        | division unit_expression 
+input: complete_expression
+        | scalefactor complete_expression
+        | scalefactor WHITESPACE complete_expression
+        | division unit_expression
 
-complete_expression: product_of_units 
-        | product_of_units division unit_expression 
+complete_expression: product_of_units
+        | product_of_units division unit_expression
 
-product_of_units: unit_expression 
-        | product_of_units product unit_expression 
+product_of_units: unit_expression
+        | product_of_units product unit_expression
 
-unit_expression: term 
+unit_expression: term
         // m(2) is m^2, not function application
-        | STRING parenthesized_number 
-        | function_application 
-        | OPEN_P complete_expression CLOSE_P 
+        | STRING parenthesized_number
+        | function_application
+        | OPEN_P complete_expression CLOSE_P
 
 function_application: STRING OPEN_P complete_expression CLOSE_P 
 
-scalefactor: LIT10 power numeric_power 
-        | LIT10 SIGNED_INTEGER 
+scalefactor: LIT10 power numeric_power
+        | LIT10 SIGNED_INTEGER
 
 division: DIVISION
 
-term: unit 
-        | unit numeric_power 
-        | unit power numeric_power 
+term: unit
+        | unit numeric_power
+        | unit power numeric_power
 
-unit: STRING 
+unit: STRING
 
 power: CARET
         | STARSTAR
 
-numeric_power: integer 
-        | parenthesized_number 
+numeric_power: integer
+        | parenthesized_number
 
-parenthesized_number: OPEN_P integer CLOSE_P 
-        | OPEN_P FLOAT CLOSE_P 
-        | OPEN_P integer division UNSIGNED_INTEGER CLOSE_P 
+parenthesized_number: OPEN_P integer CLOSE_P
+        | OPEN_P FLOAT CLOSE_P
+        | OPEN_P integer division UNSIGNED_INTEGER CLOSE_P
 
 integer: SIGNED_INTEGER | UNSIGNED_INTEGER
 

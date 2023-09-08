@@ -1,37 +1,37 @@
-input: complete_expression 
-        | scalefactor complete_expression 
+input: complete_expression
+        | scalefactor complete_expression
 
-complete_expression: product_of_units 
+complete_expression: product_of_units
 
 product_of_units: unit_expression
-        | division unit_expression 
-        | product_of_units product unit_expression 
-        | product_of_units division unit_expression 
+        | division unit_expression
+        | product_of_units product unit_expression
+        | product_of_units division unit_expression
 
-unit_expression: term 
-        | function_application 
-        | OPEN_P complete_expression CLOSE_P 
+unit_expression: term
+        | function_application
+        | OPEN_P complete_expression CLOSE_P
 
-function_application: OPEN_SQ complete_expression CLOSE_SQ 
+function_application: OPEN_SQ complete_expression CLOSE_SQ
 
-scalefactor: LIT10 power numeric_power 
-        | LIT10 SIGNED_INTEGER 
-        | UNSIGNED_INTEGER 
-        | LIT10 
-        | CDSFLOAT 
-        | FLOAT 
+scalefactor: LIT10 power numeric_power
+        | LIT10 SIGNED_INTEGER
+        | UNSIGNED_INTEGER
+        | LIT10
+        | CDSFLOAT
+        | FLOAT
 
 division: DIVISION
 
-term: unit 
-        | unit numeric_power 
+term: unit
+        | unit numeric_power
 
-unit: STRING 
-        | PERCENT 
+unit: STRING
+        | PERCENT
 
 power: STARSTAR
 
-numeric_power: integer 
+numeric_power: integer
 
 
 integer: SIGNED_INTEGER | UNSIGNED_INTEGER
