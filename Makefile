@@ -43,12 +43,12 @@ ivoatex/Makefile:
 
 VOUnits.pdf: known-units.tex
 
-known-units.tex: unity-grammars/README unity-grammars/known-units.csv known-units-to-tex.py
+known-units.tex: unity-grammars/README.txt unity-grammars/known-units.csv known-units-to-tex.py
 	rm -f $@
 	{ echo '% DO NOT EDIT'; \
 	  echo '% Generated from unity-grammars.zip/known-units.csv'; \
 	  echo; echo; \
-	  sed 's/^/% /' unity-grammars/README; \
+	  sed 's/^/% /' unity-grammars/README.txt; \
 	  echo; echo; \
 	  $(PYTHON) known-units-to-tex.py < unity-grammars/known-units.csv; \
 	} >$@.tmp && mv $@.tmp $@
