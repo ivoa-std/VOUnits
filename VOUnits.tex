@@ -432,24 +432,24 @@ and the syntax is formally defined in \prettyref{appx:vougrammar}.
 \item Unit names are, mostly, represented as you would expect.
       Most unit base symbols required by astronomy data are recognised,
       including:
-\begin{itemize}
-  \item Basic physical units including
-        \unit{m}, \unit{s}, \unit{g}, \unit{Hz}, \unit{K}
-        (\prettyref{sec:baseUnits})
-  \item Time units including
-        \unit{yr}, \unit{d}, \unit{h}, \unit{min}, \unit{s}
-        ({\em not\/} {\tt day}, {\tt hour}, {\tt sec})
-        (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits})
-  \item Angular units including
-        \unit{deg}, \unit{arcmin}, \unit{arcsec}, \unit{mas}
-        ({\em not\/} {\tt degree}, {\tt as};
-        for microarcsecond use \unit{uarcsec} {\em not\/} {\tt uas})
-        (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro})
-  \item Other units useful in astronomy including
-        \unit{Jy}, \unit{pc}, \unit{AU}, \unit{mag},
-        \unit{count}
-        (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other})
-\end{itemize}
+  \begin{itemize}
+    \item Basic physical units including
+          \unit{m}, \unit{s}, \unit{g}, \unit{Hz}, \unit{K}
+          (\prettyref{sec:baseUnits})
+    \item Time units including
+          \unit{yr}, \unit{d}, \unit{h}, \unit{min}, \unit{s}
+          ({\em not\/} {\tt day}, {\tt hour}, {\tt sec})
+          (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits})
+    \item Angular units including
+          \unit{deg}, \unit{arcmin}, \unit{arcsec}, \unit{mas}
+          ({\em not\/} {\tt degree}, {\tt as};
+          for microarcsecond use \unit{uarcsec} {\em not\/} {\tt uas})
+          (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro})
+    \item Other units useful in astronomy including
+          \unit{Jy}, \unit{pc}, \unit{AU}, \unit{mag},
+          \unit{count}
+          (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other})
+  \end{itemize}
 \item Standard SI scaling prefixes
       (\unit{k}, \unit{M}, \unit{G}, ..., \unit{m}, \unit{u}, \unit{n}, ...)
       may be used.
@@ -473,22 +473,27 @@ and the syntax is formally defined in \prettyref{appx:vougrammar}.
       Recognised functions are
       \unit{log}, \unit{ln}, \unit{exp} and \unit{sqrt}
       (\prettyref{sec:math})
-\item Unrecognised base symbols may be enclosed within single
-      quotes `\unit{'}'
-      (\prettyref{sec:quoting})
+\item Parentheses `\unit{(...)}' may be used to group terms
+      (\prettyref{appx:vougrammar})
+\item The full list of known base symbols is given in
+      \prettyref{tabx:knownunits} (see last column and footnotes),
+      but unknown symbols may also be used,
+      optionally enclosed in single quotes `\unit{'}' to avoid ambiguity.
+      Parsers should understand the structure of strings containing
+      such base symbols, but may report `unknown' units
+      (Sects.\ \ref{sec:quoting}, \ref{sec:parsing-components})
 \item The string `\unit{1}' may be used to represent a dimensionless quantity
       (\prettyref{sec:parsing-components})
 \item A numerical scale factor prefixed to the unit string is permitted,
       but not encouraged
       (\prettyref{sec:scalefactor})
 \end{itemize}
-Some examples of legal VOUnit strings are therefore:
+Some simple examples of legal VOUnit strings are therefore:
 \begin{quote}
   \unit{m/s**2} \\
   \unit{m.s**-2} \\
   \unit{mJy} \\
   \unit{log(GHz)} \\
-  \unit{M'jupiterMass'}
 \end{quote}
 
 \section{The VOUnits syntax (normative)\label{sec:proposal}}
@@ -604,8 +609,7 @@ Thus the string \unit{Pa} represents the Pascal, and not the
 peta-year, and the string \unit{mol} will always be the mole, and
 never a milli-`ol', for some unknown unit~`ol'.
 
-\subsection{Known units}
-\label{sec:knownunits}
+\subsection{Known units\label{sec:knownunits}}
 
 In \prettyref{tabx:knownunits}, we indicate the `known units' for each of the
 described syntaxes, which go beyond the physically motivated set of
