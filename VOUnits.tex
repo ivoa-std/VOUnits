@@ -102,6 +102,8 @@ consistent with other relevant standards (BIPM, ISO/IEC and the IAU).
 The intention is that units written to conform to this specification
 will likely also be parsable by other well-known parsers.  To this
 end, we include machine-readable grammars for other units syntaxes.
+To support end-users, we also include a brief informal primer of the key
+elements of the specification.
 \end{abstract}
 
 
@@ -157,7 +159,13 @@ It is not, however, quite possible for VOUnits to be in the
 intersection of existing syntaxes; there is futher discussion of this
 point in \prettyref{sec:deviations}.
 
-We also provide, for information, a set of self- and mutually-consistent
+The normative content of this document is \prettyref{sec:proposal} and \prettyref{appx:vougrammar}.
+\prettyref{sec:cribsheet} provides an informal summary of the VOUnits
+syntax which can serve as a quick primer on how to write units for use
+in the VO.
+
+In addition to the normative sections,
+we also provide, for information, a set of self- and mutually-consistent
 machine-readable grammars for all of the syntaxes discussed.
 
 The introduction gives the motivation for
@@ -166,18 +174,15 @@ metadata available in the resource layer, to the requirements of the various
 VO protocols and standards and applications.
 
 This document is organised as follows. \prettyref{sec:proposal}
-details the proposal for VOUnits. \prettyref{sec:useCase} lists some
-use cases and reference implementations.  In \prettyref{appx:current},
+details the proposal for VOUnits, including non-normative
+commentary on some of the decisions made.
+\prettyref{sec:useCase} lists some use cases and reference implementations.
+In \prettyref{appx:current},
 there is a brief review of current practices in the description and
 usage of units; in \prettyref{appx:comparisons} there is a detailed
 discussion of the differences between the various syntaxes; and
 in \prettyref{appx:grammar} there are formal (yacc-style) grammars for
 the four syntaxes discussed.
-
-The normative content of this document is \prettyref{sec:proposal} and \prettyref{appx:vougrammar}.
-\prettyref{sec:cribsheet} provides an informal summary of the VOUnits
-syntax which can serve as a quick primer on how to write units for use
-in the VO.
 
 \subsection{Units in the VO Architecture}
 
@@ -311,7 +316,7 @@ unit-string grammar means that data providers can write human-readable
 strings in the confidence that the result will \emph{additionally} be
 machine-readable in a reliable and checkable way.  Or, where a string
 is not fully machine readable (because a data provider needs to use a
-custom unit such as 'jupiterMass'; see \prettyref{sec:quoting}), that the
+custom unit such as `jupiterMass'; see \prettyref{sec:quoting}), that the
 string is at least partially machine readable, and that that partial
 readability is non-ambiguous.
 
@@ -427,67 +432,67 @@ and less obvious consequences,
 are provided in the body of \prettyref{sec:proposal},
 and the syntax is formally defined in \prettyref{appx:vougrammar}.
 \begin{itemize}
-\item Unit strings are printable ASCII characters (\prettyref{sec:encoding})
-\item Unit strings are case-sensitive (\prettyref{sec:encoding})
-\item No whitespace is permitted (\prettyref{appx:vougrammar})
+\item Unit strings are printable ASCII characters (\prettyref{sec:encoding}).
+\item Unit strings are case-sensitive (\prettyref{sec:encoding}).
+\item No whitespace is permitted (\prettyref{appx:vougrammar}).
 \item Unit names are, mostly, represented as you would expect.
       Most unit base symbols required by astronomy data are recognised,
       including:
   \begin{itemize}
     \item Basic physical units including
           \unit{m}, \unit{s}, \unit{g}, \unit{Hz}, \unit{K}
-          (\prettyref{sec:baseUnits})
+          (\prettyref{sec:baseUnits}).
     \item Time units including
           \unit{yr}, \unit{d}, \unit{h}, \unit{min}, \unit{s}
           ({\em not\/} {\tt day}, {\tt hour}, {\tt sec})
-          (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits})
+          (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits}).
     \item Angular units including
           \unit{deg}, \unit{arcmin}, \unit{arcsec}, \unit{mas}
           ({\em not\/} {\tt degree}, {\tt as};
           for microarcsecond use \unit{uarcsec} {\em not\/} {\tt uas})
-          (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro})
+          (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro}).
     \item Other units useful in astronomy including
           \unit{Jy}, \unit{pc}, \unit{AU}, \unit{mag},
           \unit{count}
-          (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other})
+          (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other}).
   \end{itemize}
 \item Standard SI scaling prefixes
       (\unit{k}, \unit{M}, \unit{G}, ..., \unit{m}, \unit{u}, \unit{n}, ...)
       may be used.
       For $10^{-6}$ the prefix `\unit{u}'
       is used instead of the non-ASCII $\mu$
-      (\prettyref{sec:scalingprefixes})
+      (\prettyref{sec:scalingprefixes}).
 \item Multiplication of units is indicated {\em only\/}
       with the period symbol `\unit{.}'
       ({\em not\/} whitespace or a `{\unitstyle\verb|*|}')
-      (\prettyref{sec:math})
+      (\prettyref{sec:math}).
 \item Raising a unit to a power is indicated {\em only\/} with the symbol
       `{\unitstyle\verb|**|}'
       ({\em not\/} a `{\unitstyle\verb|^|}'
       or by simply appending an integer)
-      (\prettyref{sec:math})
+      (\prettyref{sec:math}).
 \item Division of units is indicated with the symbol `\unit{/}'.
       There must not be more than one \unit{/}
       at the top level of an expression.
-      (\prettyref{sec:math}, \prettyref{appx:vougrammar})
+      (\prettyref{sec:math}, \prettyref{appx:vougrammar}).
 \item Functions of units are indicated with the syntax `\unit{f(unit)}'.
       Recognised functions are
       \unit{log}, \unit{ln}, \unit{exp} and \unit{sqrt}
-      (\prettyref{sec:math})
+      (\prettyref{sec:math}).
 \item Parentheses `\unit{(...)}' may be used to group terms
-      (\prettyref{appx:vougrammar})
+      (\prettyref{appx:vougrammar}).
 \item The full list of known base symbols is given in
       \prettyref{tabx:knownunits} (see last column and footnotes),
       but unknown symbols may also be used,
       optionally enclosed in single quotes `\unit{'}' to avoid ambiguity.
       Parsers should understand the structure of strings containing
       such base symbols, but may report `unknown' units
-      (Sects.\ \ref{sec:quoting}, \ref{sec:parsing-components})
+      (Sects.\ \ref{sec:quoting}, \ref{sec:parsing-components}).
 \item The string `\unit{1}' may be used to represent a dimensionless quantity
-      (\prettyref{sec:parsing-components})
+      (\prettyref{sec:parsing-components}).
 \item A numerical scale factor prefixed to the unit string is permitted,
       but not encouraged
-      (\prettyref{sec:scalefactor})
+      (\prettyref{sec:scalefactor}).
 \end{itemize}
 Some simple examples of legal VOUnit strings are therefore:
 \begin{quote}
@@ -1306,14 +1311,14 @@ involved might be physical constants (\eg  Boltzmann's constant $k_{\mathrm{B}}$
 
 Examples of such transformations can be:
 \begin{itemize}
-\item linear unit conversion: a distance is measured in \unit{pixel} in an image, and needs to be transformed in
+\item Linear unit conversion: a distance is measured in \unit{pixel} in an image, and needs to be transformed in
 the corresponding angular separation in \unit{arcsec}. This can be done if the quantity representing the pixel
 scale is given, with its value and a compatible unit like \unit{deg/pixel}.
-\item converting a photon wavelength in the corresponding photon energy or frequency.
-\item deriving the flux for a given photon emission rate (in $\!\units W$) from Planck's
+\item Converting a photon wavelength in the corresponding photon energy or frequency.
+\item Deriving the flux for a given photon emission rate (in $\!\units W$) from Planck's
 constant ($6.63 \times 10^{-34}\units{J~s}$), the radiation frequency (in \units{GHz}), and the
 number of photons emitted per second.
-\item transforming a magnitude into a flux, as needed for SED building.
+\item Transforming a magnitude into a flux, as needed for SED building.
 \end{itemize}
 
 VOUnits can help in quantity transformation if all quantities are qualified with proper VOUnits.
