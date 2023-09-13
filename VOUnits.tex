@@ -14,6 +14,7 @@
 \newcommand{\violet}{\textcolor[rgb]{0.50,0.00,0.50}}
 \newcommand{\brown}{\textcolor[rgb]{0.50,0.10,0.10}}
 \newcommand{\unit}[1]{\texttt{\small\color{orange}#1}}
+\newcommand{\unitstyle}{\small\color{orange}}
 %\newcommand{\unit}[1]{\textbf{\textsf{\color{orange}#1}}}
 
 \iftth
@@ -174,6 +175,9 @@ in \prettyref{appx:grammar} there are formal (yacc-style) grammars for
 the four syntaxes discussed.
 
 The normative content of this document is \prettyref{sec:proposal} and \prettyref{appx:vougrammar}.
+\prettyref{sec:cribsheet} provides an informal summary of the VOUnits
+syntax which can serve as a quick primer on how to write units for use
+in the VO.
 
 \subsection{Units in the VO Architecture}
 
@@ -413,6 +417,86 @@ This Recommendation, similarly, does not specify how to compare units
 with scaling prefixes (cf \prettyref{sec:scalingprefixes}).
 \end{itemize}
 
+\subsection{VOUnits syntax summary\label{sec:cribsheet}}
+
+This section provides an informal cribsheet for the most important
+rules defined by VOUnits syntax, which is recommended for use
+within the VO.
+More detailed rules and explanations, as well as special cases
+and less obvious consequences,
+are provided in the body of \prettyref{sec:proposal},
+and the syntax is formally defined in \prettyref{appx:vougrammar}.
+\begin{itemize}
+\item Unit strings are printable ASCII characters (\prettyref{sec:encoding})
+\item Unit strings are case-sensitive (\prettyref{sec:encoding})
+\item No whitespace is permitted (\prettyref{appx:vougrammar})
+\item Unit names are, mostly, represented as you would expect.
+      Most unit base symbols required by astronomy data are recognised,
+      including:
+  \begin{itemize}
+    \item Basic physical units including
+          \unit{m}, \unit{s}, \unit{g}, \unit{Hz}, \unit{K}
+          (\prettyref{sec:baseUnits})
+    \item Time units including
+          \unit{yr}, \unit{d}, \unit{h}, \unit{min}, \unit{s}
+          ({\em not\/} {\tt day}, {\tt hour}, {\tt sec})
+          (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits})
+    \item Angular units including
+          \unit{deg}, \unit{arcmin}, \unit{arcsec}, \unit{mas}
+          ({\em not\/} {\tt degree}, {\tt as};
+          for microarcsecond use \unit{uarcsec} {\em not\/} {\tt uas})
+          (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro})
+    \item Other units useful in astronomy including
+          \unit{Jy}, \unit{pc}, \unit{AU}, \unit{mag},
+          \unit{count}
+          (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other})
+  \end{itemize}
+\item Standard SI scaling prefixes
+      (\unit{k}, \unit{M}, \unit{G}, ..., \unit{m}, \unit{u}, \unit{n}, ...)
+      may be used.
+      For $10^{-6}$ the prefix `\unit{u}'
+      is used instead of the non-ASCII $\mu$
+      (\prettyref{sec:scalingprefixes})
+\item Multiplication of units is indicated {\em only\/}
+      with the period symbol `\unit{.}'
+      ({\em not\/} whitespace or a `{\unitstyle\verb|*|}')
+      (\prettyref{sec:math})
+\item Raising a unit to a power is indicated {\em only\/} with the symbol
+      `{\unitstyle\verb|**|}'
+      ({\em not\/} a `{\unitstyle\verb|^|}'
+      or by simply appending an integer)
+      (\prettyref{sec:math})
+\item Division of units is indicated with the symbol `\unit{/}'.
+      There must not be more than one \unit{/}
+      at the top level of an expression.
+      (\prettyref{sec:math}, \prettyref{appx:vougrammar})
+\item Functions of units are indicated with the syntax `\unit{f(unit)}'.
+      Recognised functions are
+      \unit{log}, \unit{ln}, \unit{exp} and \unit{sqrt}
+      (\prettyref{sec:math})
+\item Parentheses `\unit{(...)}' may be used to group terms
+      (\prettyref{appx:vougrammar})
+\item The full list of known base symbols is given in
+      \prettyref{tabx:knownunits} (see last column and footnotes),
+      but unknown symbols may also be used,
+      optionally enclosed in single quotes `\unit{'}' to avoid ambiguity.
+      Parsers should understand the structure of strings containing
+      such base symbols, but may report `unknown' units
+      (Sects.\ \ref{sec:quoting}, \ref{sec:parsing-components})
+\item The string `\unit{1}' may be used to represent a dimensionless quantity
+      (\prettyref{sec:parsing-components})
+\item A numerical scale factor prefixed to the unit string is permitted,
+      but not encouraged
+      (\prettyref{sec:scalefactor})
+\end{itemize}
+Some simple examples of legal VOUnit strings are therefore:
+\begin{quote}
+  \unit{m/s**2} \\
+  \unit{m.s**-2} \\
+  \unit{mJy} \\
+  \unit{log(GHz)} \\
+\end{quote}
+
 \section{The VOUnits syntax (normative)\label{sec:proposal}}
 
 The rules for VOUnits are defined in this section.
@@ -526,8 +610,7 @@ Thus the string \unit{Pa} represents the Pascal, and not the
 peta-year, and the string \unit{mol} will always be the mole, and
 never a milli-`ol', for some unknown unit~`ol'.
 
-\subsection{Known units}
-\label{sec:knownunits}
+\subsection{Known units\label{sec:knownunits}}
 
 In \prettyref{tabx:knownunits}, we indicate the `known units' for each of the
 described syntaxes, which go beyond the physically motivated set of
@@ -729,7 +812,7 @@ surnames, and disagreeing with the OGIP standard, we have preferred the
 initial-capital symbol in VOUnits (thus `Angstrom' as the unit symbol,
 rather than `angstrom').
 
-\subsection{Astronomy symbols}
+\subsection{Astronomy symbols\label{sec:astrosymbols}}
 
 \prettyref{tabx:comparUnitAstro} lists symbols used in astronomy to
 describe times, angles, distances and a few additional quantities.
@@ -807,8 +890,7 @@ prefix, and \norm{should not} use the \texttt d prefix (as noted
 in \prettyref{sec:other}, the decibel, \unit{dB} is listed as a `known
 unit', as opposed to a deci-Bel).
 
-\subsection{Other symbols, and other remarks}
-\label{sec:other}
+\subsection{Other symbols, and other remarks\label{sec:other}}
 
 \prettyref{tabx:comparUnitDeprecated} corresponds to Table~7 in the IAU document, and the IAU strongly
 recommends no longer using these units.
@@ -892,7 +974,7 @@ indicate this with an empty string rather than blanks or dashes.
 
 
 
-\subsection{Mathematical expressions containing symbols}
+\subsection{Mathematical expressions containing symbols\label{sec:math}}
 
 \prettyref{tabx:comparUnitCombine} summarizes how,
 in the various existing syntaxes, mathematical operations may
@@ -993,8 +1075,7 @@ representing this as \unit{log(MHz)} would be preferable.
 %We need to ensure that we are consistent with the IVOA Quantity model,
 %where appropriate.
 
-\subsection{The numerical scale-factor}
-\label{sec:scalefactor}
+\subsection{The numerical scale-factor\label{sec:scalefactor}}
 
 A VOUnits unit string \norm{may} start with a numerical scale-factor
 to indicate a derived unit.  For example, the inch might appear as the
@@ -1872,8 +1953,7 @@ for the CDS grammar}
 
 
 
-\subsection{The VOUnits grammar (normative)}
-\label{appx:vougrammar}
+\subsection{The VOUnits grammar (normative)\label{appx:vougrammar}}
 
 The VOUnits grammar is defined by this section,
 by the grammar in \prettyref{tabx:vougrammar}
@@ -1952,6 +2032,8 @@ for the VOUnits grammar}
   \item Now allowing new SI prefixes r, q, R, Q.
   \item Document management: ported to ivoatex, streamlined use cases,
     several editorial changes.
+  \item New quick VOUnits syntax summary section added,
+    \prettyref{sec:cribsheet}.
 \end{itemize}
 
 \subsection{Changes before REC-1.0}
