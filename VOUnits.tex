@@ -128,8 +128,8 @@ and contributors on the DM and Semantics forums.
 
 \section*{Conformance-related definitions}
 
-The words ``MUST'', ``SHALL'', ``SHOULD'', ``MAY'', ``RECOMMENDED'', and
-``OPTIONAL'' (in upper or lower case) used in this document are to be
+The words `MUST', `SHALL', `SHOULD', `MAY', `RECOMMENDED', and
+`OPTIONAL' (in upper or lower case) used in this document are to be
 interpreted as described in IETF standard RFC2119 \citep{std:RFC2119}.
 
 The \emph{Virtual Observatory (VO)} is a
@@ -797,9 +797,9 @@ following the character set defined in \prettyref{sec:encoding}.
 
 Note 3: The FITS deprecations in \prettyref{tabx:knownunits} are
 (a)~those where Table~4 in FITS\,3 \citep{pence10} notes that the unit
-is ``Deprecated in IAU Style Manual but still in use''; plus (b)~the
+is `Deprecated in IAU Style Manual but still in use'; plus (b)~the
 besselan and tropical years (FITS\,4 remarks that use of either of
-these years ``is not encouraged'' \citep[\S9.3]{fits4}, and this is
+these years `is not encouraged' \citep[\S9.3]{fits4}, and this is
 expanded on in FITS WCS Paper IV \citep[\S4.2]{rots15}).  The VOUnits
 deprecations inherit these.
 
@@ -1556,8 +1556,8 @@ takes priority.
     Imperial, non-metric & should not be used & \unit{} & \unit{} & \unit{} & not used \\\hline
 \end{tabular}
   \caption[Comparison of symbols deprecated by IAU]{Comparison of
-  symbols deprecated by IAU (from \citet{wilkins89} table~7, ``Non-SI
-  units and symbols whose continued use is deprecated'').
+  symbols deprecated by IAU (from \citet{wilkins89} table~7, `Non-SI
+  units and symbols whose continued use is deprecated').
   Note: (1) no symbol: \unit{mW/m2} is used for \units{erg\,cm^{-2}\,s^{-1}}.}
   \label{tabx:comparUnitDeprecated}
 \end{table}
@@ -1797,11 +1797,11 @@ is in \prettyref{tabx:fitsgrammar}.
 
 As noted above in \prettyref{sec:fitsquote},
 the FITS specification isn't completely clear on the topic of
-solidi, saying ``[t]he IAU style manual forbids
+solidi, saying `[t]he IAU style manual forbids
 the use of more than one solidus (/) character in a units
 string. However, since normal mathematical precedence rules apply
 in this context, more than one solidus may be used but is
-discouraged''.  This does not really resolve the question of whether, for
+discouraged'.  This does not really resolve the question of whether, for
 example, \texttt{kg/m s} should be parsed as \units{kg~m^{-1}~s^{-1}}
 or as \units{kg~m^{-1}~s}, since this is a question of both operator
 precedence and (left-)associativity, where there might be different
@@ -1822,9 +1822,9 @@ but mean \units{kg~m^{-1}~s^{-1}} in the FITS syntax, and
 \units{kg~m^{-1}~s} in the OGIP one.
 
 The FITS specification permits a leading numeric multiplier, but
-``[c]re\-ators of FITS files are encouraged to use the numeric
+`[c]re\-ators of FITS files are encouraged to use the numeric
 multiplier only when the available standard scale-factors of [SI] will
-not suffice''.
+not suffice'.
 
 The FITS specification permits \texttt{m(2)}, to indicate the square of
 unit~`m'.  The grammar has to special-case this, in order to
@@ -1861,10 +1861,10 @@ For the OGIP units syntax, see \cite{george95}.  Our preferred OGIP
 grammar is in \prettyref{tabx:ogipgrammar}.
 
 The OGIP specification somewhat reluctantly concedes (in its section
-3.2) that ``occasionally it may be preferable to include [leading
-scale] factors on the grounds of user-friendliness'', but that ``[t]he
+3.2) that `occasionally it may be preferable to include [leading
+scale] factors on the grounds of user-friendliness', but that `[t]he
 inclusion of numerical factors should therefore be avoided wherever
-possible'', and it is ``suggested'' that the scale-factor should in any case
+possible', and it is `suggested' that the scale-factor should in any case
 be restricted to powers of~10.
 %On these grounds, the \texttt{FLOAT}
 %terminal in the grammar should be extra-syntactically restricted to
