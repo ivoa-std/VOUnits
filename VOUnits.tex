@@ -102,6 +102,8 @@ consistent with other relevant standards (BIPM, ISO/IEC and the IAU).
 The intention is that units written to conform to this specification
 will likely also be parsable by other well-known parsers.  To this
 end, we include machine-readable grammars for other units syntaxes.
+To support end-users, we also include a brief informal primer of the key
+elements of the specification.
 \end{abstract}
 
 
@@ -128,8 +130,8 @@ and contributors on the DM and Semantics forums.
 
 \section*{Conformance-related definitions}
 
-The words ``MUST'', ``SHALL'', ``SHOULD'', ``MAY'', ``RECOMMENDED'', and
-``OPTIONAL'' (in upper or lower case) used in this document are to be
+The words `MUST', `SHALL', `SHOULD', `MAY', `RECOMMENDED', and
+`OPTIONAL' (in upper or lower case) used in this document are to be
 interpreted as described in IETF standard RFC2119 \citep{std:RFC2119}.
 
 The \emph{Virtual Observatory (VO)} is a
@@ -157,7 +159,13 @@ It is not, however, quite possible for VOUnits to be in the
 intersection of existing syntaxes; there is futher discussion of this
 point in \prettyref{sec:deviations}.
 
-We also provide, for information, a set of self- and mutually-consistent
+The normative content of this document is \prettyref{sec:proposal} and \prettyref{appx:vougrammar}.
+\prettyref{sec:cribsheet} provides an informal summary of the VOUnits
+syntax which can serve as a quick primer on how to write units for use
+in the VO.
+
+In addition to the normative sections,
+we also provide, for information, a set of self- and mutually-consistent
 machine-readable grammars for all of the syntaxes discussed.
 
 The introduction gives the motivation for
@@ -166,18 +174,15 @@ metadata available in the resource layer, to the requirements of the various
 VO protocols and standards and applications.
 
 This document is organised as follows. \prettyref{sec:proposal}
-details the proposal for VOUnits. \prettyref{sec:useCase} lists some
-use cases and reference implementations.  In \prettyref{appx:current},
+details the proposal for VOUnits, including non-normative
+commentary on some of the decisions made.
+\prettyref{sec:useCase} lists some use cases and reference implementations.
+In \prettyref{appx:current},
 there is a brief review of current practices in the description and
 usage of units; in \prettyref{appx:comparisons} there is a detailed
 discussion of the differences between the various syntaxes; and
 in \prettyref{appx:grammar} there are formal (yacc-style) grammars for
 the four syntaxes discussed.
-
-The normative content of this document is \prettyref{sec:proposal} and \prettyref{appx:vougrammar}.
-\prettyref{sec:cribsheet} provides an informal summary of the VOUnits
-syntax which can serve as a quick primer on how to write units for use
-in the VO.
 
 \subsection{Units in the VO Architecture}
 
@@ -311,7 +316,7 @@ unit-string grammar means that data providers can write human-readable
 strings in the confidence that the result will \emph{additionally} be
 machine-readable in a reliable and checkable way.  Or, where a string
 is not fully machine readable (because a data provider needs to use a
-custom unit such as 'jupiterMass'; see \prettyref{sec:quoting}), that the
+custom unit such as `jupiterMass'; see \prettyref{sec:quoting}), that the
 string is at least partially machine readable, and that that partial
 readability is non-ambiguous.
 
@@ -411,7 +416,8 @@ See that section for further discussion.
 
 \item This Recommendation does not specify how an application should
 compare units for equivalence; for example, an application may or may
-not wish to deem \unit{m/s} and \unit{km/s} to be `equivalent'.
+not wish to deem \unit{m/s} and \unit{km/s}, or \unit{m/s} and
+\unit{mm/ms}, to be `equivalent'.
 This Recommendation, similarly, does not specify how to compare units
 with scaling prefixes (cf \prettyref{sec:scalingprefixes}).
 \end{itemize}
@@ -426,67 +432,67 @@ and less obvious consequences,
 are provided in the body of \prettyref{sec:proposal},
 and the syntax is formally defined in \prettyref{appx:vougrammar}.
 \begin{itemize}
-\item Unit strings are printable ASCII characters (\prettyref{sec:encoding})
-\item Unit strings are case-sensitive (\prettyref{sec:encoding})
-\item No whitespace is permitted (\prettyref{appx:vougrammar})
+\item Unit strings are printable ASCII characters (\prettyref{sec:encoding}).
+\item Unit strings are case-sensitive (\prettyref{sec:encoding}).
+\item No whitespace is permitted (\prettyref{appx:vougrammar}).
 \item Unit names are, mostly, represented as you would expect.
       Most unit base symbols required by astronomy data are recognised,
       including:
   \begin{itemize}
     \item Basic physical units including
           \unit{m}, \unit{s}, \unit{g}, \unit{Hz}, \unit{K}
-          (\prettyref{sec:baseUnits})
+          (\prettyref{sec:baseUnits}).
     \item Time units including
           \unit{yr}, \unit{d}, \unit{h}, \unit{min}, \unit{s}
           ({\em not\/} {\tt day}, {\tt hour}, {\tt sec})
-          (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits})
+          (Sects. \ref{sec:astrosymbols}, \ref{sec:baseUnits}).
     \item Angular units including
           \unit{deg}, \unit{arcmin}, \unit{arcsec}, \unit{mas}
           ({\em not\/} {\tt degree}, {\tt as};
           for microarcsecond use \unit{uarcsec} {\em not\/} {\tt uas})
-          (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro})
+          (\prettyref{sec:astrosymbols}, \prettyref{tabx:comparUnitAstro}).
     \item Other units useful in astronomy including
           \unit{Jy}, \unit{pc}, \unit{AU}, \unit{mag},
           \unit{count}
-          (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other})
+          (Sects.\ \ref{sec:astrosymbols}, \ref{sec:other}).
   \end{itemize}
 \item Standard SI scaling prefixes
       (\unit{k}, \unit{M}, \unit{G}, ..., \unit{m}, \unit{u}, \unit{n}, ...)
       may be used.
       For $10^{-6}$ the prefix `\unit{u}'
       is used instead of the non-ASCII $\mu$
-      (\prettyref{sec:scalingprefixes})
+      (\prettyref{sec:scalingprefixes}).
 \item Multiplication of units is indicated {\em only\/}
       with the period symbol `\unit{.}'
       ({\em not\/} whitespace or a `{\unitstyle\verb|*|}')
-      (\prettyref{sec:math})
+      (\prettyref{sec:math}).
 \item Raising a unit to a power is indicated {\em only\/} with the symbol
       `{\unitstyle\verb|**|}'
       ({\em not\/} a `{\unitstyle\verb|^|}'
       or by simply appending an integer)
-      (\prettyref{sec:math})
+      (\prettyref{sec:math}).
 \item Division of units is indicated with the symbol `\unit{/}'.
       There must not be more than one \unit{/}
       at the top level of an expression.
-      (\prettyref{sec:math}, \prettyref{appx:vougrammar})
+      (\prettyref{sec:math}, \prettyref{appx:vougrammar}).
 \item Functions of units are indicated with the syntax `\unit{f(unit)}'.
       Recognised functions are
       \unit{log}, \unit{ln}, \unit{exp} and \unit{sqrt}
-      (\prettyref{sec:math})
+      (\prettyref{sec:math}).
 \item Parentheses `\unit{(...)}' may be used to group terms
-      (\prettyref{appx:vougrammar})
+      (\prettyref{appx:vougrammar}).
 \item The full list of known base symbols is given in
       \prettyref{tabx:knownunits} (see last column and footnotes),
       but unknown symbols may also be used,
       optionally enclosed in single quotes `\unit{'}' to avoid ambiguity.
       Parsers should understand the structure of strings containing
       such base symbols, but may report `unknown' units
-      (Sects.\ \ref{sec:quoting}, \ref{sec:parsing-components})
+      (Sects.\ \ref{sec:quoting}, \ref{sec:parsing-components}).
 \item The string `\unit{1}' may be used to represent a dimensionless quantity
-      (\prettyref{sec:parsing-components})
+      (\prettyref{sec:parsing-components}).
 \item A numerical scale factor prefixed to the unit string is permitted,
       but not encouraged
-      (\prettyref{sec:scalefactor})
+      (\prettyref{sec:scalefactor}).
 \end{itemize}
 Some simple examples of legal VOUnit strings are therefore:
 \begin{quote}
@@ -796,9 +802,9 @@ following the character set defined in \prettyref{sec:encoding}.
 
 Note 3: The FITS deprecations in \prettyref{tabx:knownunits} are
 (a)~those where Table~4 in FITS\,3 \citep{pence10} notes that the unit
-is ``Deprecated in IAU Style Manual but still in use''; plus (b)~the
-besselan and tropical years (FITS\,4 remarks that use of either of
-these years ``is not encouraged'' \citep[\S9.3]{fits4}, and this is
+is `Deprecated in IAU Style Manual but still in use'; plus (b)~the
+Besselian and tropical years (FITS\,4 remarks that use of either of
+these years `is not encouraged' \citep[\S9.3]{fits4}, and this is
 expanded on in FITS WCS Paper IV \citep[\S4.2]{rots15}).  The VOUnits
 deprecations inherit these.
 
@@ -1115,8 +1121,11 @@ the software which is handling the units.
 
 The VOUnits syntax permits the use of `unknown units' (that is, units not listed
 in \prettyref{tabx:knownunits}).  There need be no syntactic indication that
-a unit is `unknown'; this is convenient, but creates some minor
-ambiguities.
+a unit is `unknown', so that, for example, the \unit{jovianDay} is
+parsed as an acceptable unknown unit without it having to be marked
+as such; this is convenient, but creates a minor ambiguity when (as
+noted in \prettyref{sec:parsing-components}), an unknown unit starts
+with a decimal prefix.
 
 In the VOUnits syntax, base symbols may be put between single
 quotes \unit{'...'} (a significant divergence from the other
@@ -1140,7 +1149,9 @@ risking the leading \texttt{m} being misparsed as an SI prefix, or the
 Quoted units can take prefixes (they are `unknown units', so there are
 no restrictions on their usage), so that \unit{m'furlong'} is a
 milli-furlong, and \unit{m'm'} is a milli-`m'.  The only permissible
-prefixes are those of \prettyref{tab:vouscalingprefixes}.
+prefixes on an unknown unit, quoted or not, are the decimal prefixes of
+\prettyref{tab:vouscalingprefixes}(a); thus a \unit{Kifurlong} is a
+unit ‘Kifurlong’, and not a kibi-furlong.
 
 \subsection{General rationale (informative)}
 \label{sec:rationale}
@@ -1300,14 +1311,14 @@ involved might be physical constants (\eg  Boltzmann's constant $k_{\mathrm{B}}$
 
 Examples of such transformations can be:
 \begin{itemize}
-\item linear unit conversion: a distance is measured in \unit{pixel} in an image, and needs to be transformed in
+\item Linear unit conversion: a distance is measured in \unit{pixel} in an image, and needs to be transformed in
 the corresponding angular separation in \unit{arcsec}. This can be done if the quantity representing the pixel
 scale is given, with its value and a compatible unit like \unit{deg/pixel}.
-\item converting a photon wavelength in the corresponding photon energy or frequency.
-\item deriving the flux for a given photon emission rate (in $\!\units W$) from Planck's
+\item Converting a photon wavelength in the corresponding photon energy or frequency.
+\item Deriving the flux for a given photon emission rate (in $\!\units W$) from Planck's
 constant ($6.63 \times 10^{-34}\units{J~s}$), the radiation frequency (in \units{GHz}), and the
 number of photons emitted per second.
-\item transforming a magnitude into a flux, as needed for SED building.
+\item Transforming a magnitude into a flux, as needed for SED building.
 \end{itemize}
 
 VOUnits can help in quantity transformation if all quantities are qualified with proper VOUnits.
@@ -1550,8 +1561,8 @@ takes priority.
     Imperial, non-metric & should not be used & \unit{} & \unit{} & \unit{} & not used \\\hline
 \end{tabular}
   \caption[Comparison of symbols deprecated by IAU]{Comparison of
-  symbols deprecated by IAU (from \citet{wilkins89} table~7, ``Non-SI
-  units and symbols whose continued use is deprecated'').
+  symbols deprecated by IAU (from \citet{wilkins89} table~7, `Non-SI
+  units and symbols whose continued use is deprecated').
   Note: (1) no symbol: \unit{mW/m2} is used for \units{erg\,cm^{-2}\,s^{-1}}.}
   \label{tabx:comparUnitDeprecated}
 \end{table}
@@ -1790,12 +1801,12 @@ associated tables.  Our preferred interpretation of the FITS grammar
 is in \prettyref{tabx:fitsgrammar}.
 
 As noted above in \prettyref{sec:fitsquote},
-the FITS specification isn't completely clear on the topic of
-solidi, saying ``[t]he IAU style manual forbids
+the FITS specification is not completely clear on the topic of
+solidi, saying `[t]he IAU style manual forbids
 the use of more than one solidus (/) character in a units
 string. However, since normal mathematical precedence rules apply
 in this context, more than one solidus may be used but is
-discouraged''.  This does not really resolve the question of whether, for
+discouraged'.  This does not really resolve the question of whether, for
 example, \texttt{kg/m s} should be parsed as \units{kg~m^{-1}~s^{-1}}
 or as \units{kg~m^{-1}~s}, since this is a question of both operator
 precedence and (left-)associativity, where there might be different
@@ -1816,9 +1827,9 @@ but mean \units{kg~m^{-1}~s^{-1}} in the FITS syntax, and
 \units{kg~m^{-1}~s} in the OGIP one.
 
 The FITS specification permits a leading numeric multiplier, but
-``[c]re\-ators of FITS files are encouraged to use the numeric
+`[c]re\-ators of FITS files are encouraged to use the numeric
 multiplier only when the available standard scale-factors of [SI] will
-not suffice''.
+not suffice'.
 
 The FITS specification permits \texttt{m(2)}, to indicate the square of
 unit~`m'.  The grammar has to special-case this, in order to
@@ -1855,10 +1866,10 @@ For the OGIP units syntax, see \cite{george95}.  Our preferred OGIP
 grammar is in \prettyref{tabx:ogipgrammar}.
 
 The OGIP specification somewhat reluctantly concedes (in its section
-3.2) that ``occasionally it may be preferable to include [leading
-scale] factors on the grounds of user-friendliness'', but that ``[t]he
+3.2) that `occasionally it may be preferable to include [leading
+scale] factors on the grounds of user-friendliness', but that `[t]he
 inclusion of numerical factors should therefore be avoided wherever
-possible'', and it is ``suggested'' that the scale-factor should in any case
+possible', and it is `suggested' that the scale-factor should in any case
 be restricted to powers of~10.
 %On these grounds, the \texttt{FLOAT}
 %terminal in the grammar should be extra-syntactically restricted to
@@ -2011,7 +2022,6 @@ for the VOUnits grammar}
 \subsection{Changes since REC-1.0}
 
 \begin{itemize}
-  \item Clarified: that Besselian year is not in FITS.
   \item In FITS 4.0 \citep{fits4}, the preferred symbol for the year is
     \unit{a}, not \unit{yr} (see \prettyref{tabx:knownunits}).
   \item The VOUnits syntax now accepts \unit{1} as positively
@@ -2023,11 +2033,12 @@ for the VOUnits grammar}
     error (see \prettyref{sec:parsing-components}, GitHub issue~9).
   \item Added brief rationale for the syntax of the \texttt{VOUFLOAT}
     terminal (see \prettyref{appx:vougrammar}, GitHub issue~8).
-  \item Now allowing new SI prefixes r, q, R, Q.
+  \item Now allowing new SI prefixes `r', `q', `R', and `Q'.
   \item Document management: ported to ivoatex, streamlined use cases,
     several editorial changes.
   \item New quick VOUnits syntax summary section added,
     \prettyref{sec:cribsheet}.
+  \item Various minor adjustments and clarifications to the text.
 \end{itemize}
 
 \subsection{Changes before REC-1.0}
