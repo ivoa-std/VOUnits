@@ -1982,9 +1982,9 @@ See \prettyref{sec:deviations} for discussion.
 In particular:
 \begin{itemize}
 \item The product of units is indicated only by a dot, with no
-  whitespace: \texttt{N.m}.
+  whitespace: \unit{N.m}.
 \item Raising a unit to a power is done only with a double-star, for
-  instance \texttt{kg.m**2.s**-2}.
+  instance \unit{kg.m**2.s**-2}.
 \item There may be at most one division sign at the top level of an
   expression.
 \end{itemize}
@@ -1995,10 +1995,13 @@ string matching either of the regular expressions
 \item\texttt{0\textbackslash.[0-9]+([eE][+-]?[0-9]+)?}
 \item\texttt{[1-9][0-9]*(\textbackslash.[0-9]+)?([eE][+-]?[0-9]+)?}
 \end{itemize}
-This permits numbers resembling \texttt{0.123} or \texttt{1.5e+11}.
-It forbids \texttt{0}, which would be meaningless, and it forbids
-numbers resembling \texttt{1.} or \texttt{1.e1}, with a decimal point
+This permits numbers resembling \unit{0.123} or \unit{1.5e+11}.
+It forbids \unit{0}, which would be meaningless, and it forbids
+numbers resembling \unit{1.} or \unit{1.e1}, with a decimal point
 but no fractional part, which would be liable to misinterpretation.
+Although this syntax does match a string such as \unit{0.0}, any number
+which is numerically equal to zero is forbidden as a \texttt{VOUFLOAT}
+scaling factor.
 
 \begin{table}[ht]
 \lstinputlisting{unity-grammars/unity-vounits.txt}
