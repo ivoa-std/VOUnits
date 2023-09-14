@@ -427,7 +427,7 @@ with scaling prefixes (cf \prettyref{sec:scalingprefixes}).
 This section provides an informal cribsheet for the most important
 rules defined by VOUnits syntax, which is recommended for use
 within the VO.
-More detailed rules and explanations, as well as special cases
+More detailed rules and explanations, as well as discussion of special cases
 and less obvious consequences,
 are provided in the body of \prettyref{sec:proposal},
 and the syntax is formally defined in \prettyref{appx:vougrammar}.
@@ -1995,10 +1995,10 @@ string matching either of the regular expressions
 \item\texttt{0\textbackslash.[0-9]+([eE][+-]?[0-9]+)?}
 \item\texttt{[1-9][0-9]*(\textbackslash.[0-9]+)?([eE][+-]?[0-9]+)?}
 \end{itemize}
-(that is, something resembling \texttt{0.123} or \texttt{1.5e+11};
-but forbidding \texttt{0}, which would be meaningless, and numbers
-with a decimal point but no fractional part, such as \texttt{1.}
-or \texttt{1.e1}, which would be liable to misinterpretation).
+This permits numbers resembling \texttt{0.123} or \texttt{1.5e+11}.
+It forbids \texttt{0}, which would be meaningless, and it forbids
+numbers resembling \texttt{1.} or \texttt{1.e1}, with a decimal point
+but no fractional part, which would be liable to misinterpretation.
 
 \begin{table}[ht]
 \lstinputlisting{unity-grammars/unity-vounits.txt}
@@ -2019,26 +2019,35 @@ for the VOUnits grammar}
 
 \section{Updates of this document (informative)}
 
-\subsection{Changes since REC-1.0}
+\subsection{Changes from REC-1.0 to REC-1.1}
+
+Problem reports for the REC-1.0 document were tracked on GitHub.  This
+list is visible (as of late 2023) at
+\url{https://github.com/ivoa-std/VOUnits/issues}; the
+issue numbers quoted below refer to this list.  The issues were
+discussed on that site, on IVOA mailing lists, and at Interops.
 
 \begin{itemize}
   \item In FITS 4.0 \citep{fits4}, the preferred symbol for the year is
-    \unit{a}, not \unit{yr} (see \prettyref{tabx:knownunits}).
+    \unit{a}, not \unit{yr} (see \prettyref{tabx:knownunits}, issue~5).
   \item The VOUnits syntax now accepts \unit{1} as positively
     indicating a dimensionless unit string, and the text no longer
     recommends that the empty string `positively indicates that the
     corresponding quantity is dimensionless'.  An application is free
     to interpret the empty string as indicating a dimensionless
     quantity, that the units are unknown, or that this is a parsing
-    error (see \prettyref{sec:parsing-components}, GitHub issue~9).
-  \item Added brief rationale for the syntax of the \texttt{VOUFLOAT}
-    terminal (see \prettyref{appx:vougrammar}, GitHub issue~8).
-  \item Now allowing new SI prefixes `r', `q', `R', and `Q'.
+    error (see \prettyref{sec:parsing-components}, issue~9).
+  \item Function operands can now contain a scale-factor, so that, for example,
+    \unit{log(10**6Hz)} is an alternative to \unit{log(MHz)}, though
+    the latter is preferred (see \prettyref{sec:math}, issue~17).
+  \item Added: brief rationale for the syntax of the \texttt{VOUFLOAT}
+    terminal (see \prettyref{appx:vougrammar}, issue~8).
+  \item Added: new SI prefixes `r', `q', `R', and `Q' (issue~21).
+  \item Added: a new VOUnits syntax summary section, for impatient readers
+    (see \prettyref{sec:cribsheet}, issue~26).
+  \item Various minor adjustments and clarifications to the text.
   \item Document management: ported to ivoatex, streamlined use cases,
     several editorial changes.
-  \item New quick VOUnits syntax summary section added,
-    \prettyref{sec:cribsheet}.
-  \item Various minor adjustments and clarifications to the text.
 \end{itemize}
 
 \subsection{Changes before REC-1.0}
