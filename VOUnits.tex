@@ -2024,35 +2024,33 @@ for the VOUnits grammar}
 
 \subsection{Changes from REC-1.0 to REC-1.1}
 
-Problem reports for the REC-1.0 document were tracked on GitHub.  This
-list is visible (as of late 2023) at
-\url{https://github.com/ivoa-std/VOUnits/issues}; the
-issue numbers quoted below refer to this list.  The issues were
-discussed on that site, on IVOA mailing lists, and at Interops.
-
 \begin{itemize}
   \item In FITS 4.0 \citep{fits4}, the preferred symbol for the year is
-    \unit{a}, not \unit{yr} (see \prettyref{tabx:knownunits}, issue~5).
+    \unit{a}, not \unit{yr} (see \prettyref{tabx:knownunits}).
   \item The VOUnits syntax now accepts \unit{1} as positively
     indicating a dimensionless unit string, and the text no longer
     recommends that the empty string `positively indicates that the
     corresponding quantity is dimensionless'.  An application is free
     to interpret the empty string as indicating a dimensionless
     quantity, that the units are unknown, or that this is a parsing
-    error (see \prettyref{sec:parsing-components}, issue~9).
+    error (see \prettyref{sec:parsing-components}).
   \item Function operands can now contain a scale-factor, so that, for example,
     \unit{log(10**6Hz)} is an alternative to \unit{log(MHz)}, though
-    the latter is preferred (see \prettyref{sec:math}, issue~17).
+    the latter is preferred (see \prettyref{sec:math}).
   \item Added: brief rationale for the syntax of the \texttt{VOUFLOAT}
-    terminal (see \prettyref{appx:vougrammar}, issue~8).
+    terminal (see \prettyref{appx:vougrammar}).
   \item Added: new SI prefixes `r', `q', `R', and `Q'
-    (see \prettyref{sec:scalingprefixes}, issue~21).
+    (see \prettyref{sec:scalingprefixes}).
   \item Added: a new VOUnits syntax summary section, for impatient readers
-    (see \prettyref{sec:cribsheet}, issue~26).
+    (see \prettyref{sec:cribsheet}).
   \item Various minor adjustments and clarifications to the text.
   \item Document management: ported to ivoatex, streamlined use cases,
     several editorial changes.
 \end{itemize}
+
+Problem reports for the REC-1.0 document were tracked on GitHub, which
+is where the document was managed during redrafting.  The changes were
+discussed on that site, on IVOA mailing lists, and at Interops.
 
 \subsection{Changes before REC-1.0}
 
