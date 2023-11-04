@@ -79,8 +79,8 @@
 
 \editor{Gray, N.}
 
-\previousversion[https://ivoa.net/documents/VOUnits/20220525/]{WD-1.1
-2022-05-25}
+\previousversion[https://www.ivoa.net/documents/VOUnits/20230502]{PR-1.1-20230502}
+\previousversion[https://ivoa.net/documents/VOUnits/20220525/]{WD-1.1 2022-05-25}
 \previousversion[http://www.ivoa.net/documents/VOUnits/20140523/]{REC-1.0}
 \previousversion[http://www.ivoa.net/Documents/VOUnits/20140513/]{PR-20140513}
 \previousversion[http://www.ivoa.net/Documents/VOUnits/20140226/]{PR-20140226}
@@ -1327,9 +1327,13 @@ ADQL.  In that scenario, forgetting unit coversions is a common source
 of error, in particular when porting queries from one service to
 another.
 
-ADQL 2.1 \citep{TODO-not-a-rec-yet} offers the
+ADQL 2.1 will offer the
 \verb|IN_UNIT(expr, to_unit)|
-function as a mitigation.  When an ADQL engine can establish the
+function as a mitigation.\footnote{As of the release of VOUnits 1.1,
+ADQL~2.1 is still a Proposed Recommendation.  See
+\url{https://www.ivoa.net/documents/ADQL/20210528/index.html} for the
+current status.}
+When an ADQL engine can establish the
 unit of the \verb|expr| argument, normally based on the service's table
 metadata, and that unit and the \verb|to_unit| argument are
 commensurable (i.e, one can be expressed in the other), the value of this
