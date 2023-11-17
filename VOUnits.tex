@@ -79,8 +79,8 @@
 
 \editor{Gray, N.}
 
-\previousversion[https://ivoa.net/documents/VOUnits/20220525/]{WD-1.1
-2022-05-25}
+\previousversion[https://www.ivoa.net/documents/VOUnits/20230502]{PR-1.1-20230502}
+\previousversion[https://ivoa.net/documents/VOUnits/20220525/]{WD-1.1 2022-05-25}
 \previousversion[http://www.ivoa.net/documents/VOUnits/20140523/]{REC-1.0}
 \previousversion[http://www.ivoa.net/Documents/VOUnits/20140513/]{PR-20140513}
 \previousversion[http://www.ivoa.net/Documents/VOUnits/20140226/]{PR-20140226}
@@ -1239,7 +1239,7 @@ The notion of unit conversion and quantity manipulation is discussed in
 \label{sec:parsers}
 
 A program implementing the rules laid down in \prettyref{sec:proposal}
-is a VOUnit parser.   The Unity library (see below) is a
+is a VOUnit parser.   The Unity library \cite{unity-1.1} is a
 reference implementation for such a parser.
 
 In addition to VOUnits, Unity also supports
@@ -1281,9 +1281,7 @@ and can be tested online.\footnote{\url{http://cdsweb.u-strasbg.fr/cgi-bin/Unit}
 the symbols and notations defined in the standard for astronomical catalogues \citep[\S3.2]{cds00}, as well as
 additional symbols and notations.
 
-The Unity library\footnote{\url{https://purl.org/nxg/dist/unity}
-(note, if citing this library, please use this URL rather than the URL
-it resolves to).} is a
+The Unity library \cite{unity-1.1} is a
 standalone library introduced alongside VOUnits 1.0
 intended to parse unit strings in the VOUnits,
 OGIP, StdCats and FITS syntaxes; it was used as a vehicle for
@@ -1329,9 +1327,13 @@ ADQL.  In that scenario, forgetting unit coversions is a common source
 of error, in particular when porting queries from one service to
 another.
 
-ADQL 2.1 \citep{TODO-not-a-rec-yet} offers the
+ADQL 2.1 will offer the
 \verb|IN_UNIT(expr, to_unit)|
-function as a mitigation.  When an ADQL engine can establish the
+function as a mitigation.\footnote{As of the release of VOUnits 1.1,
+ADQL~2.1 is still a Proposed Recommendation.  See
+\url{https://www.ivoa.net/documents/ADQL/20210528/index.html} for the
+current status.}
+When an ADQL engine can establish the
 unit of the \verb|expr| argument, normally based on the service's table
 metadata, and that unit and the \verb|to_unit| argument are
 commensurable (i.e, one can be expressed in the other), the value of this
@@ -1749,8 +1751,8 @@ We believe that the grammars below are such that if a string
 successfully parses in two distinct grammars, it means the same in
 both.
 
-The grammars here are from release 1.1-b1 of the `Unity' package at
-\url{https://purl.org/nxg/dist/unity}, which includes machine-readable
+The grammars here are from release 1.1 of the `Unity' package \cite{unity-1.1},
+which includes machine-readable
 grammars, lists of recommended units, and a collection of test cases.  These are also extracted in
 machine-readable form
 at \url{https://github.com/ivoa-std/VOUnits/tree/master/unity-grammars}.
