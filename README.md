@@ -6,7 +6,9 @@ This document describes a recommended syntax for writing the string representati
 
 ## Current Status
 
-The current stable IVOA Recommendation is **[REC-VOUnits-1.0](https://ivoa.net/documents/VOUnits/20140523/)** (available from [IVOA Documents Repository](https://www.ivoa.net/documents)).
+The current stable IVOA Recommendation is 
+**[REC-VOUnits-1.1](https://ivoa.net/documents/VOUnits/20231215/)** 
+(available from [IVOA Documents Repository](https://www.ivoa.net/documents)).
 
 ## Licence
 
